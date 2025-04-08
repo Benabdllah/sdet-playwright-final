@@ -1,8 +1,15 @@
 {
     "version": "0.2.0",
     "configurations": [
+    
         {
+            "name": "Launch Chrome",
+            "request": "launch",
             "type": "chrome",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}"
+        },
+        {   "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:4200",
@@ -16,6 +23,16 @@
             "port": 9222,
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}"
-        }
+        },
+        {
+            "name": "Playwright Test Debug",
+            "type": "pwa-node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+            "args": ["test", "--project=chromium"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+          }
     ]
 }
