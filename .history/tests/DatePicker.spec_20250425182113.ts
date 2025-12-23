@@ -1,0 +1,12 @@
+import { test, expect } from '@playwright/test';
+
+
+test.only('handling table', async ({page }) => {
+ 
+await page.goto('https://testautomationpractice.blogspot.com/')
+
+await page.fill('#datepicker','03/15/2024')
+
+await ta
+
+})

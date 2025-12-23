@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { Script } from 'vm';
 
 /**
  * Read environment variables from file.
@@ -78,3 +79,6 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
+
+
+package.json: Script: /*"test": "cucumber-js test --format json:allure-results/results.json",*/

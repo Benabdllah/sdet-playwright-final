@@ -1,0 +1,90 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "conduit-login-functionality;login-and-logout-with-valid-credentials",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Login and Logout with valid credentials",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I am on the conduit login page",
+            "match": {
+              "location": "src/test/step_definitions/loginSteps.ts:8"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1012034541
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I Login with valid credentials",
+            "match": {
+              "location": "src/test/step_definitions/loginSteps.ts:14"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 5002044584,
+              "error_message": "Error: function timed out, ensure the promise resolves within 5000 milliseconds\n    at Timeout.<anonymous> (/workspace/node_modules/@cucumber/cucumber/src/time.ts:52:14)\n    at listOnTimeout (node:internal/timers:581:17)\n    at processTimers (node:internal/timers:519:7)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 6,
+            "name": "I click on the settings button",
+            "match": {
+              "location": "src/test/step_definitions/loginSteps.ts:19"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "I click on the logout button",
+            "match": {
+              "location": "src/test/step_definitions/loginSteps.ts:23"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 8,
+            "name": "I route back to the login page",
+            "match": {
+              "location": "src/test/step_definitions/loginSteps.ts:27"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "conduit-login-functionality",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Conduit Login Functionality",
+    "tags": [],
+    "uri": "src/test/features/login.feature"
+  }
+]

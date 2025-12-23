@@ -1,0 +1,149 @@
+{
+  "cookies": [
+    {
+      "name": ".ASPXAUTH",
+      "value": "E7F...längsterToken...9A2",
+      "domain": ".meineapp.com",
+      "path": "/",
+      "expires": 1760000000,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "refresh_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx",
+      "domain": "app.meineapp.com",
+      "path": "/auth",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://app.meineapp.com",
+      "localStorage": [
+        { "name": "userRole", "value": "admin" },
+        { "name": "featureFlags", "value": "{\"newDashboard\":true}" },
+        { "name": "preferredTheme", "value": "dark" },
+        { "name": "i18nextLng", "value": "de" }
+      ],
+      "sessionStorage": [
+        { "name": "cartId", "value": "c12345" }
+      ]
+    },
+    {
+      "origin": "https://auth.meineapp.com",
+      "localStorage": [
+        { "name": "oidc.user:...:", "value": "{...kompletter Keycloak Token...}" }
+      ]
+    }
+  ]
+}
+
+
+/////////////////////////
+Hier alle 5 Methoden mit exaktem Code – du kannst sofort kopieren.
+1. Playwright Codegen (5 Sekunden)
+Bashnpx playwright codegen https://app.deinefirma.com \
+  --save-storage=playwright/auth/admin.json \
+  --load-storage=playwright/auth/admin.json
+→ Öffnet Chrome
+→ Du loggst dich ganz normal als Admin ein
+→ Drückst Strg+S oder schließt das Fenster
+→ Fertig – admin.json liegt im Ordner und ist 100 % echt.
+2. Manuell im Browser + Extension
+
+Installiere diese Chrome-Extension:
+→ https://chrome.google.com/webstore/detail/playwright-auth-export/… (gibt es mehrere)
+Logge dich als Admin ein
+Klick auf das Extension-Icon → „Export Playwright storageState“
+Speichere als playwright/auth/admin.json
+
+3. Global Setup – der echte Profi-Weg (empfohlen für jedes Projekt > 100 Tests)
+TypeScript// global-setup.ts
+import { chromium, FullConfig } from '@playwright/test';
+
+async function globalSetup(config: FullConfig) {
+  const browser = await chromium.launch({ headless: false }); // false = siehst alles
+  const page = await browser.newPage();
+
+  // Admin einloggen
+  await page.goto('https://app.deinefirma.com/login');
+  await page.fill('input[name="email"]', 'admin@deinefirma.com');
+  await page.fill('input[name="password"]', 'SuperGeheim123!');
+  await page.click('button:has-text("Anmelden")');
+  await page.waitForURL('**/dashboard');
+
+  await page.context().storageState({
+    path: 'playwright/auth/admin.json'
+  });
+
+  // Optional: weitere Rollen
+  await page.context().clearCookies();
+  await page.goto('https://app.deinefirma.com/login');
+  await page.fill('input[name="email"]', 'kunde@test.de');
+  await page.fill('input[name="password"]', 'test123');
+  await page.click('button:has-text("Anmelden")');
+  await page.context().storageState({
+    path: 'playwright/auth/customer.json'
+  });
+
+  await browser.close();
+}
+
+export default globalSetup;
+In playwright.config.ts:
+TypeScriptexport default defineConfig({
+  globalSetup: './global-setup.ts',
+});
+Jetzt wird beim ersten npx playwright test automatisch eingeloggt und die States für immer gespeichert.
+4. Als normaler Playwright-Test (wenn du 2FA, SMS, Captcha hast)
+TypeScript// tests/auth/setup-auth.spec.ts
+import { test } from '@playwright/test';
+
+test('create fresh auth states', async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  await page.goto('/login');
+  await page.fill('#email', 'admin@deinefirma.com');
+  await page.fill('#password', 'SuperGeheim123!');
+  await page.click('text=Anmelden');
+
+  // Warte auf 2FA-Seite
+  await page.waitForURL('**/2fa');
+  const code = await page.locator('#code').inputValue(); // oder manuell eingeben
+  await page.fill('#code', '123456');
+  await page.click('text=Bestätigen');
+
+  await page.waitForURL('**/dashboard');
+
+  await context.storageState({ path: 'playwright/auth/admin-2fa.json' });
+});
+5. CI/CD – nie wieder abgelaufene Tokens
+GitHub Actions Beispiel:
+YAML- name: Generate fresh auth states
+  run: |
+    npx playwright test tests/auth/setup-auth.spec.ts
+    tar -czf auth-states.tar.gz playwright/auth/
+    # Upload als Artifact oder Cache
+
+- name: Use cached auth states
+  uses: actions/cache@v3
+  with:
+    path: playwright/auth/
+    key: auth-states-${{ github.run_id }}
+Zusammenfassung – was du jetzt machst
+Für 99 % aller Projekte reicht das hier:
+Bash# Einmalig ausführen
+npx playwright codegen https://app.deinefirma.com --save-storage=playwright/auth/admin.json
+# → einloggen → fertig
+
+# Danach in config
+use: {
+  storageState: 'playwright/auth/admin.json'
+}
+Und sobald du > 500 Tests hast oder im CI arbeitest → wechselst du auf Methode 3 (global-setup.ts).
+So machen es alle großen Firmen – und jetzt du auch.

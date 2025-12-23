@@ -1,0 +1,16 @@
+import { Page, expect } from '@playwright/test';
+
+export async function selectDropdownOption(page: Page, selector: string, targetText: string) {
+  let optionFound = false;
+  const options = await page.$$(selector + ' option');
+  for (const option of options) {
+    const text = await option.textContent();
+    if (text?.trim() === targetText) {
+      optionFound = true;
+      console.log(targetText, )
+      break;
+    }
+  }
+  expect(optionFound, `❌ Option "${targetText}" wurde im Dropdown "${selector}" nicht gefunden!`).toBeTruthy();
+  await page.selectOption(selector, { label: targetText });
+}

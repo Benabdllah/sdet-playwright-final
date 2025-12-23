@@ -1,0 +1,10 @@
+import { expect, Locator, Page,test,chromium } from '@playwright/test'
+
+test('Handle Pages/Windows', async()=>{
+    const browser= await chromium.launch()
+    const context= await browser.newContext()
+    const page1= await context.newPage()
+
+    const allPages=context.pages()
+    console.lo
+})

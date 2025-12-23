@@ -1,38 +1,40 @@
 {
     "version": "0.2.0",
     "configurations": [
-    
-        {
-            "name": "Launch Chrome",
-            "request": "launch",
-            "type": "chrome",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
-        {   "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:4200",
-            "sourceMaps": true,
-            "webRoot": "${workspaceRoot}"
-        },
-        {
-            "type": "chrome",
-            "request": "attach",
-            "name": "Attach to Chrome",
-            "port": 9222,
-            "sourceMaps": true,
-            "webRoot": "${workspaceRoot}"
-        },
-        {
-            "name": "Playwright Test Debug",
-            "type": "pwa-node",
-            "request": "launch",
-            "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
-            "args": ["test", "--project=chromium"],
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-          }
+      {
+        "name": "🌐 Launch Chrome (8080)",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:8080",
+        "webRoot": "${workspaceFolder}",
+        "sourceMaps": true
+      },
+      {
+        "name": "🌐 Launch Chrome (Angular 4200)",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:4200",
+        "webRoot": "${workspaceFolder}",
+        "sourceMaps": true
+      },
+      {
+        "name": "🔗 Attach to Chrome (Debug Port 9222)",
+        "type": "chrome",
+        "request": "attach",
+        "port": 9222,
+        "webRoot": "${workspaceFolder}",
+        "sourceMaps": true
+      },
+      {
+        "name": "🧪 Playwright Test Debug (Chromium)",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+        "args": ["test", "--project=chromium", "--trace", "on"],
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+      }
     ]
-}
+  }
+  

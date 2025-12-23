@@ -1,0 +1,19 @@
+
+
+services:
+  ngx-admin:
+    build: .
+    image: ngx-admin:latest
+    container_name: ngx-admin-container
+    volumes:
+      - .:/workspace:cached
+      - /workspace/node_modules
+      - ./my-allure-results:/workspace/my-allure-results
+
+    working_dir: /workspace
+    ipc: host
+    ports:
+      - "5252:5252"   # Allure Server
+    # one-command script to install dependencies, run tests, generate and open Allure report :  entrypoint: ["/bin/bash", "-c", "npm ci --legacy-peer-deps && npx playwright install --with-deps && npm run pageObjects-all && npm test && npm run allure:generate && npm run allure:open*/"]
+
+    entrypoint: ["/bin/bash", "-c", "npm ci --legacy-peer-deps && npx playwright install --with-deps && npm run pageObjects-all && npm test && npm run allure:generate && npm run allure:open"]

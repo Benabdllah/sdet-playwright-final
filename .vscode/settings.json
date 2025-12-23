@@ -1,4 +1,53 @@
 {
-    "typescript.tsdk": "./node_modules/typescript/lib",
-    "tslint.enable": false
+  "typescript.tsdk": "./node_modules/typescript/lib",
+
+  "editor.fontSize": 12,
+ "editor.quickSuggestions": {
+  "other": false,
+  "comments": false,
+  "strings": false
+}
+,
+  "editor.formatOnSave": false,
+
+  "files.autoSave": "afterDelay",
+
+  "tslint.enable": false,
+
+  // Rechtschreibprüfung
+  "cSpell.enabled": false,
+  "cSpell.language": "de,de-DE,en,nl",
+  "cSpell.caseSensitive": true,
+  "cSpell.mergeCSpellSettings": true,
+  "editor.suggest.matchOnWordStartOnly": false,
+  "editor.suggest.showClasses": false,
+  "editor.suggest.showColors": false,
+  "editor.suggest.showConstants": false,
+  "editor.suggest.showConstructors": false,
+  "editor.suggest.showCustomcolors": false,
+  "editor.suggest.showDeprecated": false,
+  "editor.suggest.showEnumMembers": false,
+  "editor.suggest.showEnums": false,
+  "editor.suggest.showEvents": false,
+  "editor.suggest.showFields": false,
+  "editor.suggest.showFiles": false,
+  "editor.suggest.showFolders": false,
+  "editor.suggest.showFunctions": false,
+  "editor.suggest.showInterfaces": false,
+  "editor.suggest.showIssues": false,
+  "editor.suggest.showKeywords": false,
+  "editor.suggest.showMethods": false,
+  "editor.suggest.showModules": false,
+  "editor.suggest.showOperators": false,
+  "editor.suggest.showProperties": false,
+  "editor.suggest.showReferences": false,
+  "editor.suggest.showSnippets": false,
+  "editor.suggest.showStructs": false,
+  "editor.suggest.showTypeParameters": false,
+  "editor.suggest.showUnits": false,
+  "editor.suggest.showUsers": false,
+  "editor.suggest.showValues": false,
+  "editor.suggest.showVariables": false,
+  "editor.suggest.showWords": false,
+  "terminal.integrated.suggest.enabled": false
 }

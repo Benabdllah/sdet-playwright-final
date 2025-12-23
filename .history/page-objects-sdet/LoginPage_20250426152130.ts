@@ -1,0 +1,29 @@
+
+import {Locator, Page} from 'playwright/test'
+import { stringify } from 'querystring'
+
+export class LoginPage{
+    readonly loginLink: Locator
+    readonly usernameInput: Locator
+    readonly passwordInput: Locator
+    readonly loginButton: Locator
+    constructor(page) {
+        super(page)
+        //this.page=page
+        this.loginLink:stringify="#login2"
+        this.usernameInput="#loginusername"
+        this.passwordInput="#loginpassword"
+        this.loginButton="//button[normalize-space()='log in']"
+    }
+    async gotoLoginPage(){
+        await this.page.goto('https://www.demoblaze.com/index.html')
+         }
+
+    async Login(username,password){
+        await this.page.locator(this.loginLink).click()
+        await this.page.locator(this.usernameInput).fill(username)
+        await this.page.locator(this.passwordInput).fill(password)
+        await this.page.locator(this.loginButton).click()
+
+         }
+}

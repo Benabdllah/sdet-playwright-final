@@ -1,0 +1,86 @@
+{
+  "SMX": {
+    "URL": "https://staging.meetingexperts.de/dl_DE.htm",
+    "ENVIRONMENT": "staging",
+    "BASE_AUTH": "game:changer",
+    "SYSTEMMAILS": "reservation@meetago.com",
+    "USER_MAIL": "test_user_staging@meetago.com",
+    "USER_PASSWORD": "${undefined_USER_PASSWORD}",
+    "GENEHMIGER_MAIL": "test_genehmiger_staging@meetago.com",
+    "GENEHMIGER_PASSWORD": "${undefined_GENEHMIGER_PASSWORD}",
+    "SUPPORTER_MAIL": "test_supporter_staging@meetago.com",
+    "SUPPORTER_PASSWORD": "${undefined_SUPPORTER_PASSWORD}"
+  },
+  "CRS": {
+    "URL": "https://portal.meetago.com/dl_DE.htm",
+    "ENVIRONMENT": "live",
+    "SYSTEMMAILS": "noreply@meetago.com",
+    "USER_MAIL": "test_user_portal@meetago.com",
+    "USER_PASSWORD": "${CRS_USER_PASSWORD}",
+    "GENEHMIGER_MAIL": "test_genehmiger_portal@meetago.com",
+    "GENEHMIGER_PASSWORD":"${CRS_GENEHMIGER_PASSWORD}",
+    "SUPPORTER_MAIL": "test_supporter_portal@meetago.com",
+    "SUPPORTER_PASSWORD": "${CRS_SUPPORTER_PASSWORD}"
+  },
+  "DBN": {
+    "URL": "https://db.crs-travel.com/dl_DE.htm",
+    "ENVIRONMENT": "live",
+    "SYSTEMMAILS": "noreply@meetago.com",
+    "USER_MAIL": "test_user_bahn@meetago.com",
+    "USER_PASSWORD": "${DBN_USER_PASSWORD}",
+    "GENEHMIGER_MAIL": "test_genehmiger_bahn@meetago.com",
+    "GENEHMIGER_PASSWORD": "${DBN_GENEHMIGER_PASSWORD}",
+    "SUPPORTER_MAIL": "test_supporter_bahn@meetago.com",
+    "SUPPORTER_PASSWORD": "${DBN_SUPPORTER_PASSWORD}"
+  },
+  "VWG": {
+    "URL": "https://volkswagen-meetings.meetago.com/dl_DE.htm",
+    "ENVIRONMENT": "live",
+    "SYSTEMMAILS": "volkswagen@meetago.com",
+    "USER_MAIL": "test_user_vw@meetago.com",
+    "USER_PASSWORD": "${VWG_USER_PASSWORD}",
+    "GENEHMIGER_MAIL": "test_genehmiger_vw@meetago.com",
+    "GENEHMIGER_PASSWORD": "${VWG_GENEHMIGER_PASSWORD}",
+    "SUPPORTER_MAIL": "test_supporter_vw@meetago.com",
+    "SUPPORTER_PASSWORD": "${VWG_SUPPORTER_PASSWORD}"
+  },
+  "ERGO": {
+    "URL": "https://ergo.crs-travel.com/dl_DE.htm",
+    "ENVIRONMENT": "live",
+    "SYSTEMMAILS": "noreply@meetago.com",
+    "USER_MAIL": "test_user_ergo@meetago.com",
+    "USER_PASSWORD": "${ERGO_USER_PASSWORD}",
+    "GENEHMIGER_MAIL": "test_genehmiger_ergo@meetago.com",
+    "GENEHMIGER_PASSWORD":"${ERGO_GENEHMIGER_PASSWORD}",
+    "SUPPORTER_MAIL": "test_supporter_ergo@meetago.com",
+    "SUPPORTER_PASSWORD": "${ERGO_SUPPORTER_PASSWORD}"
+  },
+  "TRY": {
+    "URL": "https://try.meetingexperts.de/dl_DE.htm",
+    "ENVIRONMENT": "staging",
+    "BASE_AUTH": "game:changer",
+    "SYSTEMMAILS": "",
+    "USER_MAIL": "test_user_try@meetago.com",
+    "USER_PASSWORD": "${TRY_USER_PASSWORD}",
+    "GENEHMIGER_MAIL": "test_genehmiger_try@meetago.com",
+    "GENEHMIGER_PASSWORD": "${TRY_GENEHMIGER_PASSWORD}",
+    "SUPPORTER_MAIL": "test_supporter_try@meetago.com",
+    "SUPPORTER_PASSWORD":"${TRY_SUPPORTER_PASSWORD}"
+  },
+  "SLIMDEMO": {
+    "URL": "https://staging-tagungsservice.meetago.com",
+    "ENVIRONMENT": "staging",
+    "BASE_AUTH": "meeslim:meetago8",
+    "SYSTEMMAILS": "",
+    "USER_MAIL": "qa@meetago.com",
+    "USER_PASSWORD": "xxx"
+  },
+  "SLIM": {
+    "URL": "https://tagungsservice.meetago.com",
+    "ENVIRONMENT": "live",
+    "BASE_AUTH": "meeslim:meetago8",
+    "SYSTEMMAILS": "",
+    "USER_MAIL": "qa@meetago.com",
+    "USER_PASSWORD": "xxx"
+  }
+}

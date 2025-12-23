@@ -1,0 +1,12 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="2.731457000000402">
+<testsuite name="table.spec.ts" timestamp="2025-12-01T23:31:27.555Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.969" errors="0">
+<testcase name="Tabellenfunktionen erweitert testen" classname="table.spec.ts" time="1.969">
+<system-out>
+<![CDATA[Spalte 2 Wert: $7.99
+
+[[ATTACHMENT|../test-results/table-Tabellenfunktionen-erweitert-testen-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

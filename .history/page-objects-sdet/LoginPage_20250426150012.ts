@@ -1,0 +1,2 @@
+export.LoginPage=
+class LoginPage

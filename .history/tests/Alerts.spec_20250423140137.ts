@@ -1,0 +1,21 @@
+import { test, expect } from '@playwright/test';
+import { handleAlert } from '../utils/alert-utils';
+import { takescreen } from '../utils/screenshot-util';
+
+test('Alert with Ok', async ({page }) => {
+ 
+  // 1. Seite laden
+await page.goto('https://testautomationpractice.blogspot.com/')
+
+  //Enabling alert handling //Dialog window handler
+await handleAlert(page,'accept','I am an alert box!')
+
+page.on('dialog',async dialog=>{
+  expect(dialog.type()).toContain('alert')
+  expect(dialog.message()).toContain('I am an alert box!')
+  await dialog.accept()
+})
+await page.click('#alertBtn')
+// await page.waitForTimeout(5000)
+
+})

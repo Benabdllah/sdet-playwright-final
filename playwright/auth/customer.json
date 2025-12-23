@@ -1,0 +1,54 @@
+{
+  "cookies": [
+    {
+      "name": "auth_token",
+      "value": "cust_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxx",
+      "domain": ".meetago.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "user_role",
+      "value": "customer",
+      "domain": ".meetago.com",
+      "path": "/",
+      "expires": -1,
+      "secure": true
+    },
+    {
+      "name": "pl",
+      "value": "CRS",
+      "domain": ".meetago.com",
+      "path": "/",
+      "expires": -1,
+      "secure": true
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://portal.meetago.com",
+      "localStorage": [
+        {
+          "name": "user",
+          "value": "{\"email\":\"test_user_portal@meetago.com\",\"role\":\"customer\",\"pl\":\"CRS\"}"
+        },
+        {
+          "name": "language",
+          "value": "de-DE"
+        }
+      ]
+    },
+    {
+      "origin": "https://volkswagen-meetings.meetago.com",
+      "localStorage": [
+        {
+          "name": "user",
+          "value": "{\"email\":\"test_user_vw@meetago.com\",\"role\":\"customer\",\"pl\":\"VWG\"}"
+        }
+      ]
+    }
+  ]
+}

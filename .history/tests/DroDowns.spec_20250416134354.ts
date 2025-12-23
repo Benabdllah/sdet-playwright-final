@@ -1,0 +1,16 @@
+import { test, expect } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
+
+test('handel inputbox', async ({browser }) => {
+  const context = await browser.newContext({
+    recordVideo: { dir: 'test-results/videos' }
+  });
+  const page = await context.newPage();
+  // 1. Seite laden
+  await page.goto('https://testautomationpractice.blogspot.com/')
+
+ // Multiple way to select option from dropdown
+ await page.locator("#country").selectOption()
+
+})

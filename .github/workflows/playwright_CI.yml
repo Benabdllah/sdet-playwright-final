@@ -1,0 +1,33 @@
+# .github/workflows/playwright.yml
+name: Playwright E2E
+on: [push, workflow_dispatch]
+
+permissions:
+  id-token: write     # ← OIDC für Azure
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        label: [CRS, VWG, ERGO, SMX]
+        role: [customer, admin, genehmiger]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Install & Test
+        env:
+          PRIVATE_LABEL: ${{ matrix.label }}
+          AUTH_ROLE: ${{ matrix.role }}
+        run: |
+          npm ci
+          npx playwright test --project=chromium
