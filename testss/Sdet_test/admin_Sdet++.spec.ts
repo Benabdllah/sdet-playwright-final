@@ -1,4 +1,5 @@
 import { test } from '../../fixtures';
+import { expect } from '@playwright/test';
 
 test('als Admin bei VW', async ({ authPage, plConfig }) => {
   const { page } = authPage;                         // ← korrekt destrukturiert

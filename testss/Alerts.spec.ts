@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { handleAlert,handlePrompt } from '../../utils/alert-utils';
-import { takescreen } from '../../utils/screenshot-util';
+import { handlePrompt } from '../utils/alertUtils';
 
 test('Alert with Ok', async ({page }) => {
  
