@@ -1,4 +1,5 @@
-import { tr } from '@faker-js/faker/.';
+import { faker } from '@faker-js/faker';
+
 import { defineConfig, devices } from '@playwright/test';
 import { getRoleTag } from './src/config/roleFilter';
 /**
