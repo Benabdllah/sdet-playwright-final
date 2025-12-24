@@ -29,7 +29,7 @@ export default defineConfig({
   // grep: getRoleTag(),
   timeout: 60_000,
   globalTimeout: 3_600_000, // 1 hour for CI to complete all tests
-  testDir: '.src//tests',
+  testDir: 'src//tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -40,11 +40,12 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,//workers: process.env.CI ? '40%' : 8,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html', { open: 'never' }],
-    ['json', { outputFile: 'playwright/reports/results.json' }],
-    ['junit', { outputFile: 'playwright/reports/junit.xml' }],
-    ['blob', { outputDir: 'playwright/reports/blob' }],
-    ['junit', { outputFile: `playwright/results/junit-${SELECTED_ROLE}.xml` }]
+    ['list'],  // Konsolenausgabe
+    ['html', { open: 'never', outputFolder: 'playwright-report'}],
+    //['json', { outputFile: 'playwright/reports/results.json' }],
+    ['junit', { outputFile: 'test-results/junit-report.xml'}],
+    //['blob', { outputDir: 'playwright/reports/blob' }],
+    //['junit', { outputFile: `playwright/results/junit-${SELECTED_ROLE}.xml` }]
   
     //['./reporters/slack-reporter.ts'] // eigener Reporter
   ],
@@ -59,7 +60,7 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     screenshot: 'only-on-failure',
-    trace: 'on',//'on-first-retry'
+    trace: 'on',//'on-first-retry'oder 'retain-on-failure' wenn du Speicher sparen willst
     actionTimeout: 20_000,
     navigationTimeout: 30_000,
   },
