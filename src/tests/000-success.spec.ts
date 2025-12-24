@@ -5,6 +5,6 @@ test('SDET+++++ Pipeline – erster grüner Test läuft!', async ({ page }) => {
   await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('einfache Assertion – immer grün', async () => {
+test('einfache Assertion – immer grün @guest', async () => {
   expect(true).toBe(true);
 });
