@@ -30,11 +30,7 @@ pipeline {
             }
         }
 
-        stage('Set PrivateLabel') {
-            steps {
-                sh 'npx ts-node scripts/getPrivateLabel.ts || echo "PrivateLabel script optional"'
-            }
-        }
+        // PrivateLabel-Stage entfernt – war nur Beispiel
 
         stage('Run Playwright Tests') {
             steps {
@@ -43,9 +39,7 @@ pipeline {
                     --reporter=html,list,junit \
                     --output=${PLAYWRIGHT_OUTPUT} \
                     --retries=2 \
-                    --workers=4 \
-                    --trace=retain-on-failure \
-                    --video=retain-on-failure
+                    --workers=4
                 '''
             }
         }
@@ -53,7 +47,7 @@ pipeline {
         stage('Publish Report') {
             steps {
                 publishHTML(target: [
-                    allowMissing: false,
+                    allowMissing: true,
                     alwaysLinkToLastBuild: true,
                     keepAll: true,
                     reportDir: '${PLAYWRIGHT_REPORT}',
@@ -70,6 +64,12 @@ pipeline {
             archiveArtifacts artifacts: '${PLAYWRIGHT_REPORT}/**', allowEmptyArchive: true
             junit testResults: '${PLAYWRIGHT_OUTPUT}/**/junit-report.xml', allowEmptyResults: true
             cleanWs()
+        }
+        success {
+            echo "✅ Alle Tests erfolgreich!"
+        }
+        failure {
+            echo "❌ Tests fehlgeschlagen – siehe Report & Artefakte!"
         }
     }
 }
