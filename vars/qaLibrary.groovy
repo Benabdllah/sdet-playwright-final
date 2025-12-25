@@ -1,135 +1,207 @@
 // vars/qaLibrary.groovy
-// SDET+++++ Shared Library - Version 3.0.0
+// Playwright SDET+++++ Shared Library
+// Version: 3.1.0
 
-def initializePipeline(Map config = [:]) {
-    echo "🚀 Initializing Playwright Pipeline..."
-    echo "Build Version: ${config.buildVersion ?: env.BUILD_NUMBER}"
-    echo "Environment: ${config.params?.ENVIRONMENT ?: 'N/A'}"
+/* =========================================================
+   ================ PIPELINE BOOTSTRAP =====================
+   ========================================================= */
+
+def initializePipeline(Map cfg = [:]) {
+    echo "🚀 Initializing Playwright Enterprise Pipeline"
+    echo "Build Version : ${cfg.buildVersion ?: env.BUILD_NUMBER}"
+    echo "Environment   : ${cfg.environment ?: 'N/A'}"
 }
 
-def displayHeader(Map config = [:]) {
+/* =========================================================
+   ===================== HEADER ============================
+   ========================================================= */
+
+def displayHeader(Map cfg = [:]) {
     echo """
 ╔════════════════════════════════════════════════════════╗
-║        PLAYWRIGHT ENTERPRISE PIPELINE v3.0             ║
+║        PLAYWRIGHT ENTERPRISE PIPELINE                  ║
 ╠════════════════════════════════════════════════════════╣
-║ Build: ${config.version ?: env.BUILD_NUMBER}
-║ Environment: ${config.environment}
-║ Browser: ${config.browser}
-║ Suite: ${config.suite}
-║ Sharding: ${config.sharding ? 'Enabled' : 'Disabled'}
+║ Build       : ${cfg.version ?: env.BUILD_NUMBER}
+║ Environment : ${cfg.environment ?: 'N/A'}
+║ Browser     : ${cfg.browser ?: 'chromium'}
+║ Suite       : ${cfg.suite ?: 'default'}
+║ Sharding    : ${cfg.totalShards ? 'Enabled' : 'Disabled'}
 ╚════════════════════════════════════════════════════════╝
-    """.stripIndent()
+""".stripIndent()
 }
 
+/* =========================================================
+   ================= CONFIG VALIDATION ====================
+   ========================================================= */
+
 def validateConfig(def params) {
-    if (!params.ENVIRONMENT) error "❌ ENVIRONMENT parameter is required"
-    if (params.UPDATE_SNAPSHOTS && params.ENVIRONMENT in ['production', 'pre-prod']) {
-        error "❌ Snapshot updates not allowed in ${params.ENVIRONMENT}"
+    if (!params?.ENVIRONMENT) {
+        error "❌ ENVIRONMENT parameter is mandatory"
     }
+
+    if (params.UPDATE_SNAPSHOTS &&
+        params.ENVIRONMENT in ['production', 'pre-prod']) {
+        error "❌ Snapshot updates are forbidden in ${params.ENVIRONMENT}"
+    }
+
     echo "✅ Configuration validated"
 }
 
-def checkoutCode(Map config = [:]) {
+/* =========================================================
+   ==================== SCM CHECKOUT ======================
+   ========================================================= */
+
+def checkoutCode(Map cfg = [:]) {
     checkout([
         $class: 'GitSCM',
-        branches: [[name: env.GIT_BRANCH ?: '*/main']],
+        branches: [[name: cfg.branch ?: env.GIT_BRANCH ?: '*/main']],
+        userRemoteConfigs: [[
+            url: cfg.repoUrl ?: env.GIT_URL,
+            credentialsId: cfg.credentialsId ?: 'github-credentials'
+        ]],
         extensions: [
-            [$class: 'CloneOption', shallow: config.shallow ?: true, depth: config.depth ?: 1],
-            [$class: 'CleanBeforeCheckout']
-        ],
-        userRemoteConfigs: [[url: env.GIT_URL, credentialsId: 'github-credentials']]
+            [$class: 'CleanBeforeCheckout'],
+            [$class: 'CloneOption',
+                shallow: cfg.shallow != false,
+                depth: cfg.depth ?: 1
+            ]
+        ]
     ])
 }
 
-def restoreCaches(Map config = [:]) {
-    echo "📦 Restoring caches..."
-    // NPM, Playwright browsers, Turbo cache - preserved by workspace
+/* =========================================================
+   ================= DEPENDENCIES ==========================
+   ========================================================= */
+
+def installDependencies(Map cfg = [:]) {
+    echo "🔧 Installing dependencies"
+    sh 'npm ci --no-audit --prefer-offline'
+
+    def browser = cfg.browser ?: ''
+    sh "npx playwright install ${browser} --with-deps"
 }
 
-def installDependencies(Map config = [:]) {
-    echo "🔧 Installing dependencies..."
-    sh 'npm ci --prefer-offline'
-    def browserArg = config.browser ? config.browser : ''
-    sh "npx playwright install ${browserArg} --with-deps"
+/* =========================================================
+   ================= ENV CONFIGURATION =====================
+   ========================================================= */
+
+def configureEnvironment(Map cfg = [:]) {
+    if (!cfg.environment) {
+        error "❌ Missing environment configuration"
+    }
+
+    env.BASE_URL = cfg.baseUrl ?: "https://${cfg.environment}.example.com"
+    echo "🔐 Environment configured for ${cfg.environment}"
 }
 
-def configureEnvironment(Map config = [:]) {
-    env.BASE_URL = "https://${config.environment}-example.com" // استبدل بـ logic حقيقي
-    echo "🔐 Environment configured for ${config.environment}"
-}
+/* =========================================================
+   ================= PLAYWRIGHT EXECUTION ==================
+   ========================================================= */
 
-def validateHealth() {
-    echo "🏥 Health checks skipped (implement if needed)"
-}
+def runPlaywrightShard(Map cfg) {
+    def args = []
 
-// الدالة الرئيسية لتشغيل shard واحد
-def runPlaywrightShard(Map config) {
-    def grep = config.grep ? "--grep '${config.grep}'" : ''
-    def grepInvert = config.grepInvert ? "--grep-invert '${config.grepInvert}'" : ''
-    def recording = config.recording ? '--video=on --trace=on' : '--video=retain-on-failure --trace=retain-on-failure'
-    def snapshots = config.updateSnapshots ? '--update-snapshots' : ''
+    args << "--project=${cfg.browser ?: 'chromium'}"
+    args << "--timeout=${cfg.timeout ?: 60000}"
+    args << "--reporter=html,list,junit"
+    args << "--output=${cfg.outputDir ?: 'playwright-report'}"
+    args << "--junit-output=${cfg.junitDir ?: 'junit-results'}/" +
+            "${cfg.browser}-shard-${cfg.shardIndex ?: 1}.xml"
+
+    if (cfg.totalShards) {
+        args << "--shard=${cfg.shardIndex}/${cfg.totalShards}"
+    }
+    if (cfg.grep)        args << "--grep='${cfg.grep}'"
+    if (cfg.grepInvert)  args << "--grep-invert='${cfg.grepInvert}'"
+    if (cfg.updateSnapshots) args << "--update-snapshots"
+
+    def recording = cfg.recording
+        ? "--video=on --trace=on"
+        : "--video=retain-on-failure --trace=retain-on-failure"
 
     sh """
         npx playwright test \
-            --project=${config.browser} \
-            --shard=${config.shardIndex}/${config.totalShards} \
-            ${grep} \
-            ${grepInvert} \
-            --reporter=html,list,junit \
-            --output=${config.outputDir ?: 'playwright-report'} \
-            --junit-output=${config.junitDir ?: 'junit-results'}/${config.browser}-shard-${config.shardIndex}.xml \
-            ${recording} \
-            ${snapshots} \
-            --timeout=60000
+        ${args.join(' ')} \
+        ${recording}
     """
 }
 
-def archiveShardArtifacts(Map config = [:]) {
-    archiveArtifacts artifacts: "${config.outputDir}/**/*", allowEmptyArchive: true
-    archiveArtifacts artifacts: "${config.outputDir}/*.log", allowEmptyArchive: true
+/* =========================================================
+   ==================== ARTIFACTS ==========================
+   ========================================================= */
+
+def archiveArtifactsSafe(String path) {
+    archiveArtifacts artifacts: path, allowEmptyArchive: true
 }
 
-def mergeReports(Map config = [:]) {
-    sh "npx playwright merge-reports --reporter html ${config.blobDir ?: 'blob-report'} -o ${config.outputDir ?: 'playwright-report'}"
+def archiveShardArtifacts(Map cfg = [:]) {
+    archiveArtifactsSafe("${cfg.outputDir ?: 'playwright-report'}/**/*")
+    archiveArtifactsSafe("${cfg.junitDir ?: 'junit-results'}/**/*.xml")
 }
 
-def publishHTMLReport(Map config = [:]) {
+/* =========================================================
+   ================= REPORT MERGING ========================
+   ========================================================= */
+
+def mergeReports(Map cfg = [:]) {
+    sh """
+        npx playwright merge-reports \
+        --reporter html \
+        ${cfg.blobDir ?: 'blob-report'} \
+        -o ${cfg.outputDir ?: 'playwright-report'}
+    """
+}
+
+def publishHTMLReport(Map cfg = [:]) {
     publishHTML([
         allowMissing: false,
         alwaysLinkToLastBuild: true,
         keepAll: true,
-        reportDir: config.reportDir ?: 'playwright-report',
+        reportDir: cfg.reportDir ?: 'playwright-report',
         reportFiles: 'index.html',
-        reportName: config.reportName ?: 'Playwright HTML Report'
+        reportName: cfg.reportName ?: 'Playwright Report'
     ])
 }
 
-def sendNotifications(Map config = [:]) {
-    def status = currentBuild.result ?: 'SUCCESS'
-    def color = status == 'SUCCESS' ? 'good' : 'danger'
-    def message = "Playwright Tests ${status} - Build #${env.BUILD_NUMBER} - ${config.environment}"
+/* =========================================================
+   ================= NOTIFICATIONS =========================
+   ========================================================= */
 
-    // Slack example (غيّر الـ channel والـ token حسب إعداداتك)
+def sendNotifications(Map cfg = [:]) {
+    def status = currentBuild.currentResult
+    def color  = status == 'SUCCESS' ? 'good' : 'danger'
+
+    def message = """
+Playwright Tests: ${status}
+Build #${env.BUILD_NUMBER}
+Environment: ${cfg.environment}
+""".trim()
+
     try {
-        slackSend channel: '#qa', color: color, message: message
-    } catch (e) {
-        echo "Slack notification skipped: ${e.message}"
+        slackSend channel: cfg.slackChannel ?: '#qa',
+                  color: color,
+                  message: message
+    } catch (ignored) {
+        echo "ℹ️ Slack notification skipped"
     }
 }
 
-def onSuccess(Map config = [:]) {
-    echo "🎉 All tests passed successfully!"
-}
+/* =========================================================
+   ================= PIPELINE EVENTS =======================
+   ========================================================= */
 
-def onFailure(Map config = [:]) {
-    echo "❌ Pipeline failed – check reports and traces"
-}
+def onSuccess()  { echo "🎉 All tests passed" }
+def onFailure()  { echo "❌ Pipeline failed – see reports & traces" }
+def onUnstable() { echo "⚠️ Unstable build – flaky tests detected" }
 
-def onUnstable(Map config = [:]) {
-    echo "⚠️ Pipeline unstable – flaky tests detected"
-}
+/* =========================================================
+   ====================== CLEANUP ==========================
+   ========================================================= */
 
-def cleanupWithCachePreservation() {
-    cleanWs(cleanWhenNotBuilt: false, deleteDirs: true, notFailBuild: true)
-    // الكاش يبقى بفضل الـ workspace
+def cleanup() {
+    cleanWs(
+        deleteDirs: true,
+        notFailBuild: true,
+        cleanWhenNotBuilt: false
+    )
 }
