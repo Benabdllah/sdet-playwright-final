@@ -30,7 +30,7 @@ export default defineConfig({
   // grep: getRoleTag(),
   timeout: 60_000,
   globalTimeout: 3_600_000, // 1 hour for CI to complete all tests
-  testDir: './src/tests',
+  testDir: 'src/tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -42,9 +42,9 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['list'],  // Konsolenausgabe
-    ['html', { open: 'never', outputFolder: 'playwright-report'}],
+    ['html', { open: 'never', outputFolder: 'playwright/playwright-report'}],
     //['json', { outputFile: 'playwright/reports/results.json' }],
-    ['junit', { outputFile: 'test-results/junit-report.xml'}],
+    ['junit', { outputFile: 'playwright/test-results/junit-report.xml'}],
     //['blob', { outputDir: 'playwright/reports/blob' }],
     //['junit', { outputFile: `playwright/results/junit-${SELECTED_ROLE}.xml` }]
   

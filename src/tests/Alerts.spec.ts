@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { handlePrompt } from '../utils/alertUtils';
 
-test('Alert with Ok', async ({page }) => {
+
+test('Alert with Ok @guest', async ({page }) => {
  
 // 1. Seite laden
 await page.goto('https://testautomationpractice.blogspot.com/')
@@ -17,7 +18,7 @@ page.on('dialog',async dialog=>{
 })
 await page.click('#alertBtn')
 })
-test('Confirmation Dialog-Alert with Ok and cancel', async ({page }) => {
+test('Confirmation Dialog-Alert with Ok and cancel @guest', async ({page }) => {
  
 // 1. Seite laden
 await page.goto('https://testautomationpractice.blogspot.com/')
@@ -61,7 +62,7 @@ await expect(page.locator('p#demo')).toHaveText('Hello Harry Potter! How are you
 
 
 
-test('Prompt Dialog approach 2', async ({ page }) => {
+test('Prompt Dialog approach 2 @guest', async ({ page }) => {
   await page.goto('https://testautomationpractice.blogspot.com');
 
   // Prompt-Dialog vorbereiten (mit Texteingabe)
