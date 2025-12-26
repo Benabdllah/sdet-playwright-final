@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     // Existierendes, stabiles Docker-Image
-                    env.PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.61.0-jammy'
+                    env.PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.48.0-jammy'
                     def img = docker.image(env.PLAYWRIGHT_IMAGE)
                     img.pull()
 
