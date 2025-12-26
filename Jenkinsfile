@@ -54,7 +54,7 @@ pipeline {
     }
 
     environment {
-        PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.58.0-jammy'
+        PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.58.0-jammy'.pull()
         DOCKER_ARGS = '--user=root --shm-size=2g'
         CI = 'true'
     }
@@ -209,7 +209,7 @@ pipeline {
         }
         failure {
             script {
-                qaLibrary.onFailure(params.ENVIRONMENT)
+                qaLibrary.catchError(params.ENVIRONMENT)
             }
         }
         always {
