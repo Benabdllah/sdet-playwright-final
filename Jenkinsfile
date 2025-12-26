@@ -386,7 +386,7 @@
  */
 
 pipeline {
-    agent none
+    agent any
 
     parameters {
         // Environment Configuration
