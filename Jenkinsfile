@@ -2710,7 +2710,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/playwright:v1.57.0-noble'  // Aktuelle stabile Version, alle Deps + Browser vorinstalliert
-            args '--user=root'  // Falls nötig für Rechte
+            args '--user=root --shm-size=2g'  // Falls nötig für Rechte
         }
     }
 
@@ -2730,7 +2730,7 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chromium', 'firefox', 'webkit', 'all'], description: 'Browser-Projekt(e) ausführen')
         string(name: 'GREP', defaultValue: '', description: 'Optional: Tests filtern mit --grep "tag"')
         booleanParam(name: 'SHARDING', defaultValue: false, description: 'Sharding aktivieren (für große Suites)')
-        integer(name: 'TOTAL_SHARDS', defaultValue: 3, description: 'Anzahl Shards bei aktiviertem Sharding')
+        integer(name: 'TOTAL_SHARDS', defaultValue: '3', description: 'Anzahl Shards bei aktiviertem Sharding')
     }
 
     options {
