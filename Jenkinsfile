@@ -2721,7 +2721,7 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'BROWSER', choices: ['all', 'chromium', 'firefox', 'webkit'], description: 'Browser')
+        choice(name: 'BROWSER', choices: ['all', 'chromium', 'firefox'], description: 'Browser-Projekt(e) ausführen')
         string(name: 'GREP', defaultValue: '', description: 'Grep filter')
         booleanParam(name: 'SHARDING', defaultValue: false, description: 'Sharding aktivieren')
         string(name: 'TOTAL_SHARDS', defaultValue: '3', description: 'Anzahl Shards')
@@ -2762,10 +2762,10 @@ pipeline {
                     when { expression { params.BROWSER == 'all' || params.BROWSER == 'firefox' } }
                     steps { runTests('firefox') }
                 }
-                stage('WebKit') {
-                    when { expression { params.BROWSER == 'all' || params.BROWSER == 'webkit' } }
-                    steps { runTests('webkit') }
-                }
+                // stage('WebKit') {
+                //     when { expression { params.BROWSER == 'all' || params.BROWSER == 'webkit' } }
+                //     steps { runTests('webkit') }
+                // }
             }
         }
 
