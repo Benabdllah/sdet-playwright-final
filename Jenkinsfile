@@ -34,12 +34,13 @@ pipeline {
         timestamps()
         ansiColor('xterm')
         disableConcurrentBuilds()
-        skipDefaultCheckout()
+        // skipDefaultCheckout() entfernt – wir machen Checkout selbst
     }
 
     environment {
         DOCKER_ARGS = '--user=root --shm-size=2g'
         CI = 'true'
+        PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.48.0-jammy'
     }
 
     stages {
@@ -47,8 +48,6 @@ pipeline {
         stage('Init & Validate') {
             steps {
                 script {
-                    // Existierendes, stabiles Docker-Image
-                    env.PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.48.0-jammy'
                     def img = docker.image(env.PLAYWRIGHT_IMAGE)
                     img.pull()
 
@@ -76,7 +75,6 @@ pipeline {
 
         stage('Playwright Matrix') {
             matrix {
-
                 agent {
                     docker {
                         image env.PLAYWRIGHT_IMAGE
@@ -95,17 +93,21 @@ pipeline {
                     stage('Setup') {
                         steps {
                             script {
-                                // Git Checkout mit Credential Fix
-                                checkout([
-                                    $class: 'GitSCM',
-                                    branches: [[name: '*/main']],
-                                    userRemoteConfigs: [[
-                                        url: 'https://github.com/Benabdllah/Sdet-pw-practice-app.git',
-                                        credentialsId: 'github-https'
-                                    ]]
-                                ])
+                                // Git stale lock entfernen (verhindert index.lock Fehler)
+                                sh 'rm -f .git/index.lock || true'
 
-                                qaLibrary.installDependencies(BROWSER)
+                                // Sauberer Checkout mit automatischer Credential-Nutzung
+                                checkout scm
+
+                                // Fallback: Falls qaLibrary.installDependencies nicht verfügbar ist
+                                try {
+                                    qaLibrary.installDependencies(BROWSER)
+                                } catch (Exception e) {
+                                    echo "⚠️ qaLibrary.installDependencies nicht verfügbar – fallback auf Standard"
+                                    sh 'npm ci'
+                                    sh 'npx playwright install-deps'
+                                    sh 'npx playwright install'
+                                }
                             }
                         }
                     }
@@ -170,20 +172,24 @@ pipeline {
     }
 
     post {
-        success { script { qaLibrary.onSuccess() } }
+        success {
+            script { qaLibrary.onSuccess() }
+        }
 
         failure {
             script {
+                // Korrekte Nutzung von catchError mit Block
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     qaLibrary.catchError(environment: params.ENVIRONMENT)
                 }
             }
         }
 
-        always { script { qaLibrary.finalCleanup() } }
+        always {
+            script { qaLibrary.finalCleanup() }
+        }
     }
 }
-
 
 
 // @Library('qa-shared-library@main') _
