@@ -2709,35 +2709,42 @@
 pipeline {
     agent {
         docker {
-            image 'mcr.microsoft.com/playwright:v1.57.0-noble'  // Aktuelle stabile Version, alle Deps + Browser vorinstalliert
-            args '--user=root --shm-size=2g'  // Falls nötig für Rechte
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            args '--user=root --shm-size=2g'  // Stabiler auf macOS
         }
     }
 
     environment {
-        // Git-Repository URL – besser als Credential handhaben
-        GIT_REPO = 'https://github.com/dein-username/pw-practice-app.git'
-        
-        // PrivateLabel für Testumgebung
-        //PRIVATE_LABEL = 'SMX'
-        
-        // Playwright Config
-        PLAYWRIGHT_OUTPUT = 'playwright/test-results'
-        PLAYWRIGHT_REPORT = 'playwright/playwright-report'
+        GIT_REPO = 'https://github.com/Benabdllah/Sdet-pw-practice-app.git'
+        PRIVATE_LABEL = 'SMX'
+        PLAYWRIGHT_OUTPUT = 'test-results'
+        PLAYWRIGHT_REPORT = 'playwright-report'
     }
 
     parameters {
-        choice(name: 'BROWSER', choices: ['chromium', 'firefox', 'webkit', 'all'], description: 'Browser-Projekt(e) ausführen')
-        string(name: 'GREP', defaultValue: '', description: 'Optional: Tests filtern mit --grep "tag"')
-        booleanParam(name: 'SHARDING', defaultValue: false, description: 'Sharding aktivieren (für große Suites)')
-        integer(name: 'TOTAL_SHARDS', defaultValue: '3', description: 'Anzahl Shards bei aktiviertem Sharding')
+        choice(name: 'BROWSER', 
+               choices: ['all', 'chromium', 'firefox', 'webkit'], 
+               description: 'Browser-Projekt(e) ausführen')
+
+        string(name: 'GREP', 
+               defaultValue: '', 
+               description: 'Optional: Tests filtern mit --grep "tag"')
+
+        booleanParam(name: 'SHARDING', 
+                     defaultValue: false, 
+                     description: 'Sharding aktivieren (für große Suites)')
+
+        // integer nicht erlaubt → string
+        string(name: 'TOTAL_SHARDS', 
+               defaultValue: '3', 
+               description: 'Anzahl Shards bei aktiviertem Sharding')
     }
 
     options {
         timeout(time: 90, unit: 'MINUTES')
         ansiColor('xterm')
         buildDiscarder(logRotator(numToKeepStr: '50'))
-        disableConcurrentBuilds()  // Vermeidet Ressourcenkonflikte
+        disableConcurrentBuilds()
     }
 
     stages {
@@ -2750,17 +2757,17 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                echo "🔹 Node Dependencies installieren (mit Cache)"
-                sh 'npm ci --cache .npm-cache --prefer-offline'
-                
-                echo "🔹 Playwright Browser installieren (mit Deps)"
+                echo "🔹 Node Dependencies installieren"
+                sh 'npm ci --prefer-offline'
+
+                echo "🔹 Playwright Browser installieren"
                 sh 'npx playwright install --with-deps'
             }
         }
 
         stage('Set PrivateLabel') {
             steps {
-                echo "🔹 PrivateLabel Werte aus JSON laden"
+                echo "🔹 PrivateLabel Werte laden"
                 sh 'npx ts-node scripts/getPrivateLabel.ts'
             }
         }
@@ -2768,16 +2775,28 @@ pipeline {
         stage('Run Playwright Tests') {
             parallel {
                 stage('Chromium') {
-                    when { params.BROWSER == 'all' || params.BROWSER == 'chromium' }
-                    steps { runTests('chromium') }
+                    when {
+                        expression { params.BROWSER == 'all' || params.BROWSER == 'chromium' }
+                    }
+                    steps {
+                        runTests('chromium')
+                    }
                 }
                 stage('Firefox') {
-                    when { params.BROWSER == 'all' || params.BROWSER == 'firefox' }
-                    steps { runTests('firefox') }
+                    when {
+                        expression { params.BROWSER == 'all' || params.BROWSER == 'firefox' }
+                    }
+                    steps {
+                        runTests('firefox')
+                    }
                 }
                 stage('WebKit') {
-                    when { params.BROWSER == 'all' || params.BROWSER == 'webkit' }
-                    steps { runTests('webkit') }
+                    when {
+                        expression { params.BROWSER == 'all' || params.BROWSER == 'webkit' }
+                    }
+                    steps {
+                        runTests('webkit')
+                    }
                 }
             }
         }
@@ -2802,51 +2821,45 @@ pipeline {
             echo "🔹 Artefakte sichern"
             archiveArtifacts artifacts: "${PLAYWRIGHT_OUTPUT}/**", allowEmptyArchive: true
             archiveArtifacts artifacts: "${PLAYWRIGHT_REPORT}/**", allowEmptyArchive: true
-            
-            // JUnit für Jenkins Test Trends (in playwright.config.ts: reporter: [['junit', { outputFile: 'test-results/junit-report.xml' }]])
+
             junit testResults: "${PLAYWRIGHT_OUTPUT}/**/junit-report.xml", allowEmptyResults: true
-            
+
             echo "🔹 Workspace aufräumen"
             cleanWs()
         }
-        success {
-            echo "✅ Alle Tests erfolgreich!"
-        }
-        failure {
-            echo "❌ Tests fehlgeschlagen – siehe Report & Traces!"
-        }
-        unstable {
-            echo "⚠️ Einige Tests flaky oder skipped"
-        }
+        success { echo "✅ Alle Tests erfolgreich!" }
+        failure { echo "❌ Tests fehlgeschlagen – siehe Report & Traces!" }
+        unstable { echo "⚠️ Einige Tests flaky oder skipped" }
     }
 }
 
-// Helper Funktion für wiederverwendbare Test-Execution
+// Helper-Funktion
 def runTests(String project) {
     echo "🔹 Playwright Tests für ${project} starten"
-    
+
     def shardOption = ''
     if (params.SHARDING) {
-        def shardIndex = env.EXECUTOR_NUMBER ? (env.EXECUTOR_NUMBER.toInteger() + 1) : 1
-        shardOption = "--shard=${shardIndex}/${params.TOTAL_SHARDS}"
+        def total = params.TOTAL_SHARDS.toInteger()
+        def shardIndex = (env.EXECUTOR_NUMBER ?: '0').toInteger() % total + 1
+        shardOption = "--shard=${shardIndex}/${total}"
     }
-    
+
     def grepOption = params.GREP ? "--grep '${params.GREP}'" : ''
-    
+
     sh """
-    npx playwright test \
-        --project=${project} \
-        ${shardOption} \
-        ${grepOption} \
-        --reporter=html,list,junit \
-        --output=${PLAYWRIGHT_OUTPUT} \
-        --timeout=60000 \
-        --headed=false \
-        --retries=2 \
-        --workers=4 \
-        --trace=retain-on-failure \
-        --video=retain-on-failure \
-        --screenshot=only-on-failure
+        npx playwright test \
+            --project=${project} \
+            ${shardOption} \
+            ${grepOption} \
+            --reporter=html,list,junit \
+            --output=${PLAYWRIGHT_OUTPUT} \
+            --timeout=60000 \
+            --headed=false \
+            --retries=2 \
+            --workers=4 \
+            --trace=retain-on-failure \
+            --video=retain-on-failure \
+            --screenshot=only-on-failure
     """
 }
 
