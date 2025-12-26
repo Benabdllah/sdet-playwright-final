@@ -184,10 +184,14 @@ pipeline {
             }
         }
         failure {
-            script {
-                qaLibrary.catchError(environment: params.ENVIRONMENT)
-            }
+    script {
+        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+            qaLibrary.catchError(environment: params.ENVIRONMENT)
         }
+    }
+}
+
+        
         always {
             script {
                 qaLibrary.finalCleanup()
