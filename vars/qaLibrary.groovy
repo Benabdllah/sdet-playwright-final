@@ -193,6 +193,9 @@ Environment: ${cfg.environment}
 def onSuccess()  { echo "🎉 All tests passed" }
 def onFailure()  { echo "❌ Pipeline failed – see reports & traces" }
 def onUnstable() { echo "⚠️ Unstable build – flaky tests detected" }
+def finalCleanup() {
+    echo '🧹 Shared Library: cleanup done'
+}
 
 /* =========================================================
    ====================== CLEANUP ==========================
@@ -205,16 +208,6 @@ def cleanup() {
         cleanWhenNotBuilt: false
     )
 }
-def onSuccess() {
-    echo '✅ Shared Library: success handler'
-}
 
-def onFailure(env) {
-    echo "❌ Shared Library: failure in ${env}"
-}
-
-def finalCleanup() {
-    echo '🧹 Shared Library: cleanup done'
-}
 
 return this
