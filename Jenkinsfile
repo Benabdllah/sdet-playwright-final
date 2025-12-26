@@ -178,7 +178,24 @@ pipeline {
                     }
                 }
                 stage('JUnit') {
-                    steps
+                    steps { junit allowEmptyResults: true, testResults: 'playwright/**/*.xml' }
+                }
+            }
+        }
+    }
+
+    post {
+        success { script { try { qaLibrary.onSuccess() } catch (err) {} } }
+        failure {
+            script {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    try { qaLibrary.catchError(environment: params.ENVIRONMENT) } catch (err) {}
+                }
+            }
+        }
+        always { script { try { qaLibrary.finalCleanup() } catch (err) {} } }
+    }
+}
 
 
 // @Library('qa-shared-library@main') _
