@@ -2802,7 +2802,7 @@ def runTests(String project) {
     def grepOption = params.GREP ? "--grep '${params.GREP}'" : ''
 
     sh """
-        npx playwright test src/tests/ \
+        npx playwright test \
             --project=${project} \
             ${shardOption} \
             ${grepOption} \

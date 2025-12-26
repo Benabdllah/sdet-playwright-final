@@ -1,2 +1,56 @@
-<testsuites id="" name="" tests="0" failures="0" skipped="0" errors="0" time="0.48301899999999987">
+<testsuites id="" name="" tests="6" failures="0" skipped="0" errors="0" time="11.227743">
+<testsuite name="Alerts.spec.ts" timestamp="2025-12-26T19:31:26.158Z" hostname="chromium" tests="3" failures="0" skipped="0" time="8.202" errors="0">
+<testcase name="Alert with Ok @guest" classname="Alerts.spec.ts" time="2.704">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|Alerts-Alert-with-Ok-guest-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="Alerts.spec.ts" time="2.76">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|Alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Prompt Dialog approach 2 @guest" classname="Alerts.spec.ts" time="2.738">
+<system-out>
+<![CDATA[🚨 Dialog erkannt: prompt
+📩 Nachricht: Please enter your name:
+💬 Default-Wert: Harry Potter
+✅ Prompt akzeptiert mit Eingabe: "Mohamed"
+
+[[ATTACHMENT|Alerts-Prompt-Dialog-approach-2-guest-chromium/trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="Alerts.spec.ts" timestamp="2025-12-26T19:31:26.158Z" hostname="firefox" tests="3" failures="0" skipped="0" time="14.53" errors="0">
+<testcase name="Alert with Ok @guest" classname="Alerts.spec.ts" time="4.759">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|Alerts-Alert-with-Ok-guest-firefox/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="Alerts.spec.ts" time="5.618">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|Alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-firefox/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Prompt Dialog approach 2 @guest" classname="Alerts.spec.ts" time="4.153">
+<system-out>
+<![CDATA[🚨 Dialog erkannt: prompt
+📩 Nachricht: Please enter your name:
+💬 Default-Wert: Harry Potter
+✅ Prompt akzeptiert mit Eingabe: "Mohamed"
+
+[[ATTACHMENT|Alerts-Prompt-Dialog-approach-2-guest-firefox/trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
 </testsuites>
