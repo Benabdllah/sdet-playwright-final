@@ -33,11 +33,11 @@ pipeline {
         timeout(time: 90, unit: 'MINUTES')
         timestamps()
         ansiColor('xterm')
-        disableConcurrentBuilds()
+        disableConcurrentBuilds()  // Wichtig: Keine parallelen Builds desselben Jobs
     }
 
     environment {
-        DOCKER_ARGS = '--shm-size=2g'  // kein --user=root mehr
+        DOCKER_ARGS = '--shm-size=2g'
         CI = 'true'
         PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.48.0-jammy'
         NPM_CONFIG_CACHE = '/tmp/.npm'
@@ -87,52 +87,58 @@ pipeline {
 
                 stages {
                     stage('Setup') {
+                        // Jede Matrix-Branch bekommt einen eigenen Workspace!
                         steps {
-                            script {
-                                // 1. Komplett aufräumen – beseitigt alle alten .git-Reste und Hook-Dateien
-                                deleteDir()
+                            ws("workspace/${env.JOB_NAME}-${BROWSER}-${SHARD}") {
+                                script {
+                                    // Aufräumen (sicher ist sicher)
+                                    deleteDir()
 
-                                // 2. Checkout mit mehr Retry und Debug
-                                retry(5) {
-                                    checkout scm
-                                    sh 'echo "Checkout erfolgreich" && ls -la .git/hooks || true'
+                                    // Checkout mit Retry
+                                    retry(5) {
+                                        checkout scm
+                                    }
+
+                                    // Dependencies
+                                    sh 'npm ci --prefer-offline --no-audit'
+                                    sh 'npx playwright install-deps'
+                                    sh 'npx playwright install'
                                 }
-
-                                // 3. Dependencies installieren
-                                sh 'npm ci --prefer-offline --no-audit'
-                                sh 'npx playwright install-deps'
-                                sh 'npx playwright install'
                             }
                         }
                     }
 
                     stage('Run Tests') {
                         steps {
-                            script {
-                                try {
-                                    qaLibrary.runPlaywrightShard([
-                                        browser     : BROWSER,
-                                        shardIndex  : SHARD,
-                                        totalShards : 4,
-                                        suite       : params.TEST_SUITE,
-                                        grep        : params.GREP,
-                                        grepInvert  : params.GREP_INVERT,
-                                        recording   : params.ENABLE_RECORDING,
-                                        environment : params.ENVIRONMENT
-                                    ])
-                                } catch (err) {
-                                    echo "runPlaywrightShard Fehler – Fallback: ${err}"
-                                    sh "npx playwright test --project=${BROWSER} --shard=${SHARD}/4"
+                            ws("workspace/${env.JOB_NAME}-${BROWSER}-${SHARD}") {
+                                script {
+                                    try {
+                                        qaLibrary.runPlaywrightShard([
+                                            browser     : BROWSER,
+                                            shardIndex  : SHARD,
+                                            totalShards : 4,
+                                            suite       : params.TEST_SUITE,
+                                            grep        : params.GREP,
+                                            grepInvert  : params.GREP_INVERT,
+                                            recording   : params.ENABLE_RECORDING,
+                                            environment : params.ENVIRONMENT
+                                        ])
+                                    } catch (err) {
+                                        echo "runPlaywrightShard Fehler: ${err}"
+                                        sh "npx playwright test --project=${BROWSER} --shard=${SHARD}/4"
+                                    }
                                 }
                             }
                         }
                         post {
                             always {
-                                script {
-                                    try {
-                                        qaLibrary.archiveShardArtifacts(BROWSER, SHARD)
-                                    } catch (err) {
-                                        archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
+                                ws("workspace/${env.JOB_NAME}-${BROWSER}-${SHARD}") {
+                                    script {
+                                        try {
+                                            qaLibrary.archiveShardArtifacts(BROWSER, SHARD)
+                                        } catch (err) {
+                                            archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
+                                        }
                                     }
                                 }
                             }
@@ -142,7 +148,7 @@ pipeline {
             }
         }
 
-        // Restliche Stages wie zuvor (mit when-Bedingung gegen FAILURE)
+        // Merge & Reports nur einmal am Ende
         stage('Merge & Analyze Results') {
             when { expression { currentBuild.result != 'FAILURE' } }
             agent { docker { image env.PLAYWRIGHT_IMAGE; args env.DOCKER_ARGS } }
