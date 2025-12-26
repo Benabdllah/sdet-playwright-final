@@ -553,12 +553,13 @@ pipeline {
     }
 
     stages {
-        stage('🚀 Initialize & Validate') {
-            agent { label 'master' }
+        stage('Init') { //'🚀 Initialize & Validate'
+            agent { any } //label 'master'
             steps {
                 script {
                     // Initialize pipeline with metadata
-                    qaLibrary.initializePipeline([
+                    qaLibrary.initializePipeline([environment: 'qa',
+                        browser: 'chromium',
                         buildVersion: BUILD_VERSION,
                         timestamp: BUILD_TIMESTAMP,
                         params: params
