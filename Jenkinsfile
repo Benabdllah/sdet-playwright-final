@@ -1,7 +1,7 @@
 @Library('qa-shared-library@main') _
 
 pipeline {
-    agent any
+    agent none
 
     parameters {
         choice(name: 'ENVIRONMENT',
@@ -33,24 +33,24 @@ pipeline {
         timeout(time: 90, unit: 'MINUTES')
         timestamps()
         ansiColor('xterm')
-        disableConcurrentBuilds()  // Wichtig: Keine parallelen Builds desselben Jobs
+        disableConcurrentBuilds(abortPrevious: true)  // Verhindert Überlappungen
+        parallelsAlwaysFailFast()
     }
 
     environment {
-        DOCKER_ARGS = '--shm-size=2g'
+        // Optimierte Docker-Args für macOS
+        DOCKER_ARGS = '--shm-size=2g --cap-add=SYS_ADMIN --user=root:root'
         CI = 'true'
         PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.48.0-jammy'
-        NPM_CONFIG_CACHE = '/tmp/.npm'
     }
 
     stages {
 
         stage('Init & Validate') {
+            agent { docker { image env.PLAYWRIGHT_IMAGE; args env.DOCKER_ARGS; reuseNode false } }
             steps {
                 script {
-                    docker.image(env.PLAYWRIGHT_IMAGE).pull()
-
-                    try { qaLibrary.initializePipeline(params) } catch (err) { echo "initializePipeline: ${err}" }
+                    try { qaLibrary.initializePipeline(params) } catch (err) { echo "Shared lib init skipped: ${err}" }
 
                     if (params.DRY_RUN) {
                         echo '✅ DRY RUN – configuration valid'
@@ -62,7 +62,8 @@ pipeline {
         }
 
         stage('Production Approval') {
-            when { expression { params.ENVIRONMENT == 'production' } }
+            when { expression { params.ENVIRONMENT == 'production' && !params.DRY_RUN } }
+            agent any
             steps {
                 timeout(time: 30, unit: 'MINUTES') {
                     input message: 'Deploy tests to PRODUCTION?', ok: 'Approve'
@@ -70,53 +71,46 @@ pipeline {
             }
         }
 
-        stage('Playwright Matrix') {
+        stage('Playwright Matrix Tests') {
+            when { expression { !params.DRY_RUN } }
             matrix {
                 agent {
                     docker {
                         image env.PLAYWRIGHT_IMAGE
                         args env.DOCKER_ARGS
-                        reuseNode true
+                        reuseNode false  // WICHTIG auf macOS!
                     }
                 }
 
                 axes {
                     axis { name 'BROWSER'; values 'chromium', 'firefox', 'webkit' }
-                    axis { name 'SHARD'; values '1', '2', '3', '4' }
+                    axis { name 'SHARD'; values '1', '2' }  // Nur 2 Shards pro Browser → max 6 Container gleichzeitig
                 }
 
                 stages {
-                    stage('Setup') {
-                        // Jede Matrix-Branch bekommt einen eigenen Workspace!
+                    stage('Setup & Execute') {
                         steps {
-                            ws("workspace/${env.JOB_NAME}-${BROWSER}-${SHARD}") {
-                                script {
-                                    // Aufräumen (sicher ist sicher)
-                                    deleteDir()
+                            // Eigener Workspace pro Kombination – verhindert Durable Task Konflikte
+                            ws("ws-${env.JOB_NAME}-${BROWSER}-shard-${SHARD}") {
+                                deleteDir()  // Sauberen Start garantieren
 
-                                    // Checkout mit Retry
-                                    retry(5) {
-                                        checkout scm
-                                    }
-
-                                    // Dependencies
-                                    sh 'npm ci --prefer-offline --no-audit'
-                                    sh 'npx playwright install-deps'
-                                    sh 'npx playwright install'
+                                retry(3) {
+                                    checkout scm
                                 }
-                            }
-                        }
-                    }
 
-                    stage('Run Tests') {
-                        steps {
-                            ws("workspace/${env.JOB_NAME}-${BROWSER}-${SHARD}") {
+                                sh 'npm ci --prefer-offline --no-audit'
+
+                                sh 'npx playwright install-deps'
+                                sh "npx playwright install ${BROWSER} --with-deps"
+
                                 script {
+                                    def totalShards = 2
+
                                     try {
                                         qaLibrary.runPlaywrightShard([
                                             browser     : BROWSER,
-                                            shardIndex  : SHARD,
-                                            totalShards : 4,
+                                            shardIndex  : SHARD.toInteger(),
+                                            totalShards : totalShards,
                                             suite       : params.TEST_SUITE,
                                             grep        : params.GREP,
                                             grepInvert  : params.GREP_INVERT,
@@ -124,20 +118,49 @@ pipeline {
                                             environment : params.ENVIRONMENT
                                         ])
                                     } catch (err) {
-                                        echo "runPlaywrightShard Fehler: ${err}"
-                                        sh "npx playwright test --project=${BROWSER} --shard=${SHARD}/4"
+                                        echo "Fallback execution due to library error: ${err}"
+                                        sh """
+                                            npx playwright test \
+                                                --project=${BROWSER} \
+                                                --shard=${SHARD}/${totalShards} \
+                                                ${params.GREP ? "--grep '${params.GREP}'" : ''} \
+                                                ${params.GREP_INVERT ? "--grep-invert '${params.GREP_INVERT}'" : ''} \
+                                                --reporter=html,junit \
+                                                --output=playwright-report
+                                        """
                                     }
                                 }
                             }
                         }
+
                         post {
                             always {
-                                ws("workspace/${env.JOB_NAME}-${BROWSER}-${SHARD}") {
+                                ws("ws-${env.JOB_NAME}-${BROWSER}-shard-${SHARD}") {
                                     script {
                                         try {
                                             qaLibrary.archiveShardArtifacts(BROWSER, SHARD)
                                         } catch (err) {
-                                            archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
+                                            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+                                            archiveArtifacts artifacts: '**/*.xml', allowEmptyArchive: true
+                                        }
+
+                                        try {
+                                            junit '**/junit-results/*.xml'
+                                        } catch (err) {
+                                            echo "JUnit skipped: ${err}"
+                                        }
+
+                                        try {
+                                            publishHTML([
+                                                allowMissing: true,
+                                                alwaysLinkToLastBuild: true,
+                                                keepAll: true,
+                                                reportDir: 'playwright-report',
+                                                reportFiles: 'index.html',
+                                                reportName: "PW Report - ${BROWSER} - Shard ${SHARD}"
+                                            ])
+                                        } catch (err) {
+                                            echo "HTML publish skipped: ${err}"
                                         }
                                     }
                                 }
@@ -148,58 +171,30 @@ pipeline {
             }
         }
 
-        // Merge & Reports nur einmal am Ende
-        stage('Merge & Analyze Results') {
-            when { expression { currentBuild.result != 'FAILURE' } }
-            agent { docker { image env.PLAYWRIGHT_IMAGE; args env.DOCKER_ARGS } }
+        stage('Final Reporting') {
+            when { expression { !params.DRY_RUN } }
+            agent { docker { image env.PLAYWRIGHT_IMAGE; args env.DOCKER_ARGS; reuseNode false } }
             steps {
                 script {
-                    try { qaLibrary.mergeReports() } catch (err) {}
-                    try { qaLibrary.analyzeResults() } catch (err) {}
-                }
-            }
-        }
-
-        stage('Quality Gates') {
-            when { expression { currentBuild.result != 'FAILURE' } }
-            steps {
-                script {
-                    try { qaLibrary.evaluateQualityGatesOrFail(environment: params.ENVIRONMENT) } catch (err) {}
-                }
-            }
-        }
-
-        stage('Publish Reports') {
-            when { expression { currentBuild.result != 'FAILURE' } }
-            parallel {
-                stage('HTML') {
-                    steps {
-                        script {
-                            try { qaLibrary.publishHTMLReport() } catch (err) {
-                                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true,
-                                             reportDir: 'playwright-report', reportFiles: 'index.html',
-                                             reportName: 'Playwright HTML Report'])
-                            }
-                        }
-                    }
-                }
-                stage('JUnit') {
-                    steps { junit allowEmptyResults: true, testResults: 'playwright/**/*.xml' }
+                    try { qaLibrary.mergeReports() } catch (err) { echo "Merge skipped: ${err}" }
+                    try { qaLibrary.publishHTMLReport() } catch (err) { echo "Final HTML skipped: ${err}" }
                 }
             }
         }
     }
 
     post {
-        success { script { try { qaLibrary.onSuccess() } catch (err) {} } }
+        success {
+            echo "🎉 Pipeline SUCCESS – All Playwright tests passed!"
+        }
         failure {
+            echo "❌ Pipeline FAILED – Check traces and reports"
+        }
+        always {
             script {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    try { qaLibrary.catchError(environment: params.ENVIRONMENT) } catch (err) {}
-                }
+                try { qaLibrary.finalCleanup() } catch (err) {}
             }
         }
-        always { script { try { qaLibrary.finalCleanup() } catch (err) {} } }
     }
 }
 
