@@ -1,11 +1,2 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="2.851699000000954">
-<testsuite name="Alerts.spec.ts" timestamp="2025-12-26T19:15:28.632Z" hostname="chromium" tests="1" failures="0" skipped="0" time="2.034" errors="0">
-<testcase name="Alert with Ok @guest" classname="Alerts.spec.ts" time="2.034">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|Alerts-Alert-with-Ok-guest-chromium/trace.zip]]
-]]>
-</system-out>
-</testcase>
-</testsuite>
+<testsuites id="" name="" tests="0" failures="0" skipped="0" errors="0" time="0.48301899999999987">
 </testsuites>

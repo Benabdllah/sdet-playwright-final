@@ -2796,11 +2796,13 @@ pipeline {
 }
 
 def runTests(String project) {
+    echo "🔹 Playwright Tests für ${project} starten"
+
     def shardOption = params.SHARDING ? "--shard=1/${params.TOTAL_SHARDS}" : ''
     def grepOption = params.GREP ? "--grep '${params.GREP}'" : ''
 
     sh """
-        npx playwright test \
+        npx playwright test src/tests/ \
             --project=${project} \
             ${shardOption} \
             ${grepOption} \
