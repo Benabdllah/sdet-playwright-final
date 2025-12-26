@@ -95,7 +95,16 @@ pipeline {
                     stage('Setup') {
                         steps {
                             script {
-                                qaLibrary.checkoutCode()
+                                // Git Checkout mit Credential Fix
+                                checkout([
+                                    $class: 'GitSCM',
+                                    branches: [[name: '*/main']],
+                                    userRemoteConfigs: [[
+                                        url: 'https://github.com/Benabdllah/Sdet-pw-practice-app.git',
+                                        credentialsId: 'github-https'
+                                    ]]
+                                ])
+
                                 qaLibrary.installDependencies(BROWSER)
                             }
                         }
@@ -174,6 +183,7 @@ pipeline {
         always { script { qaLibrary.finalCleanup() } }
     }
 }
+
 
 
 // @Library('qa-shared-library@main') _
