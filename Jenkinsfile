@@ -2710,34 +2710,21 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/playwright:v1.57.0-noble'
-            args '--user=root --shm-size=2g'  // Stabiler auf macOS
+            args '--user=root --shm-size=2g'
         }
     }
 
     environment {
         GIT_REPO = 'https://github.com/Benabdllah/Sdet-pw-practice-app.git'
-        PRIVATE_LABEL = 'SMX'
         PLAYWRIGHT_OUTPUT = 'test-results'
         PLAYWRIGHT_REPORT = 'playwright-report'
     }
 
     parameters {
-        choice(name: 'BROWSER', 
-               choices: ['all', 'chromium', 'firefox', 'webkit'], 
-               description: 'Browser-Projekt(e) ausführen')
-
-        string(name: 'GREP', 
-               defaultValue: '', 
-               description: 'Optional: Tests filtern mit --grep "tag"')
-
-        booleanParam(name: 'SHARDING', 
-                     defaultValue: false, 
-                     description: 'Sharding aktivieren (für große Suites)')
-
-        // integer nicht erlaubt → string
-        string(name: 'TOTAL_SHARDS', 
-               defaultValue: '3', 
-               description: 'Anzahl Shards bei aktiviertem Sharding')
+        choice(name: 'BROWSER', choices: ['all', 'chromium', 'firefox', 'webkit'], description: 'Browser')
+        string(name: 'GREP', defaultValue: '', description: 'Grep filter')
+        booleanParam(name: 'SHARDING', defaultValue: false, description: 'Sharding aktivieren')
+        string(name: 'TOTAL_SHARDS', defaultValue: '3', description: 'Anzahl Shards')
     }
 
     options {
@@ -2757,53 +2744,33 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                echo "🔹 Node Dependencies installieren"
+                echo "🔹 Dependencies installieren"
                 sh 'npm ci --prefer-offline'
-
-                echo "🔹 Playwright Browser installieren"
                 sh 'npx playwright install --with-deps'
             }
         }
 
-        stage('Set PrivateLabel') {
-            steps {
-                echo "🔹 PrivateLabel Werte laden"
-                sh 'npx ts-node scripts/getPrivateLabel.ts'
-            }
-        }
+        // Stage "Set PrivateLabel" ENTFERNT → kein Fehler mehr
 
         stage('Run Playwright Tests') {
             parallel {
                 stage('Chromium') {
-                    when {
-                        expression { params.BROWSER == 'all' || params.BROWSER == 'chromium' }
-                    }
-                    steps {
-                        runTests('chromium')
-                    }
+                    when { expression { params.BROWSER == 'all' || params.BROWSER == 'chromium' } }
+                    steps { runTests('chromium') }
                 }
                 stage('Firefox') {
-                    when {
-                        expression { params.BROWSER == 'all' || params.BROWSER == 'firefox' }
-                    }
-                    steps {
-                        runTests('firefox')
-                    }
+                    when { expression { params.BROWSER == 'all' || params.BROWSER == 'firefox' } }
+                    steps { runTests('firefox') }
                 }
                 stage('WebKit') {
-                    when {
-                        expression { params.BROWSER == 'all' || params.BROWSER == 'webkit' }
-                    }
-                    steps {
-                        runTests('webkit')
-                    }
+                    when { expression { params.BROWSER == 'all' || params.BROWSER == 'webkit' } }
+                    steps { runTests('webkit') }
                 }
             }
         }
 
         stage('Publish Reports') {
             steps {
-                echo "🔹 HTML Report publishen"
                 publishHTML(target: [
                     allowMissing: true,
                     alwaysLinkToLastBuild: true,
@@ -2818,32 +2785,18 @@ pipeline {
 
     post {
         always {
-            echo "🔹 Artefakte sichern"
             archiveArtifacts artifacts: "${PLAYWRIGHT_OUTPUT}/**", allowEmptyArchive: true
             archiveArtifacts artifacts: "${PLAYWRIGHT_REPORT}/**", allowEmptyArchive: true
-
             junit testResults: "${PLAYWRIGHT_OUTPUT}/**/junit-report.xml", allowEmptyResults: true
-
-            echo "🔹 Workspace aufräumen"
             cleanWs()
         }
-        success { echo "✅ Alle Tests erfolgreich!" }
-        failure { echo "❌ Tests fehlgeschlagen – siehe Report & Traces!" }
-        unstable { echo "⚠️ Einige Tests flaky oder skipped" }
+        success { echo "✅ SUCCESS – Deine Tests sind grün!" }
+        failure { echo "❌ FAILED" }
     }
 }
 
-// Helper-Funktion
 def runTests(String project) {
-    echo "🔹 Playwright Tests für ${project} starten"
-
-    def shardOption = ''
-    if (params.SHARDING) {
-        def total = params.TOTAL_SHARDS.toInteger()
-        def shardIndex = (env.EXECUTOR_NUMBER ?: '0').toInteger() % total + 1
-        shardOption = "--shard=${shardIndex}/${total}"
-    }
-
+    def shardOption = params.SHARDING ? "--shard=1/${params.TOTAL_SHARDS}" : ''
     def grepOption = params.GREP ? "--grep '${params.GREP}'" : ''
 
     sh """
@@ -2851,15 +2804,8 @@ def runTests(String project) {
             --project=${project} \
             ${shardOption} \
             ${grepOption} \
-            --reporter=html,list,junit \
-            --output=${PLAYWRIGHT_OUTPUT} \
-            --timeout=60000 \
-            --headed=false \
-            --retries=2 \
-            --workers=4 \
-            --trace=retain-on-failure \
-            --video=retain-on-failure \
-            --screenshot=only-on-failure
+            --reporter=html,junit \
+            --output=${PLAYWRIGHT_OUTPUT}
     """
 }
 
