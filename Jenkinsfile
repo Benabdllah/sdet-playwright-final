@@ -47,8 +47,8 @@ pipeline {
         stage('Init & Validate') {
             steps {
                 script {
-                    // Korrigiertes, existierendes Docker-Image
-                    env.PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.62.0-jammy'
+                    // Existierendes, stabiles Docker-Image
+                    env.PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.61.0-jammy'
                     def img = docker.image(env.PLAYWRIGHT_IMAGE)
                     img.pull()
 
@@ -69,8 +69,7 @@ pipeline {
             }
             steps {
                 timeout(time: 30, unit: 'MINUTES') {
-                    input message: 'Deploy tests to PRODUCTION?',
-                          ok: 'Approve'
+                    input message: 'Deploy tests to PRODUCTION?', ok: 'Approve'
                 }
             }
         }
@@ -87,14 +86,8 @@ pipeline {
                 }
 
                 axes {
-                    axis {
-                        name 'BROWSER'
-                        values 'chromium', 'firefox', 'webkit'
-                    }
-                    axis {
-                        name 'SHARD'
-                        values '1', '2', '3', '4'
-                    }
+                    axis { name 'BROWSER'; values 'chromium', 'firefox', 'webkit' }
+                    axis { name 'SHARD'; values '1', '2', '3', '4' }
                 }
 
                 stages {
@@ -137,10 +130,7 @@ pipeline {
 
         stage('Merge & Analyze Results') {
             agent {
-                docker {
-                    image env.PLAYWRIGHT_IMAGE
-                    args env.DOCKER_ARGS
-                }
+                docker { image env.PLAYWRIGHT_IMAGE; args env.DOCKER_ARGS }
             }
             steps {
                 script {
@@ -161,28 +151,18 @@ pipeline {
         stage('Publish Reports') {
             parallel {
                 stage('HTML') {
-                    steps {
-                        script {
-                            qaLibrary.publishHTMLReport()
-                        }
-                    }
+                    steps { script { qaLibrary.publishHTMLReport() } }
                 }
                 stage('JUnit') {
-                    steps {
-                        junit allowEmptyResults: true,
-                              testResults: 'playwright/**/*.xml'
-                    }
+                    steps { junit allowEmptyResults: true, testResults: 'playwright/**/*.xml' }
                 }
             }
         }
     }
 
     post {
-        success {
-            script {
-                qaLibrary.onSuccess()
-            }
-        }
+        success { script { qaLibrary.onSuccess() } }
+
         failure {
             script {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
@@ -190,11 +170,8 @@ pipeline {
                 }
             }
         }
-        always {
-            script {
-                qaLibrary.finalCleanup()
-            }
-        }
+
+        always { script { qaLibrary.finalCleanup() } }
     }
 }
 
