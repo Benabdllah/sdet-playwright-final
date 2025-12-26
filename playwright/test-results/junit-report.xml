@@ -1,9 +1,9 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="0.48839800000000105">
-<testsuite name="green.spec.ts" timestamp="2025-12-24T23:22:52.958Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0" errors="0">
-<testcase name="GRÜN – SDET+++++ Pipeline SUCCESS! @guest" classname="green.spec.ts" time="0">
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="2.851699000000954">
+<testsuite name="Alerts.spec.ts" timestamp="2025-12-26T19:15:28.632Z" hostname="chromium" tests="1" failures="0" skipped="0" time="2.034" errors="0">
+<testcase name="Alert with Ok @guest" classname="Alerts.spec.ts" time="2.034">
 <system-out>
 <![CDATA[
-[[ATTACHMENT|green-GRÜN-–-SDET-Pipeline-SUCCESS-guest-chromium/trace.zip]]
+[[ATTACHMENT|Alerts-Alert-with-Ok-guest-chromium/trace.zip]]
 ]]>
 </system-out>
 </testcase>
