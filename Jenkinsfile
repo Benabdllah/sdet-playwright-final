@@ -1126,7 +1126,7 @@ pipeline {
     post {
         always {
             script {
-                node('master') {
+                //node('master') {
                     if (!params.DRY_RUN) {
                         def duration = System.currentTimeMillis() - (env.PIPELINE_START_TIME as Long)
                         
@@ -1149,7 +1149,7 @@ pipeline {
                             preserveTurbo: true
                         ])
                     }
-                }
+                //}
             }
         }
         
