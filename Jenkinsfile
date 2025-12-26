@@ -54,7 +54,7 @@ pipeline {
     }
 
     environment {
-        PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.58.0-noble'
+        PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.58.0-jammy'
         DOCKER_ARGS = '--user=root --shm-size=2g'
         CI = 'true'
     }

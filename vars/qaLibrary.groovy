@@ -205,3 +205,16 @@ def cleanup() {
         cleanWhenNotBuilt: false
     )
 }
+def onSuccess() {
+    echo '✅ Shared Library: success handler'
+}
+
+def onFailure(env) {
+    echo "❌ Shared Library: failure in ${env}"
+}
+
+def finalCleanup() {
+    echo '🧹 Shared Library: cleanup done'
+}
+
+return this
