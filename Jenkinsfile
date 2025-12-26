@@ -47,8 +47,8 @@ pipeline {
         stage('Init & Validate') {
             steps {
                 script {
-                    // Pull Docker image here, nicht in environment {}
-                    env.PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.61.0-jammy'
+                    // Korrigiertes, existierendes Docker-Image
+                    env.PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.62.0-jammy'
                     def img = docker.image(env.PLAYWRIGHT_IMAGE)
                     img.pull()
 
@@ -184,14 +184,12 @@ pipeline {
             }
         }
         failure {
-    script {
-        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-            qaLibrary.catchError(environment: params.ENVIRONMENT)
+            script {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    qaLibrary.catchError(environment: params.ENVIRONMENT)
+                }
+            }
         }
-    }
-}
-
-        
         always {
             script {
                 qaLibrary.finalCleanup()
