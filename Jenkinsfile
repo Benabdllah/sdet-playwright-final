@@ -1,21 +1,5 @@
 @Library('qa-shared-library@main') _
 
-/**
- * ══════════════════════════════════════════════════════════════
- * PLAYWRIGHT TEST PIPELINE - ENTERPRISE (STABLE EDITION)
- * ══════════════════════════════════════════════════════════════
- *
- * ✔ Jenkins Declarative compliant
- * ✔ Matrix parallelization
- * ✔ Shared Library driven intelligence
- * ✔ Production safe
- * ✔ 80% Enterprise features restored
- *
- * NOTE:
- * - Jenkinsfile = Orchestration only
- * - Business logic lives in qa-shared-library
- */
-
 pipeline {
     agent any
 
@@ -54,18 +38,20 @@ pipeline {
     }
 
     environment {
-        PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.58.0-jammy'.pull()
         DOCKER_ARGS = '--user=root --shm-size=2g'
         CI = 'true'
     }
 
     stages {
 
-        /* ───────────────── INIT ───────────────── */
-
         stage('Init & Validate') {
             steps {
                 script {
+                    // Pull Docker image here, nicht in environment {}
+                    env.PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.61.0-jammy'
+                    def img = docker.image(env.PLAYWRIGHT_IMAGE)
+                    img.pull()
+
                     qaLibrary.initializePipeline(params)
 
                     if (params.DRY_RUN) {
@@ -76,8 +62,6 @@ pipeline {
                 }
             }
         }
-
-        /* ───────────── PRODUCTION GATE ───────────── */
 
         stage('Production Approval') {
             when {
@@ -90,8 +74,6 @@ pipeline {
                 }
             }
         }
-
-        /* ───────────── MATRIX EXECUTION ───────────── */
 
         stage('Playwright Matrix') {
             matrix {
@@ -132,12 +114,12 @@ pipeline {
                                 qaLibrary.runPlaywrightShard([
                                     browser      : BROWSER,
                                     shardIndex   : SHARD,
-                                    totalShards : 4,
-                                    suite       : params.TEST_SUITE,
-                                    grep        : params.GREP,
-                                    grepInvert  : params.GREP_INVERT,
-                                    recording   : params.ENABLE_RECORDING,
-                                    environment : params.ENVIRONMENT
+                                    totalShards  : 4,
+                                    suite        : params.TEST_SUITE,
+                                    grep         : params.GREP,
+                                    grepInvert   : params.GREP_INVERT,
+                                    recording    : params.ENABLE_RECORDING,
+                                    environment  : params.ENVIRONMENT
                                 ])
                             }
                         }
@@ -152,8 +134,6 @@ pipeline {
                 }
             }
         }
-
-        /* ───────────── MERGE RESULTS ───────────── */
 
         stage('Merge & Analyze Results') {
             agent {
@@ -170,17 +150,13 @@ pipeline {
             }
         }
 
-        /* ───────────── QUALITY GATES ───────────── */
-
         stage('Quality Gates') {
             steps {
                 script {
-                    qaLibrary.evaluateQualityGatesOrFail(params.ENVIRONMENT)
+                    qaLibrary.evaluateQualityGatesOrFail(environment: params.ENVIRONMENT)
                 }
             }
         }
-
-        /* ───────────── REPORTING ───────────── */
 
         stage('Publish Reports') {
             parallel {
@@ -209,7 +185,7 @@ pipeline {
         }
         failure {
             script {
-                qaLibrary.catchError(params.ENVIRONMENT)
+                qaLibrary.catchError(environment: params.ENVIRONMENT)
             }
         }
         always {
@@ -219,6 +195,7 @@ pipeline {
         }
     }
 }
+
 
 // @Library('qa-shared-library@main') _
 
