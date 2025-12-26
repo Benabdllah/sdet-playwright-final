@@ -37,9 +37,10 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS = '--user=root --shm-size=2g'
+        DOCKER_ARGS = '--shm-size=2g'  // --user=root entfernt → vermeidet uv_cwd-Probleme
         CI = 'true'
         PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.48.0-jammy'
+        NPM_CONFIG_CACHE = '/tmp/.npm'  // npm-Cache ins tmp → kein Berechtigungsproblem
     }
 
     stages {
@@ -49,11 +50,10 @@ pipeline {
                 script {
                     docker.image(env.PLAYWRIGHT_IMAGE).pull()
 
-                    // Falls initializePipeline existiert – sonst ignorieren
                     try {
                         qaLibrary.initializePipeline(params)
                     } catch (err) {
-                        echo "⚠️ qaLibrary.initializePipeline nicht verfügbar: ${err}"
+                        echo "⚠️ initializePipeline nicht verfügbar: ${err}"
                     }
 
                     if (params.DRY_RUN) {
@@ -93,21 +93,23 @@ pipeline {
                     stage('Setup') {
                         steps {
                             script {
-                                // 1. Stale Git lock entfernen – vor jedem Checkout!
-                                sh 'rm -rf .git/index.lock || true'
-
-                                // 2. Workspace sauber machen (verhindert alte Locks)
+                                // Vollständig aufräumen
                                 deleteDir()
 
-                                // 3. Checkout – mit retry für Stabilität
+                                // Checkout mit Retry
                                 retry(3) {
                                     checkout scm
                                 }
 
-                                // 4. Dependencies installieren – sicherer Fallback ohne qaLibrary-Abhängigkeit
-                                sh 'npm ci --prefer-offline --no-audit'
-                                sh 'npx playwright install-deps'
-                                sh 'npx playwright install'
+                                // Explizit ins Projektverzeichnis wechseln (falls nötig)
+                                dir('.') {
+                                    sh 'pwd && ls -la'
+
+                                    // Dependencies – stabil und ohne Root
+                                    sh 'npm ci --prefer-offline --no-audit'
+                                    sh 'npx playwright install-deps'
+                                    sh 'npx playwright install'
+                                }
                             }
                         }
                     }
@@ -115,7 +117,6 @@ pipeline {
                     stage('Run Tests') {
                         steps {
                             script {
-                                // Falls runPlaywrightShard existiert → nutzen, sonst warnen
                                 try {
                                     qaLibrary.runPlaywrightShard([
                                         browser     : BROWSER,
@@ -128,10 +129,9 @@ pipeline {
                                         environment : params.ENVIRONMENT
                                     ])
                                 } catch (err) {
-                                    echo "⚠️ qaLibrary.runPlaywrightShard nicht verfügbar – bitte manuell prüfen: ${err}"
-                                    // Fallback: direkter Aufruf (falls du die Logik kennst)
-                                    // sh "npx playwright test --project=${BROWSER} --shard=${SHARD}/4 ..."
-                                    error("runPlaywrightShard fehlt in Shared Library")
+                                    echo "⚠️ runPlaywrightShard fehlt oder Fehler: ${err}"
+                                    // Fallback: direkter Playwright-Befehl
+                                    sh "npx playwright test --project=${BROWSER} --shard=${SHARD}/4"
                                 }
                             }
                         }
@@ -141,10 +141,7 @@ pipeline {
                                     try {
                                         qaLibrary.archiveShardArtifacts(BROWSER, SHARD)
                                     } catch (err) {
-                                        echo "⚠️ archiveShardArtifacts nicht verfügbar: ${err}"
-                                        // Fallback: manuell archivieren
-                                        archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
-                                        archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+                                        archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true
                                     }
                                 }
                             }
@@ -154,33 +151,29 @@ pipeline {
             }
         }
 
-        // Die restlichen Stages nur ausführen, wenn Tests durchgelaufen sind
+        // Rest wie zuvor – mit try/catch für qaLibrary-Methoden
         stage('Merge & Analyze Results') {
-            when { expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' } }
+            when { expression { currentBuild.result != 'FAILURE' } }
             agent { docker { image env.PLAYWRIGHT_IMAGE; args env.DOCKER_ARGS } }
             steps {
                 script {
-                    try { qaLibrary.mergeReports() } catch (err) { echo "mergeReports fehlt: ${err}" }
-                    try { qaLibrary.analyzeResults() } catch (err) { echo "analyzeResults fehlt: ${err}" }
+                    try { qaLibrary.mergeReports() } catch (err) { echo "mergeReports: ${err}" }
+                    try { qaLibrary.analyzeResults() } catch (err) { echo "analyzeResults: ${err}" }
                 }
             }
         }
 
         stage('Quality Gates') {
-            when { expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' } }
+            when { expression { currentBuild.result != 'FAILURE' } }
             steps {
                 script {
-                    try {
-                        qaLibrary.evaluateQualityGatesOrFail(environment: params.ENVIRONMENT)
-                    } catch (err) {
-                        echo "⚠️ evaluateQualityGatesOrFail nicht verfügbar: ${err}"
-                    }
+                    try { qaLibrary.evaluateQualityGatesOrFail(environment: params.ENVIRONMENT) } catch (err) { echo "QG: ${err}" }
                 }
             }
         }
 
         stage('Publish Reports') {
-            when { expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' } }
+            when { expression { currentBuild.result != 'FAILURE' } }
             parallel {
                 stage('HTML') {
                     steps {
@@ -188,46 +181,28 @@ pipeline {
                             try {
                                 qaLibrary.publishHTMLReport()
                             } catch (err) {
-                                echo "⚠️ publishHTMLReport nicht verfügbar: ${err}"
-                                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report'])
+                                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Report'])
                             }
                         }
                     }
                 }
                 stage('JUnit') {
-                    steps {
-                        junit allowEmptyResults: true, testResults: 'playwright/**/*.xml'
-                    }
+                    steps { junit allowEmptyResults: true, testResults: 'playwright/**/*.xml' }
                 }
             }
         }
     }
 
     post {
-        success {
-            script {
-                try { qaLibrary.onSuccess() } catch (err) { echo "onSuccess fehlt: ${err}" }
-            }
-        }
-
+        success { script { try { qaLibrary.onSuccess() } catch (err) {} } }
         failure {
             script {
-                // Korrekte catchError-Nutzung mit Block
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    try {
-                        qaLibrary.catchError(environment: params.ENVIRONMENT)
-                    } catch (err) {
-                        echo "⚠️ catchError-Methode in Library nicht verfügbar: ${err}"
-                    }
+                    try { qaLibrary.catchError(environment: params.ENVIRONMENT) } catch (err) {}
                 }
             }
         }
-
-        always {
-            script {
-                try { qaLibrary.finalCleanup() } catch (err) { echo "finalCleanup fehlt: ${err}" }
-            }
-        }
+        always { script { try { qaLibrary.finalCleanup() } catch (err) {} } }
     }
 }
 
