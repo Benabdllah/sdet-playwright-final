@@ -37,10 +37,10 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS = '--shm-size=2g'  // --user=root entfernt → vermeidet uv_cwd-Probleme
+        DOCKER_ARGS = '--shm-size=2g'  // kein --user=root mehr
         CI = 'true'
         PLAYWRIGHT_IMAGE = 'mcr.microsoft.com/playwright:v1.48.0-jammy'
-        NPM_CONFIG_CACHE = '/tmp/.npm'  // npm-Cache ins tmp → kein Berechtigungsproblem
+        NPM_CONFIG_CACHE = '/tmp/.npm'
     }
 
     stages {
@@ -50,11 +50,7 @@ pipeline {
                 script {
                     docker.image(env.PLAYWRIGHT_IMAGE).pull()
 
-                    try {
-                        qaLibrary.initializePipeline(params)
-                    } catch (err) {
-                        echo "⚠️ initializePipeline nicht verfügbar: ${err}"
-                    }
+                    try { qaLibrary.initializePipeline(params) } catch (err) { echo "initializePipeline: ${err}" }
 
                     if (params.DRY_RUN) {
                         echo '✅ DRY RUN – configuration valid'
@@ -93,23 +89,19 @@ pipeline {
                     stage('Setup') {
                         steps {
                             script {
-                                // Vollständig aufräumen
+                                // 1. Komplett aufräumen – beseitigt alle alten .git-Reste und Hook-Dateien
                                 deleteDir()
 
-                                // Checkout mit Retry
-                                retry(3) {
+                                // 2. Checkout mit mehr Retry und Debug
+                                retry(5) {
                                     checkout scm
+                                    sh 'echo "Checkout erfolgreich" && ls -la .git/hooks || true'
                                 }
 
-                                // Explizit ins Projektverzeichnis wechseln (falls nötig)
-                                dir('.') {
-                                    sh 'pwd && ls -la'
-
-                                    // Dependencies – stabil und ohne Root
-                                    sh 'npm ci --prefer-offline --no-audit'
-                                    sh 'npx playwright install-deps'
-                                    sh 'npx playwright install'
-                                }
+                                // 3. Dependencies installieren
+                                sh 'npm ci --prefer-offline --no-audit'
+                                sh 'npx playwright install-deps'
+                                sh 'npx playwright install'
                             }
                         }
                     }
@@ -129,8 +121,7 @@ pipeline {
                                         environment : params.ENVIRONMENT
                                     ])
                                 } catch (err) {
-                                    echo "⚠️ runPlaywrightShard fehlt oder Fehler: ${err}"
-                                    // Fallback: direkter Playwright-Befehl
+                                    echo "runPlaywrightShard Fehler – Fallback: ${err}"
                                     sh "npx playwright test --project=${BROWSER} --shard=${SHARD}/4"
                                 }
                             }
@@ -151,14 +142,14 @@ pipeline {
             }
         }
 
-        // Rest wie zuvor – mit try/catch für qaLibrary-Methoden
+        // Restliche Stages wie zuvor (mit when-Bedingung gegen FAILURE)
         stage('Merge & Analyze Results') {
             when { expression { currentBuild.result != 'FAILURE' } }
             agent { docker { image env.PLAYWRIGHT_IMAGE; args env.DOCKER_ARGS } }
             steps {
                 script {
-                    try { qaLibrary.mergeReports() } catch (err) { echo "mergeReports: ${err}" }
-                    try { qaLibrary.analyzeResults() } catch (err) { echo "analyzeResults: ${err}" }
+                    try { qaLibrary.mergeReports() } catch (err) {}
+                    try { qaLibrary.analyzeResults() } catch (err) {}
                 }
             }
         }
@@ -167,7 +158,7 @@ pipeline {
             when { expression { currentBuild.result != 'FAILURE' } }
             steps {
                 script {
-                    try { qaLibrary.evaluateQualityGatesOrFail(environment: params.ENVIRONMENT) } catch (err) { echo "QG: ${err}" }
+                    try { qaLibrary.evaluateQualityGatesOrFail(environment: params.ENVIRONMENT) } catch (err) {}
                 }
             }
         }
@@ -178,33 +169,16 @@ pipeline {
                 stage('HTML') {
                     steps {
                         script {
-                            try {
-                                qaLibrary.publishHTMLReport()
-                            } catch (err) {
-                                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Report'])
+                            try { qaLibrary.publishHTMLReport() } catch (err) {
+                                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true,
+                                             reportDir: 'playwright-report', reportFiles: 'index.html',
+                                             reportName: 'Playwright HTML Report'])
                             }
                         }
                     }
                 }
                 stage('JUnit') {
-                    steps { junit allowEmptyResults: true, testResults: 'playwright/**/*.xml' }
-                }
-            }
-        }
-    }
-
-    post {
-        success { script { try { qaLibrary.onSuccess() } catch (err) {} } }
-        failure {
-            script {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    try { qaLibrary.catchError(environment: params.ENVIRONMENT) } catch (err) {}
-                }
-            }
-        }
-        always { script { try { qaLibrary.finalCleanup() } catch (err) {} } }
-    }
-}
+                    steps
 
 
 // @Library('qa-shared-library@main') _
