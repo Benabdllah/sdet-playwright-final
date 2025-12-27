@@ -30,7 +30,7 @@ export default defineConfig({
   // grep: getRoleTag(),
   timeout: 60_000,
   globalTimeout: 3_600_000, // 1 hour for CI to complete all tests
-  testDir: './src/tests',
+  testDir: 'src/tests',
   testMatch: '**/*.spec.ts',
   /* Run tests in files in parallel */
   fullyParallel: true,

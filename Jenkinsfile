@@ -2746,7 +2746,7 @@ pipeline {
             steps {
                 echo "🔹 Dependencies installieren"
                 sh 'npm ci --prefer-offline'
-                sh 'npx playwright install --with-deps'
+                //sh 'npx playwright install --with-deps'
             }
         }
 
