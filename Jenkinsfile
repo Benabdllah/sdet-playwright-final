@@ -2804,6 +2804,7 @@ def runTests(String project) {
     sh """
         npx playwright test\
             --project=${project} \
+            -c playwright.config.ts \
             ${shardOption} \
             ${grepOption} \
             --reporter=junit \
