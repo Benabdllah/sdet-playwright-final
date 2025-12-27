@@ -2799,18 +2799,18 @@ def runTests(String project) {
     echo "🔹 Playwright Tests für ${project} starten"
 
     def shardOption = params.SHARDING ? "--shard=1/${params.TOTAL_SHARDS}" : ''
-    def grepOption = params.GREP ? "--grep '${params.GREP}'" : ''
+    def grepOption  = params.GREP ? "--grep='${params.GREP}'" : ''
 
     sh """
-        npx playwright test\
-            --project=${project} \
-            -c playwright.config.ts \
-            ${shardOption} \
-            ${grepOption} \
-            --reporter=junit \
-            --output=${PLAYWRIGHT_OUTPUT}
+      npx playwright test \
+        -c playwright.config.ts \
+        --project=${project} \
+        ${shardOption} \
+        ${grepOption} \
+        --reporter=junit
     """
 }
+
 
 // // // // // // // // pipeline {
 // // // // // // // //     agent {
