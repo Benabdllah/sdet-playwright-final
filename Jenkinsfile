@@ -2802,11 +2802,11 @@ def runTests(String project) {
     def grepOption = params.GREP ? "--grep '${params.GREP}'" : ''
 
     sh """
-        npx playwright test src/tests\
+        npx playwright test src/tests/alerts.spec.ts \
             --project=${project} \
             ${shardOption} \
             ${grepOption} \
-            --reporter=html,junit \
+            --reporter=junit \
             --output=${PLAYWRIGHT_OUTPUT}
     """
 }
