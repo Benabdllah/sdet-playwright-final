@@ -1,56 +1,30 @@
-<testsuites id="" name="" tests="6" failures="0" skipped="0" errors="0" time="10.567973">
-<testsuite name="alerts.spec.ts" timestamp="2025-12-26T19:47:51.270Z" hostname="chromium" tests="3" failures="0" skipped="0" time="8.159" errors="0">
-<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="2.57">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|alerts-Alert-with-Ok-guest-chromium/trace.zip]]
-]]>
-</system-out>
+<testsuites id="" name="" tests="6" failures="0" skipped="6" errors="0" time="0.008557999999999993">
+<testsuite name="alerts.spec.ts" timestamp="2025-12-27T01:26:21.077Z" hostname="chromium" tests="3" failures="0" skipped="3" time="0" errors="0">
+<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="2.75">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/trace.zip]]
-]]>
-</system-out>
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="2.839">
-<system-out>
-<![CDATA[🚨 Dialog erkannt: prompt
-📩 Nachricht: Please enter your name:
-💬 Default-Wert: Harry Potter
-✅ Prompt akzeptiert mit Eingabe: "Mohamed"
-
-[[ATTACHMENT|alerts-Prompt-Dialog-approach-2-guest-chromium/trace.zip]]
-]]>
-</system-out>
+<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
-<testsuite name="alerts.spec.ts" timestamp="2025-12-26T19:47:51.270Z" hostname="firefox" tests="3" failures="0" skipped="0" time="12.382" errors="0">
-<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="4.33">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|alerts-Alert-with-Ok-guest-firefox/trace.zip]]
-]]>
-</system-out>
+<testsuite name="alerts.spec.ts" timestamp="2025-12-27T01:26:21.077Z" hostname="firefox" tests="3" failures="0" skipped="3" time="0" errors="0">
+<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="4.207">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-firefox/trace.zip]]
-]]>
-</system-out>
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
-<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="3.845">
-<system-out>
-<![CDATA[🚨 Dialog erkannt: prompt
-📩 Nachricht: Please enter your name:
-💬 Default-Wert: Harry Potter
-✅ Prompt akzeptiert mit Eingabe: "Mohamed"
-
-[[ATTACHMENT|alerts-Prompt-Dialog-approach-2-guest-firefox/trace.zip]]
-]]>
-</system-out>
+<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="0">
+<skipped>
+</skipped>
 </testcase>
 </testsuite>
 </testsuites>

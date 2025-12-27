@@ -1,14 +1,11 @@
 import { test } from '@playwright/test';
 import { PageManager } from '../pages/pages_POM/pageManager';
-import { selectDropdownOption } from '../../utils/dropdown-utils';
-import { uploadFile } from '../../utils/file-upload-utils';
-import { switchToFrame } from '../../utils/frame-utils';
-import { handleAlert} from '../../utils/alert-utils';
-import { closeModalIfVisible } from '../../utils/modal-utils';
 
-import { waitForLazyElement } from '../../utils/lazy-loading-utils';
-import { waitForFileDownload } from '../../utils/file-download-utils';
-import { downloadAndCheckPDFContent } from '../../utils/pdf-download-utils';
+
+import { handlePrompt,handleAlert } from '../utils/alert-utils';
+
+
+
 
 test.beforeEach(async({page})=>{
     await page.goto('https://the-internet.herokuapp.com/javascript_alerts')

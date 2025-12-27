@@ -2803,7 +2803,7 @@ def runTests(String project) {
 
     sh """
       npx playwright test \
-        -c playwright.config.ts \
+        
         --project=${project} \
         ${shardOption} \
         ${grepOption} \
