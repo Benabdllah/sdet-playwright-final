@@ -2709,7 +2709,7 @@
 pipeline {
     agent {
         docker {
-            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            image 'mcr.microsoft.com/playwright:v1.57.1-noble'
             args '--user=root --shm-size=2g'
         }
     }
