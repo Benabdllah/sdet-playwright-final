@@ -1,7 +1,7 @@
 {
   "name": "Playwright Test Environment (SDET+++++ Edition)",
   "image": "mcr.microsoft.com/playwright:v1.56.1-noble",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/workspace/Sdet-pw-practice-app",
   
   "runArgs": [
     "--shm-size=2g",
@@ -26,7 +26,7 @@
     "source=playwright-vscode-server,target=/root/.vscode-server,type=volume"
   ],
   
-  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  //"postCreateCommand": "bash .devcontainer/post-create.sh",
   
   "customizations": {
     "vscode": {
@@ -156,10 +156,9 @@
   "postStartCommand": "git config --global --add safe.directory /workspace",
   
   "waitFor": "postCreateCommand",
-  
-  "updateContentCommand": "npm install",
-  
-  "onCreateCommand": "echo '🚀 SDET+++++ Dev Container initializing...'",
+ "updateContentCommand": "npm ci --prefer-offline",
+  "onCreateCommand": "npx playwright install --with-deps",
+  "postCreateCommand": "echo '🚀 SDET+++++ Dev Container ready!'",
   
   "shutdownAction": "stopContainer"
-}
+} 
