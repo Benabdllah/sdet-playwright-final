@@ -1,0 +1,36 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.9.4
+2 info using node@v22.21.0
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/workspaces/.npmrc
+5 silly config load:file:/root/.npmrc
+6 silly config load:file:/usr/etc/npmrc
+7 verbose title npm run test:docker
+8 verbose argv "run" "test:docker"
+9 verbose logfile logs-max:10 dir:/workspace/.npm-cache/_logs/2025-12-28T17_16_55_612Z-
+10 verbose logfile /workspace/.npm-cache/_logs/2025-12-28T17_16_55_612Z-debug-0.log
+11 silly logfile done cleaning log files
+12 verbose stack Error: Could not read package.json: Error: ENOENT: no such file or directory, open '/workspaces/package.json'
+12 verbose stack     at async open (node:internal/fs/promises:641:25)
+12 verbose stack     at async readFile (node:internal/fs/promises:1245:14)
+12 verbose stack     at async read (/usr/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/read-package.js:9:18)
+12 verbose stack     at async PackageJson.load (/usr/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/index.js:132:31)
+12 verbose stack     at async PackageJson.normalize (/usr/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/index.js:118:5)
+12 verbose stack     at async #run (/usr/lib/node_modules/npm/lib/commands/run-script.js:86:13)
+12 verbose stack     at async RunScript.exec (/usr/lib/node_modules/npm/lib/commands/run-script.js:40:7)
+12 verbose stack     at async Npm.exec (/usr/lib/node_modules/npm/lib/npm.js:207:9)
+12 verbose stack     at async module.exports (/usr/lib/node_modules/npm/lib/cli/entry.js:74:5)
+13 error code ENOENT
+14 error syscall open
+15 error path /workspaces/package.json
+16 error errno -2
+17 error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/workspaces/package.json'
+18 error enoent This is related to npm not being able to find a file.
+18 error enoent
+19 verbose cwd /workspaces
+20 verbose os Linux 6.10.14-linuxkit
+21 verbose node v22.21.0
+22 verbose npm  v10.9.4
+23 verbose exit -2
+24 verbose code -2
+25 error A complete log of this run can be found in: /workspace/.npm-cache/_logs/2025-12-28T17_16_55_612Z-debug-0.log

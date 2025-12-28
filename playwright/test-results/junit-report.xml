@@ -1,20 +1,20 @@
-<testsuites id="" name="" tests="6" failures="0" skipped="0" errors="0" time="9.553187">
-<testsuite name="alerts.spec.ts" timestamp="2025-12-28T16:57:26.536Z" hostname="chromium" tests="3" failures="0" skipped="0" time="11.096" errors="0">
-<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="3.481">
+<testsuites id="" name="" tests="6" failures="0" skipped="0" errors="0" time="14.242208">
+<testsuite name="alerts.spec.ts" timestamp="2025-12-28T17:40:33.266Z" hostname="chromium" tests="3" failures="0" skipped="0" time="6.022" errors="0">
+<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="2.055">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|alerts-Alert-with-Ok-guest-chromium/trace.zip]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="4.123">
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="2.147">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/trace.zip]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="3.492">
+<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="1.82">
 <system-out>
 <![CDATA[🚨 Dialog erkannt: prompt
 📩 Nachricht: Please enter your name:
@@ -26,22 +26,22 @@
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="alerts.spec.ts" timestamp="2025-12-28T16:57:26.536Z" hostname="firefox" tests="3" failures="0" skipped="0" time="11.58" errors="0">
-<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="4.808">
+<testsuite name="alerts.spec.ts" timestamp="2025-12-28T17:40:33.266Z" hostname="firefox" tests="3" failures="0" skipped="0" time="6.137" errors="0">
+<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="2.284">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|alerts-Alert-with-Ok-guest-firefox/trace.zip]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="4.522">
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="2.162">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-firefox/trace.zip]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="2.25">
+<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="1.691">
 <system-out>
 <![CDATA[🚨 Dialog erkannt: prompt
 📩 Nachricht: Please enter your name:
