@@ -50,3 +50,7 @@ node_modules/
 
 # Playwright
 /playwright/.auth/
+.playwright-browsers/
+playwright-report/
+test-results/
+.npm-cache/
