@@ -104,6 +104,11 @@
   },
   
   "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+    "installZsh": false,
+    "installOhMyZsh": false
+  },
+    
     "ghcr.io/devcontainers/features/git:1": {
       "version": "latest",
       "ppa": true
@@ -115,19 +120,16 @@
       "version": "latest",
       "moby": true,
       "dockerDashComposeVersion": "v2"
-    },
-    "ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
-    "ghcr.io/devcontainers-contrib/features/jq-apt-get:1": {},
-    "ghcr.io/devcontainers-contrib/features/typescript:2": {
-      "version": "latest"
     }
-  },
+    
+   
+    },
   
   "forwardPorts": [
     3000,
     5000,
     8080,
-    9323
+    9323    
   ],
   
   "portsAttributes": {

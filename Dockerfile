@@ -6,7 +6,7 @@ FROM --platform=linux/arm64 node:20-bullseye
 # ============
 # 📦 System Dependencies
 # ============
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y jq\
     wget curl unzip git xvfb \
     libnss3 libatk1.0-0 libatk-bridge2.0-0 libx11-xcb1 \
     libxcomposite1 libxdamage1 libxrandr2 libgbm1 libasound2 \

@@ -1,0 +1,39 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.9.4
+2 info using node@v22.21.0
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/workspace/.npmrc
+5 silly config load:file:/root/.npmrc
+6 silly config load:file:/usr/etc/npmrc
+7 verbose title npm install
+8 verbose argv "install"
+9 verbose logfile logs-max:10 dir:/workspace/.npm-cache/_logs/2025-12-28T16_55_02_902Z-
+10 verbose logfile /workspace/.npm-cache/_logs/2025-12-28T16_55_02_902Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+13 silly idealTree buildDeps
+14 silly reify moves {}
+15 verbose stack Error: Could not read package.json: Error: ENOENT: no such file or directory, open '/workspace/package.json'
+15 verbose stack     at async open (node:internal/fs/promises:641:25)
+15 verbose stack     at async readFile (node:internal/fs/promises:1245:14)
+15 verbose stack     at async read (/usr/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/read-package.js:9:18)
+15 verbose stack     at async PackageJson.load (/usr/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/index.js:132:31)
+15 verbose stack     at async PackageJson.normalize (/usr/lib/node_modules/npm/node_modules/@npmcli/package-json/lib/index.js:118:5)
+15 verbose stack     at async runScript (/usr/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/run-script.js:11:28)
+15 verbose stack     at async Install.exec (/usr/lib/node_modules/npm/lib/commands/install.js:163:9)
+15 verbose stack     at async Npm.exec (/usr/lib/node_modules/npm/lib/npm.js:207:9)
+15 verbose stack     at async module.exports (/usr/lib/node_modules/npm/lib/cli/entry.js:74:5)
+16 error code ENOENT
+17 error syscall open
+18 error path /workspace/package.json
+19 error errno -2
+20 error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/workspace/package.json'
+21 error enoent This is related to npm not being able to find a file.
+21 error enoent
+22 verbose cwd /workspace
+23 verbose os Linux 6.10.14-linuxkit
+24 verbose node v22.21.0
+25 verbose npm  v10.9.4
+26 verbose exit -2
+27 verbose code -2
+28 error A complete log of this run can be found in: /workspace/.npm-cache/_logs/2025-12-28T16_55_02_902Z-debug-0.log
