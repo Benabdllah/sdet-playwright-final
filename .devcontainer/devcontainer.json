@@ -1,17 +1,20 @@
 {
-  "name": "Playwright + Cucumber + Allure Dev",
-  "build": {
-    "dockerfile": "../Dockerfile",
-    "context": ".."
-  },
+  "name": "Playwright Dev (CI identical)",
+  "image": "mcr.microsoft.com/playwright:v1.56.1-noble",
+
   "workspaceFolder": "/workspace",
-  "runArgs": ["--ipc=host", "-p", "5252:5252"],
-  "postCreateCommand": "npm ci --legacy-peer-deps && npx playwright install",
+
+  "runArgs": [
+    "--shm-size=2g"
+  ],
+
+  "postCreateCommand": "npm ci",
+
   "extensions": [
     "ms-playwright.playwright",
-    "esbenp.prettier-vscode",
-    "angular.ng-template"
+    "esbenp.prettier-vscode"
   ],
+
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   }
