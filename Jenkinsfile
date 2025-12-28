@@ -2716,8 +2716,8 @@ pipeline {
 
     environment {
         GIT_REPO = 'https://github.com/Benabdllah/Sdet-pw-practice-app.git'
-        PLAYWRIGHT_OUTPUT = 'test-results'
-        PLAYWRIGHT_REPORT = 'playwright-report'
+        PLAYWRIGHT_OUTPUT = 'playwright/test-results'
+        PLAYWRIGHT_REPORT = 'playwright/playwright-report'
     }
 
     parameters {
@@ -2803,13 +2803,14 @@ def runTests(String project) {
 
     sh """
       npx playwright test \
-        
         --project=${project} \
         ${shardOption} \
         ${grepOption} \
-        --reporter=junit
+        --reporter=junit \
+        --output=playwright-results/${project}
     """
 }
+
 
 
 // // // // // // // // pipeline {
