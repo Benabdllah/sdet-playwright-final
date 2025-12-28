@@ -1,21 +1,163 @@
 {
-  "name": "Playwright Dev (CI identical)",
+  "name": "Playwright Test Environment (SDET+++++ Edition)",
   "image": "mcr.microsoft.com/playwright:v1.56.1-noble",
-
   "workspaceFolder": "/workspace",
-
+  
   "runArgs": [
-    "--shm-size=2g"
+    "--shm-size=2g",
+    "--memory=4g",
+    "--cpus=2",
+    "--cap-add=SYS_ADMIN",
+    "--security-opt=seccomp=unconfined",
+    "--init"
   ],
-
-  "postCreateCommand": "npm ci",
-
-  "extensions": [
-    "ms-playwright.playwright",
-    "esbenp.prettier-vscode"
+  
+  "containerEnv": {
+    "CI": "true",
+    "PLAYWRIGHT_BROWSERS_PATH": "/workspace/.playwright-browsers",
+    "NODE_ENV": "development",
+    "FORCE_COLOR": "1",
+    "NPM_CONFIG_CACHE": "/workspace/.npm-cache"
+  },
+  
+  "mounts": [
+    "source=${localWorkspaceFolder}/.playwright-browsers,target=/workspace/.playwright-browsers,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/.npm-cache,target=/workspace/.npm-cache,type=bind,consistency=cached",
+    "source=playwright-vscode-server,target=/root/.vscode-server,type=volume"
   ],
-
-  "settings": {
-    "terminal.integrated.defaultProfile.linux": "bash"
-  }
+  
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-playwright.playwright",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-next",
+        "firsttris.vscode-jest-runner",
+        "orta.vscode-jest",
+        "usernamehw.errorlens",
+        "eamodio.gitlens",
+        "GitHub.copilot",
+        "ms-azuretools.vscode-docker",
+        "humao.rest-client",
+        "streetsidesoftware.code-spell-checker",
+        "wayou.vscode-todo-highlight"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash",
+            "icon": "terminal-bash"
+          }
+        },
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit",
+          "source.organizeImports": "explicit"
+        },
+        "files.watcherExclude": {
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true,
+          "**/node_modules/**": true,
+          "**/.playwright-browsers/**": true,
+          "**/.npm-cache/**": true,
+          "**/playwright-report/**": true,
+          "**/test-results/**": true
+        },
+        "search.exclude": {
+          "**/node_modules": true,
+          "**/bower_components": true,
+          "**/.playwright-browsers": true,
+          "**/.npm-cache": true,
+          "**/playwright-report": true,
+          "**/test-results": true
+        },
+        "playwright.reuseBrowser": true,
+        "playwright.showTrace": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "eslint.validate": [
+          "javascript",
+          "typescript"
+        ],
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "git.autofetch": true,
+        "git.enableSmartCommit": true,
+        "errorLens.enabledDiagnosticLevels": [
+          "error",
+          "warning"
+        ]
+      }
+    }
+  },
+  
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": true
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "moby": true,
+      "dockerDashComposeVersion": "v2"
+    },
+    "ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
+    "ghcr.io/devcontainers-contrib/features/jq-apt-get:1": {},
+    "ghcr.io/devcontainers-contrib/features/typescript:2": {
+      "version": "latest"
+    }
+  },
+  
+  "forwardPorts": [
+    3000,
+    5000,
+    8080,
+    9323
+  ],
+  
+  "portsAttributes": {
+    "3000": {
+      "label": "Application",
+      "onAutoForward": "notify"
+    },
+    "5000": {
+      "label": "API",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Test Server",
+      "onAutoForward": "silent"
+    },
+    "9323": {
+      "label": "Playwright Inspector",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  
+  "remoteUser": "root",
+  
+  "postStartCommand": "git config --global --add safe.directory /workspace",
+  
+  "waitFor": "postCreateCommand",
+  
+  "updateContentCommand": "npm install",
+  
+  "onCreateCommand": "echo '🚀 SDET+++++ Dev Container initializing...'",
+  
+  "shutdownAction": "stopContainer"
 }

@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    "ms-playwright.playwright",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+    "firsttris.vscode-jest-runner",
+    "orta.vscode-jest",
+    "usernamehw.errorlens",
+    "eamodio.gitlens",
+    "GitHub.copilot",
+    "ms-azuretools.vscode-docker",
+    "humao.rest-client",
+    "streetsidesoftware.code-spell-checker",
+    "wayou.vscode-todo-highlight",
+    "oderwat.indent-rainbow",
+    "PKief.material-icon-theme",
+    "aaron-bond.better-comments",
+    "christian-kohler.path-intellisense",
+    "wix.vscode-import-cost",
+    "ritwickdey.LiveServer"
+  ],
+  "unwantedRecommendations": []
+}
