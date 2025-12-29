@@ -1,19 +1,228 @@
+# ══════════════════════════════════════════════════════════════
+# SDET+++++ Docker Compose Configuration
+# ══════════════════════════════════════════════════════════════
+# Version: 3.0.0
+# Purpose: Multi-service test orchestration
+# ══════════════════════════════════════════════════════════════
 
+version: '3.8'
 
+# ============
+# Services
+# ============
 services:
-  ngx-admin:
-    build: .
-    image: ngx-admin:latest
-    container_name: ngx-admin-container
+  # ────────────────────────────────────────────────────────────
+  # Playwright Test Runner (Main Service)
+  # ────────────────────────────────────────────────────────────
+  playwright-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: "20"
+        PLAYWRIGHT_VERSION: "1.56.1"
+    
+    image: playwright-tests:latest
+    
+    container_name: playwright-sdet
+    
+    # Resource limits (production-grade)
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    
+    # Environment variables
+    environment:
+      - NODE_ENV=test
+      - CI=true
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+      - TZ=UTC
+      - FORCE_COLOR=1
+      # Test configuration
+      - TEST_TIMEOUT=60000
+      - TEST_RETRIES=2
+      - WORKERS=4
+      # Reporting
+      - ALLURE_RESULTS_DIR=/workspace/allure-results
+      - ALLURE_REPORT_DIR=/workspace/allure-report
+    
+    # Volume mounts for persistence
     volumes:
+      # Source code (for development)
       - .:/workspace:cached
-      - /workspace/node_modules
-      - ./my-allure-results:/workspace/my-allure-results
-
-    working_dir: /workspace
-    ipc: host
+      # Persistent test results
+      - test-results:/workspace/test-results
+      - playwright-report:/workspace/playwright-report
+      - allure-results:/workspace/allure-results
+      - allure-report:/workspace/allure-report
+      # Cache for faster rebuilds
+      - npm-cache:/root/.npm
+      - playwright-cache:/ms-playwright
+    
+    # Port mappings
     ports:
-      - "5252:5252"   # Allure Server
-    # one-command script to install dependencies, run tests, generate and open Allure report :  entrypoint: ["/bin/bash", "-c", "npm ci --legacy-peer-deps && npx playwright install --with-deps && npm run pageObjects-all && npm test && npm run allure:generate && npm run allure:open*/"]
+      - "5252:5252"  # Allure report server
+      - "9323:9323"  # Playwright inspector
+    
+    # Network configuration
+    networks:
+      - test-network
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Command override examples (uncomment to use)
+    # command: npx playwright test --project=chromium
+    # command: /bin/bash  # Interactive mode
 
-    entrypoint: ["/bin/bash", "-c", "npm ci --legacy-peer-deps && npx playwright install --with-deps && npm run pageObjects-all && npm test && npm run allure:generate && npm run allure:open"]
+  # ────────────────────────────────────────────────────────────
+  # Allure Report Server (Optional standalone service)
+  # ────────────────────────────────────────────────────────────
+  allure-server:
+    image: frankescobar/allure-docker-service:2.21.0
+    container_name: allure-server
+    
+    environment:
+      - CHECK_RESULTS_EVERY_SECONDS=5
+      - KEEP_HISTORY=1
+      - KEEP_HISTORY_LATEST=25
+    
+    ports:
+      - "5050:5050"  # Allure UI
+      - "4040:4040"  # Allure API
+    
+    volumes:
+      - allure-results:/app/allure-results
+      - allure-reports:/app/default-reports
+    
+    networks:
+      - test-network
+    
+    depends_on:
+      - playwright-tests
+
+  # ────────────────────────────────────────────────────────────
+  # Test Application Server (if needed)
+  # ────────────────────────────────────────────────────────────
+  # test-app:
+  #   image: nginx:alpine
+  #   container_name: test-app
+  #   ports:
+  #     - "3000:80"
+  #   volumes:
+  #     - ./app:/usr/share/nginx/html:ro
+  #   networks:
+  #     - test-network
+
+# ============
+# Named Volumes (Persistent Storage)
+# ============
+volumes:
+  test-results:
+    driver: local
+  playwright-report:
+    driver: local
+  allure-results:
+    driver: local
+  allure-report:
+    driver: local
+  allure-reports:
+    driver: local
+  npm-cache:
+    driver: local
+  playwright-cache:
+    driver: local
+
+# ============
+# Networks
+# ============
+networks:
+  test-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+# ══════════════════════════════════════════════════════════════
+# 🚀 USAGE COMMANDS
+# ══════════════════════════════════════════════════════════════
+#
+# Start all services:
+#   docker-compose up
+#
+# Start in background:
+#   docker-compose up -d
+#
+# Build and start:
+#   docker-compose up --build
+#
+# Run specific service:
+#   docker-compose up playwright-tests
+#
+# Run tests once and remove:
+#   docker-compose run --rm playwright-tests
+#
+# Interactive shell:
+#   docker-compose run --rm playwright-tests /bin/bash
+#
+# Run specific test:
+#   docker-compose run --rm playwright-tests npx playwright test specific.spec.ts
+#
+# View logs:
+#   docker-compose logs -f playwright-tests
+#
+# Stop all services:
+#   docker-compose down
+#
+# Stop and remove volumes:
+#   docker-compose down -v
+#
+# Scale tests (parallel execution):
+#   docker-compose up --scale playwright-tests=3
+#
+# ══════════════════════════════════════════════════════════════
+# 📊 PRODUCTION DEPLOYMENT
+# ══════════════════════════════════════════════════════════════
+#
+# For CI/CD environments:
+#   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+#
+# For scheduled runs:
+#   docker-compose run --rm playwright-tests npm run test:scheduled
+#
+# With custom environment:
+#   docker-compose --env-file .env.staging up
+#
+# ══════════════════════════════════════════════════════════════
+# 🔧 TROUBLESHOOTING
+# ══════════════════════════════════════════════════════════════
+#
+# View service status:
+#   docker-compose ps
+#
+# Check resource usage:
+#   docker stats
+#
+# Inspect network:
+#   docker network inspect playwright-tests_test-network
+#
+# Clean up everything:
+#   docker-compose down -v --rmi all
+#
+# Rebuild from scratch:
+#   docker-compose build --no-cache
+#
+# ══════════════════════════════════════════════════════════════
