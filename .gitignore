@@ -53,4 +53,6 @@ playwright/.auth/
 # Logs & Temp
 *.log
 *.zip
-*.tar.gz
+*.tar.gz.playwright-browsers/
+playwright-report/
+test-results/
