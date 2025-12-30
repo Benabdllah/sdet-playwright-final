@@ -26,7 +26,7 @@
   "mounts": [
     "source=${localWorkspaceFolder}/.playwright-browsers,target=/workspaces/.playwright-browsers,type=bind,consistency=cached",
     "source=${localWorkspaceFolder}/.npm-cache,target=/workspaces/.npm-cache,type=bind,consistency=cached",
-    "source=playwright-vscode-server,target=/root/.vscode-server,type=volume"
+    "source=playwright-vscode-seadd .rver,target=/root/.vscode-server,type=volume"
   ],
 
   "customizations": {
