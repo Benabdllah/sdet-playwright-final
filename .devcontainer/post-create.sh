@@ -58,6 +58,11 @@ alias test:smoke='npx playwright test --grep @smoke'
 alias test:regression='npx playwright test --grep @regression'
 alias test:headed='npx playwright test --headed'
 
+alias cuc='npx cucumber-js'
+alias cuc:smoke='npx cucumber-js --profile smoke'
+alias cuc:reg='npx cucumber-js --profile regression'
+alias cuc:debug='npx cucumber-js --profile debug'
+
 # Useful shortcuts
 alias ll='ls -alF'
 alias la='ls -A'

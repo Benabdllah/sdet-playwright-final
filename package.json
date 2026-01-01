@@ -1,12 +1,20 @@
 {
-  "name": "SDET_pw-practice-app",
+  "name": "SDET_PW_Practice",
   "version": "1.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bondar-artem/pw-practice-app.git"
+    "url": "git+https://github.com/Benabdllah/Sdet-pw-practice-app.git"
   },
   "scripts": {
+    "test:cuc": "npx cucumber-js --profile default",
+    "test:cuc:smoke": "npx cucumber-js --profile smoke",
+    "test:cuc:regression": "npx cucumber-js --profile regression",
+    "test:cuc:debug": "npx cucumber-js --profile debug",
+    "test:debug": "npx playwright test --debug",
+    "test:ci": "npx cucumber-js --profile ci --reporter=dot --reporter=html --reporter=allure-playwright",
+    "test:headless": "npx playwright test --headless",
+    "test:headed": "npx playwright test --headed",
     "test:local": "npx playwright test",
     "test:docker": "docker exec pw-dev npx playwright test",
     "dev": "tsx",
@@ -65,10 +73,12 @@
     "@angular/compiler-cli": "^19.2.15",
     "@angular/language-service": "^19.2.15",
     "@compodoc/compodoc": "^1.1.19",
-    "@cucumber/cucumber": "^11.2.0",
+    "@cucumber/cucumber": "^12.5.0",
     "@faker-js/faker": "^9.6.0",
     "@fortawesome/fontawesome-free": "^5.2.0",
     "@playwright/test": "^1.56.1",
+    "@types/cucumber": "^6.0.1",
+    "@types/dotenv": "^6.1.1",
     "@types/leaflet": "1.2.3",
     "@types/node": "^20.5.6",
     "allure-commandline": "^2.33.0",

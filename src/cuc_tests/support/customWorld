@@ -1,0 +1,32 @@
+import { IWorldOptions, World } from '@cucumber/cucumber';
+import { Browser, BrowserContext, Page } from '@playwright/test';
+
+export class CustomWorld extends World {
+  browser!: Browser;
+  context!: BrowserContext;
+  page!: Page;
+
+  scenarioName?: string;
+  featureName?: string;
+  startTime?: number;
+
+  logs: string[] = [];
+
+  constructor(options: IWorldOptions) {
+    super(options);
+  }
+
+  async initPage(browser: Browser) {
+    this.context = await browser.newContext();
+    this.page = await this.context.newPage();
+
+    this.page.on('console', msg => {
+      this.logs.push(`[${msg.type()}] ${msg.text()}`);
+    });
+  }
+
+  async close() {
+    if (this.page) await this.page.close();
+    if (this.context) await this.context.close();
+  }
+}

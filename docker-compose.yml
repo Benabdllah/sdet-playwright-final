@@ -24,7 +24,7 @@ services:
     
     image: playwright-tests:latest
     
-    container_name: playwright-sdet
+    container_name: playwright-SDET-tests
     
     # Resource limits (production-grade)
     deploy:

@@ -8,5 +8,5 @@ export function getRoleTag() {
     genehmiger: /@genehmiger/,
     guest:      /@guest/,
   };
-  return map[role] || /.*/;
+  return map[role] || /.*/; // Default: match all (for local development), hier wird zb. map['guest'] genutzt
 }

@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+//import { fk } from '@faker-js/faker';
 
 import { defineConfig, devices } from '@playwright/test';
 import { getRoleTag } from './src/config/roleFilter';
@@ -13,21 +13,12 @@ import { getRoleTag } from './src/config/roleFilter';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const SELECTED_ROLE = process.env.ROLE || 'guest';  // <-- der heilige Schalter
 export default defineConfig({
-  grep: (() => {
-    switch (SELECTED_ROLE) {
-      case 'admin':     return /@admin/;
-      case 'customer':  return /@customer/;
-      case 'supporter': return /@supporter/;
-      case 'genehmiger':return /@genehmiger/;
-      case 'guest':     return /@guest/;
-      default:          return /./; // alles (nur für lokale Entwicklung)
-    }
-  })(),
+  grep: getRoleTag() || undefined,//➡️ grep ist eine Konfigurations-Property (ein Feld), ist keine Funktion
+  grepInvert: /@slow/, // Beispiel: alle Tests außer die mit @slow Tag
 
   // Optional: noch sauberer – komplett auslagern
-  // grep: getRoleTag(),
+  // grep: getRoleTag(), 
   timeout: 60_000,
   globalTimeout: 3_600_000, // 1 hour for CI to complete all tests
   testDir: './src/tests',
