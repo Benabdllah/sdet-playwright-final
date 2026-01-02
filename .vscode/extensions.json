@@ -1,24 +1,504 @@
 {
+  // ============================================================================
+  // ULTIMATIVE ULTRA SDET +++++ FINAL VERSION - VS Code Extensions Konfiguration
+  // ============================================================================
+  // Diese Datei definiert eine produktionsreife Sammlung von VS Code Extensions
+  // für professionelle Software Development Engineer in Test (SDET) Automation.
+  //
+  // Sie konzentriert sich auf:
+  // ✓ Playwright E2E Testing Framework
+  // ✓ TypeScript / JavaScript Development
+  // ✓ Test Automation Best Practices
+  // ✓ Code Quality & Linting
+  // ✓ Git Integration & Collaboration
+  // ✓ REST API Testing & Debugging
+  // ✓ Performance Monitoring & Profiling
+  // ✓ Security & OWASP Compliance
+  // ✓ Accessibility Testing (A11y)
+  // ✓ Monitoring & Observability
+  // ✓ Container Orchestration (Docker/Kubernetes)
+  // ============================================================================
+
   "recommendations": [
+    // ========================================================================
+    // CORE TESTING FRAMEWORKS & RUNNERS
+    // ========================================================================
+
+    // Playwright Test Framework - Offizielle Extension für E2E/Integration Tests
+    // Features: Inspector, Test Runner, Debug Mode, Trace Viewer, HTML Reports
     "ms-playwright.playwright",
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
-    "ms-vscode.vscode-typescript-next",
-    "firsttris.vscode-jest-runner",
+
+    // Test Explorer UI - Zentrale Verwaltung aller Tests (Playwright, Jest, etc.)
+    // Features: Test Discovery, Execution, Debugging, Coverage Reports
+    "hbenl.vscode-test-explorer",
+
+    // Jest Extension - Unit Test Framework Integration
+    // Features: Test Runner, Quick Navigation, Coverage Highlighting, Debugging
     "orta.vscode-jest",
+
+    // Jest Runner - Alternative Jest Integration mit besserer UI
+    // Features: Code Lens Integration, Test Execution Buttons, Quick Run
+    "firsttris.vscode-jest-runner",
+
+    // Vitest - Alternative TypeScript Test Framework
+    // Features: Speed, ES Modules Support, TypeScript First Class Support
+    "vitest.explorer",
+
+    // Test Results Summary - Visuelle Zusammenfassung von Test-Ergebnissen
+    // Features: HTML Reports, Failure Analysis, Trend Tracking
+    "ryanluker.vscode-coverage-gutters",
+
+    // ========================================================================
+    // TYPESCRIPT & JAVASCRIPT DEVELOPMENT
+    // ========================================================================
+
+    // TypeScript Next - Neueste TypeScript Features & Language Server
+    // Features: Type Checking, IntelliSense, Quick Fixes, Refactoring
+    "ms-vscode.vscode-typescript-next",
+
+    // TypeScript Vue Plugin - TypeScript Unterstützung für Vue Templates
+    // Features: Template Type Checking, IntelliSense in Templates
+    "Vue.vscode-typescript-vue-plugin",
+
+    // JavaScript Debugger - Debugging für Node.js und Browser
+    // Features: Breakpoints, Watch Expressions, Call Stack Analysis, Step Debugging
+    "ms-vscode.js-debug",
+
+    // Better JavaScript Debugger - Verbesserte Debugging-Erfahrung
+    // Features: Bessere Variable Inspection, Async Stack Traces
+    "ms-vscode.js-debug-nightly",
+
+    // ========================================================================
+    // CODE QUALITY & LINTING
+    // ========================================================================
+
+    // ESLint - JavaScript/TypeScript Linting & Code Analysis
+    // Features: Real-time Linting, Auto-Fix, Custom Rules, Integration
+    "dbaeumer.vscode-eslint",
+
+    // Prettier - Code Formatter für Konsistenz & Lesbarkeit
+    // Features: Auto-Format, Multi-Language, Config File Support
+    "esbenp.prettier-vscode",
+
+    // StyleLint - CSS/SCSS Linting für Stylesheet Quality
+    // Features: Linting Rules, Auto-Fix, Vendor Prefix Support
+    "stylelint.vscode-stylelint",
+
+    // YAML Validator - YAML/JSON Schema Validierung für Config Files
+    // Features: Schema Validation, Auto-Complete, Inline Error Reports
+    "redhat.vscode-yaml",
+
+    // Error Lens - Inline Error/Warning Display für bessere Sichtbarkeit
+    // Features: Inline Diagnostics, Custom Formatting, Severity Highlighting
     "usernamehw.errorlens",
-    "eamodio.gitlens",
-    "GitHub.copilot",
-    "ms-azuretools.vscode-docker",
-    "humao.rest-client",
+
+    // Code Spell Checker - Rechtschreibprüfung für Code & Comments
+    // Features: Custom Dictionaries, Ignore Patterns, Multiple Languages
     "streetsidesoftware.code-spell-checker",
-    "wayou.vscode-todo-highlight",
-    "oderwat.indent-rainbow",
-    "PKief.material-icon-theme",
+
+    // German Spell Checker - Unterstützung für Deutschprüfung
+    // Features: German Dictionary, Language-Specific Rules
+    "streetsidesoftware.code-spell-checker-german",
+
+    // Better Comments - Visuelle Syntax Highlighting für Code Comments
+    // Features: Color-Coded Comments, Custom Tags, Highlight Patterns
     "aaron-bond.better-comments",
+
+    // ========================================================================
+    // REST API TESTING & HTTP CLIENT
+    // ========================================================================
+
+    // REST Client - Inline HTTP Request Testing direkt im Editor
+    // Features: HTTP Requests, Response Preview, Environment Variables, Scripting
+    "humao.rest-client",
+
+    // Thunder Client - Leichte Alternative zu Postman
+    // Features: REST Testing, WebSocket Support, Environment Management
+    "rangav.vscode-thunder-client",
+
+    // GraphQL - GraphQL Query Development & Validation
+    // Features: Syntax Highlighting, Autocomplete, Schema Navigation
+    "GraphQL.vscode-graphql",
+
+    // WebSocket Debugging - WebSocket Protocol Inspection & Debugging
+    // Features: Message Capture, Frame Analysis, Real-time Monitoring
+    "morrissimo.vscode-websocket-client",
+
+    // ========================================================================
+    // GIT & VERSION CONTROL
+    // ========================================================================
+
+    // GitLens - Git Integration mit erweiterten Features
+    // Features: Blame Information, Commit History, Branch Management, Diff
+    "eamodio.gitlens",
+
+    // Git Automator - Automatisierung von Git Workflows
+    // Features: Custom Commands, Macro Support, Workflow Automation
+    "sorokin.autogit",
+
+    // GitHub Copilot - AI-Powered Code Completion & Suggestions
+    // Features: Code Generation, Explanations, Chat Interface, PR Comments
+    "GitHub.copilot",
+
+    // GitHub Copilot Chat - Conversational AI für Code Development
+    // Features: Code Questions, Debugging Assistance, Refactoring Suggestions
+    "GitHub.copilot-chat",
+
+    // Pull Request & Issues - GitHub PR/Issue Management im Editor
+    // Features: PR Review, Comment Threads, Issue Tracking, Status Updates
+    "GitHub.vscode-pull-request-github",
+
+    // Commit Message AI - AI-Gestützte Git Commit Message Generation
+    // Features: Conventional Commits, Message Templates, Analytics
+    "Zerption.commit-message-ai",
+
+    // ========================================================================
+    // DEBUGGING & PROFILING
+    // ========================================================================
+
+    // Debugger for Chrome - Debugging für Chrome/Chromium Browser
+    // Features: Remote Debugging, Breakpoints, Source Maps, Profiling
+    "msjsdiag.debugger-for-chrome",
+
+    // Debugger for Firefox - Firefox Browser Debugging Integration
+    // Features: Remote Protocol, Sourcemap Support, Developer Tools
+    "firefox-devtools.vscode-firefox-debug",
+
+    // Node.js Debugging - Erweiterte Node.js Debugging Capabilities
+    // Features: Breakpoints, Condition Evaluation, Memory Inspection
+    "ms-vscode.node-debug2",
+
+    // Chrome Debugger - Google Chrome/Chromium Debug Protocol
+    // Features: Port Forwarding, Remote Debugging, Performance Monitoring
+    "msjsdiag.debugger-for-edge",
+
+    // Performance Profiler - JavaScript Performance Profiling Tools
+    // Features: Flame Graphs, Timeline Analysis, Memory Profiling
+    "wkh237.col-align",
+
+    // ========================================================================
+    // DOCKER & CONTAINERIZATION
+    // ========================================================================
+
+    // Docker - Docker Container Management Extension
+    // Features: Image/Container Management, Dockerfile Syntax, Registry Integration
+    "ms-azuretools.vscode-docker",
+
+    // Kubernetes - Kubernetes Cluster Management & Deployment
+    // Features: Cluster Navigation, Manifest Editing, Deployment Management
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+
+    // Dev Containers - Remote Container Development Support
+    // Features: Containerized Development, Dependency Isolation, Environment Consistency
+    "ms-vscode-remote.remote-containers",
+
+    // Docker Compose - Docker Compose File Support & Management
+    // Features: Service Navigation, Port Forwarding, Log Monitoring
+    "ms-azuretools.vscode-docker-compose",
+
+    // ========================================================================
+    // SECURITY & COMPLIANCE
+    // ========================================================================
+
+    // Security Scanner - OWASP & CWE Vulnerability Scanning
+    // Features: CVE Detection, Dependency Audit, Security Recommendations
+    "aquasecurity.trivy",
+
+    // SARIF Viewer - Security Analysis Result Format Visualization
+    // Features: Vulnerability Reports, Code Location Mapping, Trend Analysis
+    "microsoft.sarif-viewer",
+
+    // Secret Detector - Hardcoded Secret & Credential Detection
+    // Features: Pattern Matching, Secret Scanning, Remediation Suggestions
+    "whitesource.whitesource",
+
+    // SonarQube - Code Quality & Security Analysis
+    // Features: Code Smells, Bugs, Vulnerabilities, Technical Debt Analysis
+    "SonarSource.sonarlint-vscode",
+
+    // ============================================================================
+    // FILE & DIRECTORY NAVIGATION
+    // ============================================================================
+
+    // Path Intellisense - Intellisense für Dateipfade & Imports
+    // Features: Auto-Complete, Path Resolution, Alias Support
     "christian-kohler.path-intellisense",
+
+    // Import Cost - Analyse der Import Größe & Bundle Impact
+    // Features: File Size, Package Size, Optimization Suggestions
     "wix.vscode-import-cost",
-    "ritwickdey.LiveServer"
+
+    // File Utils - Datei- & Verzeichnis Operationen
+    // Features: File Creation, Move, Copy, Rename mit Shortcuts
+    "sleistner.vscode-fileutils",
+
+    // Trailing Spaces - Erkennung & Entfernung von Trailing Spaces
+    // Features: Highlighting, Auto-Removal, Performance Optimization
+    "shardulm94.trailing-spaces",
+
+    // ============================================================================
+    // ACCESSIBILITY & COMPLIANCE TESTING
+    // ============================================================================
+
+    // Accessibility Insights - WCAG & Section 508 Compliance Checking
+    // Features: Automated Testing, Manual Testing Guidance, Repair Assistance
+    "ms-edgedevtools.edge-devtools",
+
+    // Axe DevTools - Automated Accessibility Testing von Deque
+    // Features: WCAG Level AA/AAA, Issue Severity, Remediation Guidance
+    "deque.axe-devtools",
+
+    // Color Blindness Simulator - Simulation verschiedener Color Blindness Types
+    // Features: Deuteranopia, Protanopia, Tritanopia, Achromopsia Simulation
+    "ms-vscode.color-theme-simulator",
+
+    // WebAIM Color Contrast Checker - Farbkontrast Validierung
+    // Features: WCAG AA/AAA Compliance, Contrast Ratio Calculation
+    "karthiknadig.color-contrast-checker",
+
+    // ============================================================================
+    // PERFORMANCE & MONITORING
+    // ============================================================================
+
+    // Peacock - Visuelle Workspace Identifikation mit Farbcodierung
+    // Features: Window Coloring, Status Bar Coloring, Team Differentiation
+    "johnpapa.vscode-peacock",
+
+    // Settings Sync - VS Code Settings, Extensions, Keybindings Synchronization
+    // Features: Cloud Sync, Multi-Device Consistency, Backup Management
+    "Shan.code-settings-sync",
+
+    // Memory Usage - RAM & CPU Usage Monitoring
+    // Features: Real-time Monitoring, Performance Alerts, Optimization Tips
+    "traBpUkciP.code-memory",
+
+    // Todo Highlight - Visuelle Highlighting von TODO/FIXME/NOTE Comments
+    // Features: Custom Tags, Color Highlighting, Quick Navigation
+    "wayou.vscode-todo-highlight",
+
+    // ============================================================================
+    // CODE ORGANIZATION & FORMATTING
+    // ============================================================================
+
+    // Indent Rainbow - Visuelle Indent Level Unterscheidung mit Farben
+    // Features: Nested Level Highlighting, Performance Optimization, Customization
+    "oderwat.indent-rainbow",
+
+    // Bracket Pair Colorizer - Farbcodierung von Bracket Paaren
+    // Features: Matching Pair Detection, Custom Colors, Scope Analysis
+    "CoenraadS.bracket-pair-colorizer-2",
+
+    // Rainbow CSV - CSV/TSV mit Farbcodierung für bessere Lesbarkeit
+    // Features: Column Highlighting, Data Navigation, Quick Analysis
+    "mechatroner.rainbow-csv",
+
+    // Tabs - Bessere Tab Management für Multiple Files
+    // Features: Tab Coloring, Quick Navigation, Workspace Organization
+    "hok2e.tabs-manager",
+
+    // ============================================================================
+    // THEME & UI CUSTOMIZATION
+    // ============================================================================
+
+    // Material Icon Theme - Moderne Material Design Icons für Dateien/Folder
+    // Features: Icon Customization, Color Association, Multiple Themes
+    "PKief.material-icon-theme",
+
+    // One Dark Pro - Premium One Dark Theme mit hohem Kontrast
+    // Features: Syntax Highlighting, Workbench Theming, Custom Colors
+    "zhuangtongfa.material-theme",
+
+    // Dracula Official - Dracula Color Theme für VS Code
+    // Features: Color Harmony, Eye Comfort, Multiple Variants
+    "dracula-theme.theme-dracula",
+
+    // Nord Theme - Arctic, North-bluish Color Palette
+    // Features: Minimalist Design, Cool Tones, Accessibility Focus
+    "arcticicestudio.nord-visual-studio-code",
+
+    // Icons Extension - Zusätzliche Icon Packs für verschiedene Dateitypen
+    // Features: File Type Differentiation, Visual Organization, Quick Identification
+    "tal7aouy.icons",
+
+    // ============================================================================
+    // DEVELOPMENT TOOLS & UTILITIES
+    // ============================================================================
+
+    // Thunder Client - Lightweight REST API Client Alternative
+    // Features: HTTP Testing, Environment Variables, Request History
+    "rangav.vscode-thunder-client",
+
+    // Live Server - Lokaler Development Server mit Live Reload
+    // Features: Auto-Refresh, Multi-Root Workspaces, Simple Setup
+    "ritwickdey.LiveServer",
+
+    // HTTP/2 Client - Advanced HTTP/2 Protocol Support für API Testing
+    // Features: Server Push, Multiplexing, Header Compression Inspection
+    "mkloubert.vscode-http-client",
+
+    // XML Tools - XML Validation, Formatting, XPath Query Support
+    // Features: Syntax Highlighting, Pretty Print, Format Validation
+    "DotJoshJohnson.xml",
+
+    // JSON Tools - JSON Validation, Formatting, Schema Support
+    // Features: JSON Schema Validation, Formatting, Comparison
+    "eriklynd.json-tools",
+
+    // ============================================================================
+    // DOCUMENTATION & MARKDOWN
+    // ============================================================================
+
+    // Markdown All in One - Markdown Editing & Preview Enhancement
+    // Features: Syntax Highlighting, Table of Contents, Mathematical Notation
+    "yzhang.markdown-all-in-one",
+
+    // Markdown Preview Enhanced - Advanced Markdown Preview mit Math/Diagram Support
+    // Features: PlantUML, Mermaid Diagrams, Math Rendering, Export Options
+    "shd101wyy.markdown-preview-enhanced",
+
+    // Swagger Viewer - OpenAPI/Swagger Specification Viewer
+    // Features: API Documentation, Endpoint Navigation, Interactive Explorer
+    "Arjun.swagger-viewer",
+
+    // Mermaid Diagram Support - Diagramm-Erstellung mit Mermaid Syntax
+    // Features: Flowcharts, Sequence Diagrams, Class Diagrams, Git Graphs
+    "bierner.markdown-mermaid",
+
+    // ============================================================================
+    // TEST DATA & FIXTURES MANAGEMENT
+    // ============================================================================
+
+    // Generate Random Data - Fixture & Test Data Generation
+    // Features: Mock Data, Password Generation, UUID Creation
+    "tomoki1207.vscode-random",
+
+    // Faker - Realistic Mock Data Generation für Testing
+    // Features: Addresses, Names, Emails, Phone Numbers, Custom Patterns
+    "ms-vscode.extension-pack-for-web",
+
+    // Template Strings - Template String & String Interpolation Helpers
+    // Features: Quick Template Generation, Format Helpers, String Tools
+    "carlwuhwobeda.template-string-converter",
+
+    // ============================================================================
+    // ENV & CONFIGURATION MANAGEMENT
+    // ============================================================================
+
+    // DotENV - .env File Support & Syntax Highlighting
+    // Features: Variable Highlighting, Syntax Validation, Quick Navigation
+    "mikestead.dotenv",
+
+    // ENV Validator - Environment Variable Validation gegen Schemas
+    // Features: Schema Definition, Type Checking, Required Variables Validation
+    "IronGeek.vscode-env",
+
+    // EnvFile - Environment Variable File Support & Toggle
+    // Features: Multi-Environment Management, Quick Switching, File Support
+    "jsynowiec.vscode-dotenv",
+
+    // ============================================================================
+    // CI/CD & AUTOMATION
+    // ============================================================================
+
+    // GitHub Actions - GitHub Actions Workflow Editing & Validation
+    // Features: Syntax Highlighting, Quick Start Templates, Actions Explorer
+    "GitHub.vscode-github-actions",
+
+    // GitLab CI - GitLab CI/CD Pipeline Support
+    // Features: Syntax Highlighting, Validation, Quick Navigation
+    "my-linux-distro.my-linux-distro",
+
+    // Jenkins - Jenkins Pipeline Integration & Job Management
+    // Features: Job Browsing, Console Output, Pipeline Visualization
+    "secanis.vscode-jenkins-status-bar",
+
+    // Yaml - YAML Syntax Highlighting & Validation für CI/CD Config
+    // Features: Schema Validation, Syntax Highlighting, Go to Definition
+    "redhat.vscode-yaml",
+
+    // ============================================================================
+    // PRODUCTIVITY & WORKFLOW ENHANCEMENTS
+    // ============================================================================
+
+    // Polacode - Schöne Code Screenshot Generierung für Dokumentation
+    // Features: Syntax Highlighting, Custom Theme, Export as PNG/SVG
+    "kowainik.polacode-2019",
+
+    // Quick Open - Erweiterte File Open Dialoge mit Suche
+    // Features: Fuzzy Search, Command History, Quick Actions
+    "ryuta46.multi-command",
+
+    // Snippet Manager - Custom Code Snippet Management & Generation
+    // Features: Template Variables, Placeholder Support, Organization
+    "ms-vscode.simple-java-debug",
+
+    // Macro Manager - VS Code Macro Recording & Playback für Automatisierung
+    // Features: Record Sequences, Replay Workflows, Custom Automation
+    "geddski.macros",
+
+    // ============================================================================
+    // TEAM COLLABORATION & REMOTE DEVELOPMENT
+    // ============================================================================
+
+    // Live Share - Real-time Collaborative Editing & Debugging
+    // Features: Shared Editing, Shared Server, Shared Terminal, Voice Chat
+    "MS-vsliveshare.vsliveshare",
+
+    // Live Share Audio - Audio Communication für Live Share Sessions
+    // Features: Voice Chat, Screen Sharing, Real-time Communication
+    "MS-vsliveshare.vsliveshare-audio",
+
+    // Code Review - Code Review Tools Integration
+    // Features: PR Review, Inline Comments, Approval Workflows
+    "ms-vscode-review-manager.review-manager",
+
+    // ============================================================================
+    // ADVANCED TYPESCRIPT & TYPE CHECKING
+    // ============================================================================
+
+    // TSLint - Legacy TypeScript Linting (Deprecated - verwende ESLint + TS)
+    // Hinweis: TSLint ist deprecated, nutze ESLint mit @typescript-eslint
+    // "ms-vscode.vscode-typescript-tslint-plugin",
+
+    // Zod Validator - TypeScript First Schema Validation
+    // Features: Runtime Validation, Type Inference, Error Messages
+    "ms-vscode-remote.remote-wsl",
+
+    // Prisma - Database ORM Support & Migration Tools
+    // Features: Schema Editing, Database Navigation, Migration Management
+    "Prisma.prisma",
+
+    // Drizzle Studio - SQL Database Management & Inspection
+    // Features: Schema Visualization, Query Building, Data Inspection
+    "kristijanhusak.vim"
   ],
-  "unwantedRecommendations": []
+
+  // ============================================================================
+  // UNWANTED RECOMMENDATIONS
+  // ============================================================================
+  // Diese Erweiterungen werden NICHT empfohlen und vom Marketplace ausgeblendet,
+  // um Verwirrung zu vermeiden und die Empfehlungsliste sauber zu halten.
+  // ============================================================================
+
+  "unwantedRecommendations": [
+    // Legacy & Deprecated Extensions
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "formulahendry.code-runner",
+    "eg2.tslint",
+
+    // Redundant Extensions (durch empfohlene Alternativen ersetzt)
+    "ms-vscode.sublime-keybindings",
+    "ms-vscode.vim",
+
+    // Veraltete Test Runner
+    "ms-vscode-remote.remote-wsl-recommender",
+
+    // Performance-problematische Extensions
+    "jcbuisson.duplicatekiller",
+    "wmaurer.change-case",
+
+    // Sicherheitsproblematisch (unzureichend gepflegt)
+    "hoovercj.hovercraft",
+    "alefragnani.bookmarks"
+  ]
 }

@@ -1,0 +1,66 @@
+[
+  {
+    "name": "UI Element Locator Issues",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*locator|.*could not find.*|.*selector.*|.*No such element.*|.*cannot find element.*|.*Unable to locate.*"
+  },
+  {
+    "name": "Assertion Failures",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*AssertionError.*|.*Expected.*but was.*|.*to equal.*|.*to contain.*|.*expected.*received.*|.*Assertion failed.*"
+  },
+  {
+    "name": "Timeout Errors",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*timeout.*|.*Timed out.*|.*waitForNavigation.*|.*waitForSelector.*|.*Timeout.*exceeded.*|.*exceeded timeout.*"
+  },
+  {
+    "name": "Navigation & Page Load Issues",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Navigation.*|.*page\\.goto.*|.*ERR_.*|.*net::.*|.*Failed to navigate.*"
+  },
+  {
+    "name": "Network & Connectivity Issues",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Connection refused.*|.*Connection reset.*|.*Network.*|.*ECONNREFUSED.*|.*ECONNRESET.*|.*socket hang up.*|.*net::ERR.*"
+  },
+  {
+    "name": "API & Backend Issues",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*API.*|.*HTTP [45][0-9]{2}.*|.*Status.*[45][0-9]{2}.*|.*request failed.*|.*backend.*|.*server.*error.*"
+  },
+  {
+    "name": "Browser Crash or Session Issues",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*browser.*closed.*|.*session.*|.*target.*closed.*|.*protocol.*error.*|.*Browser closed unexpectedly.*"
+  },
+  {
+    "name": "Test Data Issues",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*null.*|.*undefined.*|.*is not defined.*|.*Cannot read.*property.*|.*data.*invalid.*|.*Missing.*data.*"
+  },
+  {
+    "name": "Flaky Test",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*flaky.*|.*intermittent.*|.*race condition.*|.*inconsistent.*"
+  },
+  {
+    "name": "Permission & Authentication Issues",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*401.*|.*403.*|.*Unauthorized.*|.*Forbidden.*|.*permission.*denied.*|.*authentication.*failed.*"
+  },
+  {
+    "name": "Environment Configuration Issues",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*environment.*|.*config.*|.*Cannot find module.*|.*baseUrl.*|.*missing.*variable.*"
+  },
+  {
+    "name": "Not Implemented / Skipped",
+    "matchedStatuses": ["skipped"],
+    "messageRegex": ".*Not Implemented.*|.*@Pending.*|.*Undefined Step.*|.*skip.*|.*pending.*"
+  },
+  {
+    "name": "Unclassified Failure",
+    "matchedStatuses": ["failed"]
+  }
+]

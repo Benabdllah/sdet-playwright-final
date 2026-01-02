@@ -1,0 +1,735 @@
+# ============================================================================
+# .gitattributes - Ultimative Ultra SDET +++++ Final Version
+# ============================================================================
+# Git Attributes Configuration für SDET Automation Framework
+#
+# 📋 PURPOSE:
+# - Einheitliche Line-Ending Behandlung (CRLF vs LF)
+# - Binary vs Text Dateien definieren
+# - Diff-Strategien für verschiedene Dateitypen
+# - Merge-Strategien konfigurieren
+# - Export-Ignore Patterns
+# - Whitespace-Handling
+# - Delta-Compression für große Dateien
+#
+# 🔧 HOW THIS WORKS:
+# - `text` = Text file, Git will normalize line endings
+# - `binary` = Binary file, Git won't modify
+# - `diff=<type>` = Use specific diff algorithm
+# - `merge=<type>` = Use specific merge strategy
+# - `eol=<type>` = Force line ending (lf or crlf)
+# - `export-ignore` = Exclude from git archive
+# - `delta` = Use delta compression (large files)
+# - `ident` = Replace $Id$ keyword
+#
+# ============================================================================
+# AUTO NORMALIZATION
+# ============================================================================
+
+# Auto-detect file types based on filename and normalize line endings
+* text=auto
+
+# ============================================================================
+# SOURCE CODE - TEXT FILES (Unix Line Endings)
+# ============================================================================
+
+# TypeScript & JavaScript
+*.ts text eol=lf diff=typescript
+*.tsx text eol=lf diff=typescript
+*.js text eol=lf diff=javascript
+*.jsx text eol=lf diff=javascript
+*.mjs text eol=lf diff=javascript
+*.cjs text eol=lf diff=javascript
+
+# JSON
+*.json text eol=lf diff=json
+
+# YAML
+*.yaml text eol=lf diff=yaml
+*.yml text eol=lf diff=yaml
+
+# XML
+*.xml text eol=lf diff=xml
+
+# Configuration Files
+*.conf text eol=lf
+*.config text eol=lf
+*.properties text eol=lf
+*.gradle text eol=lf
+
+# Shell Scripts
+*.sh text eol=lf diff=bash
+*.bash text eol=lf diff=bash
+*.zsh text eol=lf diff=bash
+*.ksh text eol=lf diff=bash
+*.fish text eol=lf diff=bash
+
+# Python
+*.py text eol=lf diff=python
+*.pyw text eol=lf diff=python
+*.pyx text eol=lf diff=python
+*.pyi text eol=lf diff=python
+
+# Perl
+*.pl text eol=lf diff=perl
+
+# Ruby
+*.rb text eol=lf diff=ruby
+*.rake text eol=lf
+*.gemspec text eol=lf
+
+# PHP
+*.php text eol=lf diff=php
+
+# SQL
+*.sql text eol=lf diff=sql
+
+# CSS & Styling
+*.css text eol=lf diff=css
+*.scss text eol=lf diff=css
+*.sass text eol=lf diff=css
+*.less text eol=lf diff=css
+
+# HTML
+*.html text eol=lf diff=html
+*.htm text eol=lf diff=html
+*.xhtml text eol=lf diff=html
+
+# Markdown
+*.md text eol=lf diff=markdown
+*.markdown text eol=lf diff=markdown
+*.mdown text eol=lf diff=markdown
+*.mkdn text eol=lf diff=markdown
+*.mkd text eol=lf diff=markdown
+*.mdwn text eol=lf diff=markdown
+
+# Documentation
+*.txt text eol=lf
+*.rst text eol=lf
+*.adoc text eol=lf
+*.asciidoc text eol=lf
+
+# Gradle/Maven
+*.gradle text eol=lf diff=java
+pom.xml text eol=lf diff=xml
+build.xml text eol=lf diff=xml
+
+# Make
+Makefile text eol=lf diff=makefile
+makefile text eol=lf diff=makefile
+*.mk text eol=lf diff=makefile
+
+# Dockerfile
+Dockerfile text eol=lf diff=dockerfile
+dockerfile text eol=lf diff=dockerfile
+Dockerfile.* text eol=lf diff=dockerfile
+*.dockerfile text eol=lf diff=dockerfile
+
+# Docker Compose
+docker-compose.yml text eol=lf diff=yaml
+docker-compose.yaml text eol=lf diff=yaml
+docker-compose.*.yml text eol=lf diff=yaml
+docker-compose.*.yaml text eol=lf diff=yaml
+
+# Jenkins
+Jenkinsfile text eol=lf diff=groovy
+*.groovy text eol=lf diff=groovy
+*.gradle text eol=lf diff=groovy
+
+# GitHub
+.github/* text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.gitkeep text eol=lf
+
+# GitLab
+.gitlab-ci.yml text eol=lf diff=yaml
+.gitlab* text eol=lf
+
+# GitHub Actions
+.github/workflows/*.yml text eol=lf diff=yaml
+.github/workflows/*.yaml text eol=lf diff=yaml
+
+# .env Files
+.env* text eol=lf
+*.env text eol=lf
+
+# License & Legal
+LICENSE text eol=lf
+COPYING text eol=lf
+COPYING.LESSER text eol=lf
+LICENSE.* text eol=lf
+AUTHORS text eol=lf
+CONTRIBUTORS text eol=lf
+NOTICE text eol=lf
+
+# Changelog & History
+CHANGELOG* text eol=lf
+CHANGELOG.* text eol=lf
+HISTORY text eol=lf
+NEWS text eol=lf
+CHANGES text eol=lf
+
+# README & Documentation
+README* text eol=lf
+README.* text eol=lf
+*.md text eol=lf
+SETUP.md text eol=lf
+INSTALL.md text eol=lf
+TESTING.md text eol=lf
+CONTRIBUTING.md text eol=lf
+API.md text eol=lf
+ARCHITECTURE.md text eol=lf
+TROUBLESHOOTING.md text eol=lf
+
+# Package Managers
+package.json text eol=lf diff=json
+package-lock.json text eol=lf diff=json
+yarn.lock text eol=lf diff=json
+pnpm-lock.yaml text eol=lf diff=yaml
+poetry.lock text eol=lf diff=python
+Pipfile text eol=lf diff=python
+Pipfile.lock text eol=lf diff=json
+Gemfile text eol=lf diff=ruby
+Gemfile.lock text eol=lf diff=ruby
+requirements.txt text eol=lf diff=python
+requirements*.txt text eol=lf diff=python
+setup.py text eol=lf diff=python
+setup.cfg text eol=lf
+
+# TypeScript Configuration
+tsconfig.json text eol=lf diff=json
+tsconfig.*.json text eol=lf diff=json
+
+# ESLint Configuration
+.eslintrc text eol=lf diff=json
+.eslintrc.* text eol=lf
+.eslintignore text eol=lf
+
+# Prettier Configuration
+.prettierrc text eol=lf diff=json
+.prettierrc.* text eol=lf
+.prettierignore text eol=lf
+
+# Babel Configuration
+.babelrc text eol=lf diff=json
+babel.config.* text eol=lf
+
+# Test Configuration
+jest.config.* text eol=lf
+karma.conf.* text eol=lf
+mocha.opts text eol=lf
+.mocharc.* text eol=lf
+*.mocharc.* text eol=lf
+cypress.config.* text eol=lf
+playwright.config.* text eol=lf
+
+# Linting
+.stylelintrc text eol=lf
+.htmlhintrc text eol=lf
+tslint.json text eol=lf diff=json
+
+# NPM
+.npmrc text eol=lf
+.npmignore text eol=lf
+
+# YARN
+.yarnrc text eol=lf
+.yarnignore text eol=lf
+.yarn-metadata.json text eol=lf
+
+# Kubernetes
+*.yaml text eol=lf diff=yaml
+*.yml text eol=lf diff=yaml
+k8s/* text eol=lf diff=yaml
+kube/* text eol=lf diff=yaml
+
+# Terraform
+*.tf text eol=lf diff=terraform
+*.tfvars text eol=lf diff=terraform
+*.tfstate text eol=lf diff=json
+
+# Ansible
+*.yml text eol=lf diff=yaml
+*.yaml text eol=lf diff=yaml
+hosts text eol=lf
+inventory text eol=lf
+
+# ============================================================================
+# TEST FILES
+# ============================================================================
+
+# Playwright Tests
+*.spec.ts text eol=lf diff=typescript
+*.spec.tsx text eol=lf diff=typescript
+*.spec.js text eol=lf diff=javascript
+*.spec.jsx text eol=lf diff=javascript
+*.test.ts text eol=lf diff=typescript
+*.test.tsx text eol=lf diff=typescript
+*.test.js text eol=lf diff=javascript
+*.test.jsx text eol=lf diff=javascript
+
+# Cucumber Feature Files
+*.feature text eol=lf diff=gherkin
+
+# Test Results (Don't treat as binary)
+*.json text eol=lf diff=json
+
+# HAR Files (HTTP Archive)
+*.har text eol=lf diff=json
+
+# ============================================================================
+# BINARY FILES
+# ============================================================================
+
+# Images
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.webp binary
+*.tiff binary
+*.tif binary
+*.bmp binary
+
+# Audio & Video
+*.mp3 binary
+*.mp4 binary
+*.m4a binary
+*.aac binary
+*.ogg binary
+*.wav binary
+*.flac binary
+*.avi binary
+*.mov binary
+*.mkv binary
+*.webm binary
+*.flv binary
+*.wmv binary
+
+# Documents
+*.pdf binary
+*.doc binary
+*.docx binary
+*.odt binary
+*.xls binary
+*.xlsx binary
+*.ods binary
+*.ppt binary
+*.pptx binary
+*.odp binary
+
+# Archives & Compressed
+*.zip binary
+*.tar binary
+*.tar.gz binary
+*.tgz binary
+*.tar.bz2 binary
+*.tar.xz binary
+*.rar binary
+*.7z binary
+*.gz binary
+*.bz2 binary
+*.xz binary
+
+# Executables & Binaries
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.o binary
+*.a binary
+*.lib binary
+*.jar binary
+*.class binary
+*.pyc binary
+*.pyo binary
+*.pyd binary
+
+# Database Files
+*.db binary
+*.sqlite binary
+*.sqlite3 binary
+*.dbf binary
+
+# Node Modules & Dependencies (Keep as binary)
+node_modules/ -text -merge -diff
+
+# Lock Files (Text for better diffs)
+yarn.lock text eol=lf
+package-lock.json text eol=lf diff=json
+pnpm-lock.yaml text eol=lf diff=yaml
+
+# ============================================================================
+# BUILD & DIST OUTPUT
+# ============================================================================
+
+# Build directories
+dist/** binary
+build/** binary
+out/** binary
+bin/** binary
+*.bundle binary
+*.bundle.js binary
+
+# Compiled JavaScript
+*.min.js binary
+*.min.css binary
+
+# Source Maps
+*.map text eol=lf diff=json
+
+# ============================================================================
+# TEMPORARY & CACHE FILES
+# ============================================================================
+
+# Dependency Caches
+node_modules/** -text
+bower_components/** -text
+vendor/** -text
+.dependencies/** -text
+
+# Build Cache
+.cache/** -text
+.tmp/** -text
+*.cache binary
+
+# IDE Cache
+.vscode/** -text -merge -diff
+.idea/** -text -merge -diff
+.vs/** -text -merge -diff
+
+# OS Files
+.DS_Store binary
+Thumbs.db binary
+ehthumbs.db binary
+Desktop.ini binary
+$RECYCLE.BIN/** binary
+
+# ============================================================================
+# SDET-SPECIFIC FILES
+# ============================================================================
+
+# Test Results
+test-results/** -text
+test-results/** binary
+allure-results/** -text
+allure-results/** binary
+
+# Reports
+reports/** -text
+reports/** binary
+coverage/** -text
+coverage/** binary
+.nyc_output/** -text
+
+# Screenshots & Artifacts
+screenshots/** binary
+videos/** binary
+traces/** binary
+artifacts/** binary
+
+# Logs (Can be large, use delta)
+*.log text eol=lf
+logs/** text eol=lf delta
+
+# HAR Files
+hars/** text eol=lf diff=json
+*.har text eol=lf diff=json
+
+# Metrics & Analytics
+metrics/** text eol=lf diff=json
+analytics/** text eol=lf diff=json
+
+# ============================================================================
+# MERGE STRATEGIES
+# ============================================================================
+
+# Resolve merge conflicts automatically for certain files
+package.json merge=npm
+package-lock.json merge=npm
+yarn.lock merge=yarn
+
+# Use ours for lockfiles during merge
+.lock merge=keepours
+
+# ============================================================================
+# WHITESPACE HANDLING
+# ============================================================================
+
+# Always treat these as having whitespace issues
+*.js whitespace=tab-in-indent
+*.ts whitespace=tab-in-indent
+*.tsx whitespace=tab-in-indent
+*.py whitespace=tab-in-indent
+
+# Indent with 4 spaces
+*.py whitespace=indent-with-non-tab,trailing-space,space-before-tab
+
+# ============================================================================
+# EXPORT IGNORE (Exclude from git archive)
+# ============================================================================
+
+# Development Tools
+.vscode/** export-ignore
+.idea/** export-ignore
+.settings/** export-ignore
+*.swp export-ignore
+*.swo export-ignore
+*~ export-ignore
+.DS_Store export-ignore
+Thumbs.db export-ignore
+
+# Testing & Coverage
+test-results/** export-ignore
+allure-results/** export-ignore
+coverage/** export-ignore
+.nyc_output/** export-ignore
+*.lcov export-ignore
+
+# Dependencies
+node_modules/** export-ignore
+vendor/** export-ignore
+bower_components/** export-ignore
+
+# Build Output
+dist/** export-ignore
+build/** export-ignore
+out/** export-ignore
+
+# Logs
+logs/** export-ignore
+*.log export-ignore
+
+# Temporary Files
+.tmp/** export-ignore
+tmp/** export-ignore
+*.tmp export-ignore
+
+# Environment
+.env export-ignore
+.env.local export-ignore
+.env.*.local export-ignore
+
+# Git-related
+.git export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+.github/** export-ignore
+
+# CI/CD (Usually)
+.github/workflows/** export-ignore
+.gitlab-ci.yml export-ignore
+
+# Documentation (Usually Included)
+# docs/** (do NOT export-ignore)
+# README.md (do NOT export-ignore)
+
+# ============================================================================
+# DELTA COMPRESSION (for large files)
+# ============================================================================
+
+# Large binary files benefit from delta compression
+*.zip delta
+*.tar delta
+*.tar.gz delta
+*.tgz delta
+*.jar delta
+*.dll delta
+*.so delta
+*.dylib delta
+
+# Large JSON files
+*.min.json delta
+large-*.json delta
+
+# Database dumps
+*.sql delta
+*.dump delta
+
+# ============================================================================
+# IDENT SUBSTITUTION
+# ============================================================================
+
+# Replace $Id$ with file hash (rarely used in modern projects)
+# *.c ident
+
+# ============================================================================
+# LANGUAGE-SPECIFIC DIFF SETTINGS
+# ============================================================================
+
+# TypeScript/JavaScript with custom diff
+*.ts diff=typescript
+*.tsx diff=typescript
+*.js diff=javascript
+*.jsx diff=javascript
+
+# Python with custom diff
+*.py diff=python
+
+# Ruby with custom diff
+*.rb diff=ruby
+
+# Java with custom diff
+*.java diff=java
+
+# C/C++ with custom diff
+*.c diff=c
+*.cpp diff=c
+*.h diff=c
+*.hpp diff=c
+
+# C# with custom diff
+*.cs diff=csharp
+
+# Bash with custom diff
+*.sh diff=bash
+*.bash diff=bash
+
+# Diff/Patch files
+*.diff text eol=lf diff=diff
+*.patch text eol=lf diff=diff
+
+# ============================================================================
+# CUSTOM MERGE STRATEGIES
+# ============================================================================
+
+# Use union merge for certain files (take both sides)
+# Uncomment if needed:
+# package.json merge=union
+# yarn.lock merge=union
+
+# Favor "ours" version in merge conflicts
+# .lock merge=keepours
+
+# ============================================================================
+# LINE ENDING RULES FOR WINDOWS
+# ============================================================================
+
+# If working on Windows with CRLF, force LF for these:
+# (already done above with eol=lf)
+
+# If working on Unix with LF, force CRLF for these (rare):
+# *.bat eol=crlf
+# *.cmd eol=crlf
+
+# ============================================================================
+# NOTES & BEST PRACTICES
+# ============================================================================
+#
+# 📋 ATTRIBUTE QUICK REFERENCE:
+#
+# Normalization:
+#   text=auto          Auto-detect and normalize
+#   eol=lf             Force Unix line endings
+#   eol=crlf           Force Windows line endings
+#
+# Classification:
+#   text               Git will normalize
+#   binary             Git won't modify
+#
+# Diffs:
+#   diff=type          Use specific diff driver
+#   -diff              Disable diff
+#
+# Merge:
+#   merge=type         Use specific merge strategy
+#   -merge             No merge (use 'ours' or 'theirs' manually)
+#
+# Other:
+#   delta              Delta compression for large files
+#   ident              $Id$ keyword substitution
+#   export-ignore      Exclude from git archive
+#
+# ============================================================================
+# WORKFLOW TIPS
+# ============================================================================
+#
+# 1. Apply .gitattributes to existing repo:
+#    git add .gitattributes
+#    git commit -m "Add .gitattributes for line ending normalization"
+#    git rm -rf --cached .
+#    git reset --hard HEAD
+#
+# 2. Normalize existing line endings:
+#    git add -A
+#    git status (check changes)
+#    git commit -m "Normalize line endings to LF"
+#
+# 3. Check current attributes:
+#    git check-attr -a <filename>
+#
+# 4. Debug merge/diff issues:
+#    git config --list | grep merge
+#    git config --list | grep diff
+#
+# 5. Export without certain files:
+#    git archive --format=tar HEAD | tar -x
+#    (Uses export-ignore settings)
+#
+# ============================================================================
+# TEAM COLLABORATION
+# ============================================================================
+#
+# ALWAYS commit .gitattributes to repository:
+#   - Ensures consistent line ending handling across team
+#   - Prevents CRLF/LF conflicts
+#   - Helps with cross-platform development (Mac/Linux/Windows)
+#   - Improves diffs and merge conflict resolution
+#
+# Tell team to refresh their clone after .gitattributes changes:
+#   git rm -rf --cached .
+#   git reset --hard HEAD
+#   git status (should be clean)
+#
+# ============================================================================
+# SDET FRAMEWORK SPECIFIC
+# ============================================================================
+#
+# This .gitattributes configuration is optimized for:
+#
+# ✓ Playwright Test Files (.spec.ts, .test.ts)
+# ✓ Cucumber Feature Files (.feature)
+# ✓ TypeScript Configuration
+# ✓ YAML/JSON Configuration Files
+# ✓ Shell Scripts (Bash, Zsh)
+# ✓ Test Results (JSON, XML, HAR)
+# ✓ Screenshots, Videos, Traces (Binary)
+# ✓ Docker & Kubernetes Files
+# ✓ CI/CD Configurations (GitHub Actions, GitLab CI, Jenkins)
+# ✓ Cross-Platform Development (Windows/Mac/Linux)
+#
+# Key Features:
+# - LF line endings for all source code (Unix standard)
+# - Proper binary handling for media files
+# - Smart diff strategies for different file types
+# - Merge strategies for lock files
+# - Export-ignore for unnecessary files
+# - Delta compression for large files
+# - Test artifact handling
+#
+# ============================================================================
+# VERSION HISTORY
+# ============================================================================
+#
+# v1.0.0 (2. Januar 2026)
+# - Initial comprehensive .gitattributes configuration
+# - Support for 50+ file types
+# - Proper line ending normalization
+# - Binary file handling
+# - Custom diff strategies
+# - Merge strategies for lock files
+# - SDET framework optimizations
+# - Cross-platform development support
+# - Export-ignore for artifacts
+# - Delta compression for large files
+#
+# ============================================================================
+# SDET Framework - Git Attributes Configuration
+# Version: 1.0.0
+# Purpose: Ensure consistent git behavior across team
+# Generated: 2. Januar 2026
+# Status: Production Ready ✅
+# ============================================================================

@@ -1,0 +1,301 @@
+# ============================================================================
+# ULTIMATE SDET ESLINT IGNORE CONFIGURATION (FINAL)
+# ============================================================================
+# Comprehensive configuration for Software Development Engineer in Test (SDET)
+# Excludes all non-source directories, artifacts, and generated files
+# ============================================================================
+
+# NODE MODULES & DEPENDENCIES
+# ============================================================================
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+npm-shrinkwrap.json
+.pnpm-store/
+
+# BUILD & DISTRIBUTION
+# ============================================================================
+dist/
+build/
+out/
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# TEST RESULTS & REPORTS
+# ============================================================================
+test-results/
+playwright-report/
+coverage/
+.coverage
+lcov-report/
+junit/
+allure-results/
+allure-report/
+reports/
+.nyc_output/
+
+# CUCUMBER ARTIFACTS
+# ============================================================================
+playwright-report/cucumber/
+cucumber/
+features/.generated/
+
+# PLAYWRIGHT & BROWSER ARTIFACTS
+# ============================================================================
+playwright/
+.playwright/
+browser-downloads/
+downloads/
+traces/
+videos/
+screenshots/
+hars/
+auth/
+
+# LOGS & TEMP FILES
+# ============================================================================
+logs/
+log/
+*.log
+*.log.*
+npm-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+debug.log
+selenium.log
+
+# ENVIRONMENT & CONFIGURATION
+# ============================================================================
+.env
+.env.local
+.env.*.local
+.env.test
+.env.test.local
+.cache
+.vscode-test/
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# DOCKER & CONTAINERS
+# ============================================================================
+docker/
+.docker/
+docker-compose.override.yml
+
+# METRICS & PERFORMANCE
+# ============================================================================
+metrics/
+performance/
+*.metrics.json
+
+# TEMPORARY FILES
+# ============================================================================
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.~*
+.viminfo
+
+# IDE & EDITOR
+# ============================================================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*.iml
+.DS_Store
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
+.vs/
+.venv/
+
+# GENERATED & AUTO-GENERATED
+# ============================================================================
+coverage/
+dist/
+build/
+.next/
+out/
+.nuxt/
+*.code-workspace
+.eslintcache
+.stylelintcache
+
+# SECURITY & CREDENTIALS
+# ============================================================================
+secrets/
+.ssh/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+credentials.json
+
+# CI/CD ARTIFACTS
+# ============================================================================
+.github/
+.gitlab-ci.yml.backup
+.circleci/
+azure-pipelines.yml.backup
+
+# VENDORED & THIRD-PARTY
+# ============================================================================
+vendor/
+vendors/
+lib/
+libs/
+jquery/
+bootstrap/
+foundation/
+
+# PUBLIC & STATIC
+# ============================================================================
+public/
+static/
+assets/
+*.min.js
+*.min.css
+
+# ROOT LEVEL FILES (except package.json)
+# ============================================================================
+!package.json
+.npmrc
+.yarnrc
+.pnpmfile.cjs
+
+# JEST & TEST CONFIGURATION
+# ============================================================================
+jest.config.js
+jest.coverage.js
+.jestrc*
+jest-snapshots/
+
+# WEBPACK & BUNDLERS
+# ============================================================================
+webpack.config.js
+webpack.config.*.js
+rollup.config.js
+vite.config.js
+next.config.js
+nuxt.config.ts
+
+# BABEL & TRANSPILERS
+# ============================================================================
+babel.config.js
+.babelrc*
+.babelignore
+
+# ANGULAR & FRAMEWORKS
+# ============================================================================
+angular.json
+.angular/
+dist/
+*.module.ts
+!src/**/*.module.ts
+
+# TYPESCRIPT
+# ============================================================================
+tsconfig.json
+tsconfig.app.json
+tsconfig.spec.json
+tsconfig.build.json
+
+# LINTING & FORMATTING
+# ============================================================================
+.eslintrc*
+.prettierrc*
+.stylelintrc*
+tslint.json
+prettier.config.js
+
+# VARIABLE FILES & DATA
+# ============================================================================
+vars/
+.variables/
+*.env.example
+
+# DOCUMENTATION
+# ============================================================================
+docs/
+!docs/
+
+# GIT
+# ============================================================================
+.git/
+.gitignore
+.gitattributes
+
+# ALLURE CONFIGURATION
+# ============================================================================
+config/allure/categories.json
+allure-results/
+allure-report/
+
+# CUCUMBER CONFIGURATION
+# ============================================================================
+config/cucumber/
+
+# SPECIFIC GENERATED FILES
+# ============================================================================
+.cache/
+.turbo/
+.swc/
+.parcel-cache/
+dist-electron/
+out/
+release/
+
+# SPECIAL SDET PATTERNS
+# ============================================================================
+**/downloads/**
+**/uploads/**
+**/.test-results/
+**/test-artifacts/
+**/screenshots/**
+**/videos/**
+**/traces/**
+**/hars/**
+**/reports/**
+**/coverage/**
+
+# BACKUP FILES
+# ============================================================================
+*.backup
+*.bak
+*.orig
+*.bkp
+
+# COMPILED
+# ============================================================================
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+*.app
+
+# OS SPECIFIC
+# ============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

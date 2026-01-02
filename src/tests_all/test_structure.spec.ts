@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { PageManager } from '../pages/pages_POM/pageManager';
 
 
-import { handlePrompt,handleAlert } from '../utils/alert-utils';
+import { handlePrompt,handleAlert } from '../helpers/alertHelper';
 
 
 

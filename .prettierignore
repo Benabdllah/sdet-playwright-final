@@ -1,1 +1,732 @@
-README.md
+# ============================================================================
+# .prettierignore - Ultimative Ultra SDET +++++ Final Version
+# ============================================================================
+# Prettier Code Formatter Ignore-Konfiguration für SDET Framework
+#
+# 📋 ZWECK:
+# - Dateien/Verzeichnisse vom Prettier-Formatting ausschließen
+# - Formatierung von generiertem/kompiliertem Code verhindern
+# - Build-Artefakte und Abhängigkeiten überspringen
+# - Fremdcode schützen
+# - Formatter-Performance optimieren
+# - Formatierungskonflikte vermeiden
+# - Binär- und Nicht-Text-Dateien ausschließen
+#
+# 🎯 SO FUNKTIONIERT ES:
+# - Dateien, die Mustern entsprechen, werden von Prettier ÜBERSPRUNGEN
+# - Ähnliche Syntax wie .gitignore
+# - Kommentare beginnen mit #
+# - Leere Zeilen werden ignoriert
+# - Muster sind unter Unix/Linux case-sensitive
+#
+# ============================================================================
+# ABHÄNGIGKEITEN & PAKETMANAGER
+# ============================================================================
+
+# Node.js node_modules (WICHTIG: Immer ausschließen!)
+node_modules/
+/node_modules
+
+# npm
+package-lock.json
+npm-debug.log
+npm-debug.log.*
+npm-shrinkwrap.json
+
+# yarn
+yarn.lock
+yarn-error.log
+.yarn/
+.yarn-cache/
+
+# pnpm
+pnpm-lock.yaml
+pnpm-debug.log
+
+# Bower
+bower_components/
+
+# ============================================================================
+# BUILD- & KOMPILIERTE AUSGABE
+# ============================================================================
+
+# TypeScript Build-Ausgabe
+dist/
+build/
+out/
+.tsc-out/
+
+# JavaScript Bundles
+*.bundle.js
+*.bundle.css
+*.min.js
+*.min.css
+*.min.html
+
+# Source Maps
+*.map
+*.js.map
+*.css.map
+
+# Webpack-Ausgabe
+.webpack/
+webpack-bundle-analyzer-report.html
+
+# Babel-Ausgabe
+lib/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# ============================================================================
+# GENERIERTE & KOMPILIERTE DATEIEN
+# ============================================================================
+
+# Auto-generierte TypeScript-Deklarationen
+*.d.ts
+!src/**/*.d.ts
+
+# Generierter Code
+*.generated.ts
+*.generated.js
+*.generated.tsx
+*.generated.jsx
+
+# Protobuf-Generierte
+*.pb.ts
+*.pb.js
+
+# GraphQL-Generierte
+__generated__/
+generated/
+*.graphql.ts
+*.graphql.js
+
+# OpenAPI-Generierte
+openapi-generated/
+*/generated/*
+
+# ============================================================================
+# TESTERGEBNISSE & BERICHTE
+# ============================================================================
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+
+# Test-Abdeckung
+coverage/
+.coverage/
+*.lcov
+
+# Jest Cache
+.jest_cache/
+
+# Allure Reports
+allure-results/
+allure-report/
+
+# Cucumber Reports
+cucumber-report/
+
+# JUnit Reports
+junit.xml
+junit-*.xml
+
+# ============================================================================
+# ARTEFAKTE & MEDIEN
+# ============================================================================
+
+# Screenshots & Videos
+screenshots/
+videos/
+traces/
+downloads/
+
+# Binärdateien
+*.mp4
+*.mov
+*.avi
+*.webm
+*.mkv
+
+# Bilder
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+
+# ============================================================================
+# KONFIGURATION & UMGEBUNG
+# ============================================================================
+
+# Umgebungsdateien
+.env
+.env.local
+.env.*.local
+
+# Geheimnisse
+.secrets/
+secrets/
+
+# Anmeldedaten
+credentials.json
+.aws/
+.azure/
+
+# ============================================================================
+# IDE & EDITOR-KONFIGURATIONEN
+# ============================================================================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# IntelliJ
+.idea/
+*.iml
+
+# Visual Studio
+.vs/
+
+# Vim
+.vim/
+.vimrc
+.gvimrc
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Emacs
+.emacs.d/
+
+# ============================================================================
+# PROTOKOLLE & TEMPORÄRE DATEIEN
+# ============================================================================
+
+# Protokolle
+logs/
+*.log
+*.log.*
+debug.log
+error.log
+
+# Temporäre Dateien
+.tmp/
+tmp/
+temp/
+.temp/
+*.tmp
+
+# ============================================================================
+# CACHE & BUILD-CACHE
+# ============================================================================
+
+# Node Cache
+.npm/
+.eslintcache
+
+# Babel Cache
+.babelcache
+
+# Webpack Cache
+.webpack_cache/
+.webpack-bundle-analyzer-report.html
+
+# TypeScript Cache
+.tscache/
+
+# ============================================================================
+# DOCKER & INFRASTRUKTUR
+# ============================================================================
+
+# Docker
+docker-compose.override.yml
+.docker/
+Dockerfile.prod
+Dockerfile.dev
+
+# Kubernetes
+k8s/
+kube/
+*.yaml
+*.yml
+
+# ============================================================================
+# DATENBANKDATEIEN
+# ============================================================================
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# MongoDB
+*.bson
+dump/
+
+# PostgreSQL Dumps
+*.sql
+*.sql.backup
+
+# ============================================================================
+# PAKETLOCK-DATEIEN
+# ============================================================================
+
+# Lock-Dateien unformatiert halten (werden auto-generiert)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ============================================================================
+# FREMDER CODE & VENDOR-CODE
+# ============================================================================
+
+# Vendor-Verzeichnisse
+vendor/
+vendors/
+external/
+third-party/
+
+# Heruntergeladene Bibliotheken
+lib/
+libs/
+
+# ============================================================================
+# KOMPILIERTE & MINIMIERTE DATEIEN
+# ============================================================================
+
+# Minimierte Dateien nicht formatieren (sind bewusst kompakt)
+*.min.js
+*.min.css
+*.min.html
+
+# Kompilierte Dateien
+*.class
+*.jar
+*.dll
+*.exe
+*.so
+*.dylib
+
+# ============================================================================
+# DOKUMENTATION & MARKDOWN
+# ============================================================================
+
+# Dokumentation (normalerweise vorformatiert oder generiert)
+docs/generated/
+docs/_build/
+docs/api/
+
+# Changelog (oft generiert)
+CHANGELOG.md
+CHANGELOG.html
+
+# API-Dokumentation
+jsdoc/
+typedoc/
+
+# ============================================================================
+# GIT & VERSIONSKONTROLLE
+# ============================================================================
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# ============================================================================
+# CI/CD-ARTEFAKTE
+# ============================================================================
+
+# GitHub Actions
+.github/workflows/cache/
+
+# Jenkins
+jenkins-artifacts/
+jenkins-logs/
+
+# GitLab CI
+.gitlab-ci.yml
+.gitlab/
+
+# ============================================================================
+# SICHERUNGS- & ARCHIVDATEIEN
+# ============================================================================
+
+# Sicherungen
+*.bak
+*.backup
+*.swp
+*.swo
+*~
+
+# Archive
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# ============================================================================
+# BETRIEBSSYSTEM-SPEZIFISCHE DATEIEN
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash/
+
+# ============================================================================
+# SPEZIELLE DATEIEN
+# ============================================================================
+
+# Binärdateien (nicht formatieren)
+*.bin
+*.exe
+*.dll
+*.so
+*.dylib
+*.wasm
+
+# Kompilierter Code
+*.o
+*.out
+*.class
+*.pyc
+*.pyo
+
+# ============================================================================
+# SDET-SPEZIFISCHE IGNORES
+# ============================================================================
+
+# Testergebnisse & Berichte
+test-results/
+allure-results/
+allure-report/
+playwright-report/
+
+# Test-Medien
+screenshots/
+videos/
+traces/
+artifacts/
+
+# HAR-Dateien (HTTP Archive - oft groß)
+*.har
+hars/
+
+# Performance-Metriken
+metrics/
+performance-results/
+
+# ============================================================================
+# SPEZIFISCHE DATEIERWEITERUNGEN ZUM IGNORIEREN
+# ============================================================================
+
+# Lock-Dateien
+*.lock
+
+# Kompilierte TypeScript
+*.tsbuildinfo
+
+# Kompilierte Node-Module
+.node-gyp/
+
+# ============================================================================
+# NOTIZEN & BEST PRACTICES
+# ============================================================================
+#
+# 📌 WAS IGNORIEREN:
+#
+# IMMER IGNORIEREN:
+#   ✓ node_modules/          - Abhängigkeiten (zu groß)
+#   ✓ Build-Ausgabe (dist/)  - Generierte Dateien
+#   ✓ .env Dateien           - Sensible Daten
+#   ✓ Package Lock-Dateien   - Auto-generiert
+#   ✓ Testergebnisse/Abdeckung - Generierte Berichte
+#   ✓ IDE-Einstellungen      - Persönliche Konfigurationen
+#   ✓ Generierter Code       - Auto-generierte Dateien
+#
+# NORMALERWEISE IGNORIEREN:
+#   ✓ *.min.js, *.min.css    - Minimierte Dateien
+#   ✓ *.map                  - Source Maps
+#   ✓ *.log                  - Protokolldateien
+#   ✓ Fremder Code           - vendor/, external/
+#   ✓ Datenbankdateien       - *.db, *.sqlite
+#   ✓ Binärdateien           - Bilder, Videos, Archive
+#
+# NICHT IGNORIEREN:
+#   ✗ Quellcode              - Sollte formatiert werden
+#   ✗ Tests                  - Sollten formatiert werden
+#   ✗ Konfigdateien          - Sollten formatiert werden
+#   ✗ README & Dokumentation - Sollte formatiert werden
+#
+# ============================================================================
+# FORMATIERUNGSVERHALTEN
+# ============================================================================
+#
+# 🎯 PRETTIER WIRD:
+#   - Alle .ts, .tsx, .js, .jsx Dateien NICHT in .prettierignore formatieren
+#   - Alle .json Dateien formatieren (Konfigdateien, etc.)
+#   - Alle .md Dateien formatieren (Dokumentation)
+#   - Alle .html Dateien formatieren
+#   - Alle .css, .scss, .less Dateien formatieren
+#
+# 🚫 PRETTIER WIRD NICHT:
+#   - Dateien formatieren, die .prettierignore Muster entsprechen
+#   - Binärdateien formatieren
+#   - Dateien ohne Parser formatieren
+#   - Ignorierte Verzeichnisse und deren Inhalte formatieren
+#
+# ============================================================================
+# PRETTIER AUSFÜHREN
+# ============================================================================
+#
+# Alle Dateien formatieren (mit .prettierignore):
+#   npm run format
+#   prettier --write "src/**/*.{ts,tsx,js,jsx,json,md}"
+#
+# Spezifische Datei formatieren:
+#   prettier --write src/file.ts
+#
+# Formatierung prüfen (nicht ändern):
+#   prettier --check "src/**/*.{ts,tsx,js,jsx}"
+#
+# .prettierignore für spezifische Datei ignorieren:
+#   prettier --write --ignore-unknown src/generated.ts
+#
+# ============================================================================
+# KONFIGURATION MIT .prettierrc
+# ============================================================================
+#
+# Gängige .prettierrc Einstellungen:
+#
+# {
+#   "semi": true,
+#   "singleQuote": true,
+#   "tabWidth": 2,
+#   "trailingComma": "es5",
+#   "printWidth": 100,
+#   "arrowParens": "always",
+#   "bracketSpacing": true,
+#   "endOfLine": "lf"
+# }
+#
+# Kombiniert mit .prettierignore:
+#   .prettierignore = Dateien überspringen
+#   .prettierrc      = Formatierungsregeln
+#   .editorconfig    = Editor-Einstellungen
+#
+# ============================================================================
+# INTEGRATION MIT ANDEREN TOOLS
+# ============================================================================
+#
+# Mit ESLint:
+#   npm install --save-dev prettier eslint-config-prettier
+#   Zu .eslintrc.json hinzufügen:
+#     "extends": ["prettier"]
+#
+# Mit Git Hooks (Husky):
+#   npm install husky lint-staged
+#   npx husky install
+#   npm set-script prepare "husky install"
+#
+# .husky/pre-commit:
+#   #!/sh
+#   . "$(dirname "$0")/_/husky.sh"
+#   npx lint-staged
+#
+# .lintstagedrc.json:
+#   {
+#     "*.{ts,tsx,js,jsx}": ["prettier --write", "eslint --fix"],
+#     "*.{json,md}": ["prettier --write"]
+#   }
+#
+# ============================================================================
+# CI/CD-INTEGRATION
+# ============================================================================
+#
+# GitHub Actions:
+# name: Prettier Check
+# on: [pull_request]
+# jobs:
+#   prettier:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions/setup-node@v3
+#       - run: npm install
+#       - run: npm run format:check
+#
+# GitLab CI:
+# prettier_check:
+#   script:
+#     - npm install
+#     - npx prettier --check "src/**/*.{ts,tsx,js,jsx}"
+#
+# Jenkins:
+# sh 'npm install'
+# sh 'npx prettier --check "src/**/*.*.{ts,tsx,js,jsx}"'
+#
+# ============================================================================
+# TEAM-RICHTLINIEN
+# ============================================================================
+#
+# Für Entwicklung:
+#   1. Prettier vor dem Committen ausführen
+#   2. Editor-Plugin für Auto-Format bei Speichern verwenden
+#   3. .prettierignore für deine Dateien prüfen
+#   4. Ausführen: npm run format
+#
+# Für CI/CD:
+#   1. Verwenden: npm run format:check
+#   2. Fehlschlag bei nicht formatiertem Code
+#   3. Auto-Fix mit: npm run format
+#   4. Formatierte Code committen
+#
+# Für Team:
+#   - .prettierignore in Repository committen
+#   - .prettierrc Konfiguration teilen
+#   - Konsistente Einstellungen verwenden
+#   - Keine persönlichen Formatierungsvorlieben
+#   - Prettier entscheiden lassen
+#
+# ============================================================================
+# PROBLEMLÖSUNG
+# ============================================================================
+#
+# Problem: "Datei nicht formatiert trotz Prettier-Ausführung"
+# Lösung:
+#   - Prüfe, ob Datei .prettierignore Muster entspricht
+#   - Prüfe, ob Dateierweiterung unterstützt wird
+#   - Verifiziere .prettierignore Syntax
+#   - Führe aus: npx prettier --debug-check <file>
+#
+# Problem: "node_modules wird immer noch formatiert"
+# Lösung:
+#   - Stelle sicher, dass Muster korrekt ist: node_modules/
+#   - Nicht: node_modules (Schrägstrich fehlt)
+#   - Prüfe, ob .prettierignore im Projektverzeichnis ist
+#   - Führe aus: cat .prettierignore
+#
+# Problem: "Formatter zu langsam"
+# Lösung:
+#   - Mehr Muster zu .prettierignore hinzufügen
+#   - node_modules/ und dist/ ausschließen
+#   - Große generierte Dateien ausschließen
+#   - .prettierrc ignorePatterns Feld verwenden
+#
+# Problem: "Konflikte mit ESLint"
+# Lösung:
+#   - Installiere eslint-config-prettier
+#   - Zu .eslintrc hinzufügen: "extends": ["prettier"]
+#   - Dies deaktiviert konfligierende ESLint-Regeln
+#
+# ============================================================================
+# SDET-SPEZIFISCHE ÜBERLEGUNGEN
+# ============================================================================
+#
+# Für SDET Framework:
+#   - Alle Test-Dateien formatieren (.spec.ts, .test.ts)
+#   - Feature-Dateien formatieren (.feature)
+#   - Testergebnisse und Artefakte ignorieren
+#   - Screenshots, Videos, Traces ignorieren
+#   - HAR-Dateien ignorieren (binär-ähnlich)
+#   - Test-Konfigurationsdateien formatieren
+#   - Abdeckung und Berichte ignorieren
+#   - Formatierung über Tests konsistent halten
+#
+# Test-Datei-Muster:
+#   src/**/*.spec.ts     = Sollten formatiert werden
+#   src/**/*.test.ts     = Sollten formatiert werden
+#   *.feature            = Sollten formatiert werden
+#   test-results/        = Sollten ignoriert werden
+#   screenshots/         = Sollten ignoriert werden
+#
+# ============================================================================
+# EDITOR-KONFIGURATION
+# ============================================================================
+#
+# VS Code (Prettier Extension installieren):
+#   1. Installiere: "Prettier - Code formatter" Extension
+#   2. Settings.json:
+#      {
+#        "editor.defaultFormatter": "esbenp.prettier-vscode",
+#        "editor.formatOnSave": true,
+#        "editor.formatOnPaste": true
+#      }
+#   3. Prettier wird automatisch .prettierrc und .prettierignore verwenden
+#
+# WebStorm/IntelliJ:
+#   1. Einstellungen > Tools > Prettier
+#   2. Aktiviere: "On save" & "On reformat code"
+#   3. Prettier ausführen: Ctrl+Alt+Shift+P (Windows/Linux)
+#                         Cmd+Shift+P (macOS)
+#
+# Vim/Neovim:
+#   1. Verwende vim-prettier Plugin
+#   2. Oder integriere mit ALE
+#
+# ============================================================================
+# NÜTZLICHE BEFEHLE
+# ============================================================================
+#
+# Alle Dateien formatieren:
+#   npm run format
+#   prettier --write "src/**/*.{ts,tsx,js,jsx,json,md}"
+#
+# Formatierung prüfen:
+#   npm run format:check
+#   prettier --check "src/**/*.{ts,tsx,js,jsx,json,md}"
+#
+# Spezifische Datei formatieren:
+#   prettier --write src/file.ts
+#
+# Formatieren und committen:
+#   prettier --write . && git add -A
+#
+# Ohne .prettierignore prüfen:
+#   prettier --check "src/**/*.ts" --ignore-unknown
+#
+# ============================================================================
+# VERSIONSVERLAUF
+# ============================================================================
+#
+# v1.0.0 (2. Januar 2026)
+# - Umfassende .prettierignore Konfiguration
+# - 100+ Muster
+# - Komplette Dokumentation
+# - SDET-spezifische Ignores
+# - CI/CD-Integration
+# - Editor-Konfiguration
+# - Problemlösungs-Anleitung
+# - Team-Richtlinien
+# - Best Practices
+#
+# ============================================================================
+# SDET Framework - Prettier Ignore-Konfiguration
+# Version: 1.0.0
+# Zweck: Dateien vom Prettier-Formatting ausschließen
+# Generiert: 2. Januar 2026
+# Status: Produktionsreif ✅
+# ============================================================================

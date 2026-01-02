@@ -1,40 +1,871 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "🌐 Launch Chrome (8080)",
-        "type": "chrome",
-        "request": "launch",
-        "url": "http://localhost:8080",
-        "webRoot": "${workspaceFolder}",
-        "sourceMaps": true
-      },
-      {
-        "name": "🌐 Launch Chrome (Angular 4200)",
-        "type": "chrome",
-        "request": "launch",
-        "url": "http://localhost:4200",
-        "webRoot": "${workspaceFolder}",
-        "sourceMaps": true
-      },
-      {
-        "name": "🔗 Attach to Chrome (Debug Port 9222)",
-        "type": "chrome",
-        "request": "attach",
-        "port": 9222,
-        "webRoot": "${workspaceFolder}",
-        "sourceMaps": true
-      },
-      {
-        "name": "🧪 Playwright Test Debug (Chromium)",
-        "type": "node",
-        "request": "launch",
-        "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
-        "args": ["test", "--project=chromium", "--trace", "on"],
-        "cwd": "${workspaceFolder}",
-        "console": "integratedTerminal",
-        "internalConsoleOptions": "neverOpen"
+  // ============================================================================
+  // ULTIMATIVE ULTRA SDET +++++ FINAL VERSION - VS Code Launch Konfiguration
+  // ============================================================================
+  // Diese Datei definiert eine produktionsreife Debugging-Konfiguration für
+  // Playwright E2E Tests, Node.js Development, Browser Debugging und weitere
+  // Test Automation Szenarien.
+  //
+  // Verfügbare Debug-Konfigurationen:
+  // ✓ Playwright Test Debugging (alle Browser)
+  // ✓ Browser Debugging (Chrome, Firefox, Safari)
+  // ✓ Node.js Server Debugging
+  // ✓ Jest Unit Test Debugging
+  // ✓ API Testing Debugging
+  // ✓ Performance Profiling
+  // ✓ Remote Debugging
+  // ✓ Multi-Worker Debugging
+  // ✓ Trace & Inspection Tools
+  // ============================================================================
+
+  "version": "0.2.0",
+  "configurations": [
+    // ========================================================================
+    // PLAYWRIGHT TEST DEBUGGING - Alle Browser & Konfigurationen
+    // ========================================================================
+
+    {
+      "name": "🎭 Playwright: Debug (Chromium - Single Test)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--debug",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 1
       }
-    ]
-  }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug (Firefox - Single Test)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=firefox",
+        "--debug",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 2
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug (WebKit - Single Test)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=webkit",
+        "--debug",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 3
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug mit Trace (Chromium)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--debug",
+        "--headed",
+        "--trace=on",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 4
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug mit Video (Chromium)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--debug",
+        "--headed",
+        "--video=on",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 5
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug mit Screenshots (Chromium)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--debug",
+        "--headed",
+        "--screenshot=only-on-failure",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 6
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug alle Browser (Chromium + Firefox + WebKit)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--debug",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 7
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug UI Mode (Interaktives Debugging)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--ui",
+        "--project=chromium"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 8
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Inspector (DevTools Integration)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--inspect-brk",
+        "--project=chromium",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 9
+      }
+    },
+
+    // ========================================================================
+    // PLAYWRIGHT - SPEZIFISCHE TEST SZENARIEN
+    // ========================================================================
+
+    {
+      "name": "🎭 Playwright: Debug API Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "src/tests/api",
+        "--debug",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright-specific",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug E2E Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "src/tests",
+        "--debug",
+        "--headed",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright-specific",
+        "order": 2
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug Accessibility Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "src/tests",
+        "--grep=@a11y",
+        "--debug",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright-specific",
+        "order": 3
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug Mobile Tests (iPhone 12)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=Mobile Chrome",
+        "--debug",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright-specific",
+        "order": 4
+      }
+    },
+
+    {
+      "name": "🎭 Playwright: Debug Performance Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "src/tests",
+        "--grep=@performance",
+        "--debug",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright-specific",
+        "order": 5
+      }
+    },
+
+    // ========================================================================
+    // BROWSER DEBUGGING - Chrome, Firefox, Safari Launch
+    // ========================================================================
+
+    {
+      "name": "🌐 Chrome: Launch auf localhost:8080",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/*",
+        "webpack:///./src/*": "${workspaceFolder}/src/*"
+      },
+      "smartStep": true,
+      "disableNetworkCache": true,
+      "presentation": {
+        "group": "browser-launch",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "🌐 Chrome: Launch auf localhost:4200 (Angular)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/*",
+        "webpack:///./src/*": "${workspaceFolder}/src/*"
+      },
+      "smartStep": true,
+      "disableNetworkCache": true,
+      "presentation": {
+        "group": "browser-launch",
+        "order": 2
+      }
+    },
+
+    {
+      "name": "🌐 Chrome: Launch mit Debugging auf Custom Port",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:${input:port}",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "runtimeArgs": [
+        "--remote-debugging-port=9222"
+      ],
+      "presentation": {
+        "group": "browser-launch",
+        "order": 3
+      }
+    },
+
+    {
+      "name": "🌐 Chrome: Attach an Debug Port 9222",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "presentation": {
+        "group": "browser-attach",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "🌐 Chrome: Attach mit Network Throttling",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "pathMapping": {
+        "/": "${workspaceFolder}",
+        "/node_modules/": "${workspaceFolder}/node_modules/"
+      },
+      "presentation": {
+        "group": "browser-attach",
+        "order": 2
+      }
+    },
+
+    {
+      "name": "🦊 Firefox: Launch auf localhost:8080",
+      "type": "firefox",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}",
+      "reAttach": true,
+      "presentation": {
+        "group": "browser-launch",
+        "order": 4
+      }
+    },
+
+    {
+      "name": "🦊 Firefox: Launch auf localhost:4200 (Angular)",
+      "type": "firefox",
+      "request": "launch",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}",
+      "reAttach": true,
+      "presentation": {
+        "group": "browser-launch",
+        "order": 5
+      }
+    },
+
+    // ========================================================================
+    // NODE.JS DEBUGGING - Server, Scripts, Tools
+    // ========================================================================
+
+    {
+      "name": "🔹 Node.js: Debug Current File",
+      "type": "node",
+      "request": "launch",
+      "program": "${file}",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "nodejs",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "🔹 Node.js: Debug (Auto Restart)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/index.ts",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      "presentation": {
+        "group": "nodejs",
+        "order": 2
+      }
+    },
+
+    {
+      "name": "🔹 Node.js: Inspect mit --inspect-brk",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/index.ts",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "--loader=ts-node/esm"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "nodejs",
+        "order": 3
+      }
+    },
+
+    {
+      "name": "🔹 Node.js: Attach an Debug Port 9229",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "presentation": {
+        "group": "nodejs",
+        "order": 4
+      }
+    },
+
+    // ========================================================================
+    // JEST UNIT TEST DEBUGGING
+    // ========================================================================
+
+    {
+      "name": "🧪 Jest: Debug All Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "--runInBand",
+        "--detectOpenHandles",
+        "--forceExit"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "jest",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "🧪 Jest: Debug Current File",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "${relativeFile}",
+        "--runInBand",
+        "--verbose",
+        "--detectOpenHandles"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "jest",
+        "order": 2
+      }
+    },
+
+    {
+      "name": "🧪 Jest: Debug mit Coverage",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "--runInBand",
+        "--coverage",
+        "--detectOpenHandles"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "jest",
+        "order": 3
+      }
+    },
+
+    {
+      "name": "🧪 Jest: Debug Watch Mode",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "--runInBand",
+        "--watch",
+        "--no-cache"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "jest",
+        "order": 4
+      }
+    },
+
+    // ========================================================================
+    // API TESTING DEBUGGING
+    // ========================================================================
+
+    {
+      "name": "🔌 API Test: Debug (REST Client)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/tests/api/index.ts",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "api",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "🔌 API Test: Debug mit GraphQL",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/tests/api/graphql.ts",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "api",
+        "order": 2
+      }
+    },
+
+    // ========================================================================
+    // PERFORMANCE & PROFILING
+    // ========================================================================
+
+    {
+      "name": "📊 Performance: Profiling mit CPU Samples",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--headed",
+        "--workers=1"
+      ],
+      "runtimeArgs": [
+        "--prof"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "performance",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "📊 Performance: Heap Snapshot Analysis",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "runtimeArgs": [
+        "--expose-gc"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "performance",
+        "order": 2
+      }
+    },
+
+    // ========================================================================
+    // REMOTE & SPECIAL DEBUGGING
+    // ========================================================================
+
+    {
+      "name": "🌍 Remote: Debug über SSH",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "localhost",
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "presentation": {
+        "group": "remote",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "🌍 Remote: Debug Docker Container",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "127.0.0.1",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/app",
+      "presentation": {
+        "group": "remote",
+        "order": 2
+      }
+    },
+
+    {
+      "name": "🌍 Remote: Kubernetes Pod Debugging",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "127.0.0.1",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "presentation": {
+        "group": "remote",
+        "order": 3
+      }
+    },
+
+    // ========================================================================
+    // MULTI-WORKER & PARALLEL TESTING
+    // ========================================================================
+
+    {
+      "name": "⚙️ Playwright: Multi-Worker Debug (2 Workers)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--debug",
+        "--headed",
+        "--workers=2"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "advanced",
+        "order": 1
+      }
+    },
+
+    {
+      "name": "⚙️ Playwright: Multi-Worker Debug (4 Workers)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--debug",
+        "--headed",
+        "--workers=4"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "advanced",
+        "order": 2
+      }
+    },
+
+    {
+      "name": "⚙️ Playwright: Serial Execution (Debugging Flakiness)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "--project=chromium",
+        "--debug",
+        "--headed",
+        "--workers=1",
+        "--repeat-each=3"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "advanced",
+        "order": 3
+      }
+    }
+  ],
+
+  // ============================================================================
+  // INPUT VARIABLES FÜR INTERAKTIVE DEBUGGING SESSIONS
+  // ============================================================================
+  "inputs": [
+    {
+      "id": "port",
+      "type": "promptString",
+      "description": "Gib den Port für das Local Debugging ein (Standard: 3000)",
+      "default": "3000"
+    },
+    {
+      "id": "testPattern",
+      "type": "promptString",
+      "description": "Gib ein Test File Pattern ein (z.B. login.spec.ts)",
+      "default": ""
+    },
+    {
+      "id": "browserProject",
+      "type": "pickString",
+      "description": "Wähle das Playwright Browser Projekt aus",
+      "options": [
+        "chromium",
+        "firefox",
+        "webkit",
+        "Mobile Chrome",
+        "Mobile Safari"
+      ],
+      "default": "chromium"
+    },
+    {
+      "id": "logLevel",
+      "type": "pickString",
+      "description": "Wähle das Log Level aus",
+      "options": [
+        "debug",
+        "info",
+        "warn",
+        "error"
+      ],
+      "default": "debug"
+    }
+  ],
+
+  // ============================================================================
+  // COMPOUND CONFIGURATIONS - KOMBINIERTE DEBUG SESSIONS
+  // ============================================================================
+  "compounds": [
+    {
+      "name": "🎯 Full Stack: Playwright + Chrome DevTools",
+      "configurations": [
+        "🎭 Playwright: Debug (Chromium - Single Test)",
+        "🌐 Chrome: Attach an Debug Port 9222"
+      ],
+      "stopOnEntry": false
+    },
+
+    {
+      "name": "🎯 Full Stack: Node.js Server + Browser",
+      "configurations": [
+        "🔹 Node.js: Debug (Auto Restart)",
+        "🌐 Chrome: Launch auf localhost:8080"
+      ],
+      "stopOnEntry": false
+    },
+
+    {
+      "name": "🎯 E2E Testing: Playwright + Jest API Tests",
+      "configurations": [
+        "🎭 Playwright: Debug E2E Tests",
+        "🧪 Jest: Debug API Test: Debug (REST Client)"
+      ],
+      "stopOnEntry": false
+    },
+
+    {
+      "name": "🎯 Performance Analysis: Profiling + Chrome",
+      "configurations": [
+        "📊 Performance: Profiling mit CPU Samples",
+        "🌐 Chrome: Attach an Debug Port 9222"
+      ],
+      "stopOnEntry": false
+    }
+  ]
+}
   

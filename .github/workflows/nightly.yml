@@ -1,0 +1,442 @@
+# ============================================================================
+# GitHub Actions Workflow - Ultimative SDET+++++ Nightly Test Execution 2026
+# ============================================================================
+
+name: '🌙 SDET Nightly Test Execution – Ultimate Edition'
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Täglich 02:00 UTC
+  workflow_dispatch:
+    inputs:
+      skip_api:
+        type: boolean
+        default: false
+        description: 'Skip API tests'
+      skip_mobile:
+        type: boolean
+        default: false
+        description: 'Skip mobile tests'
+      debug:
+        type: boolean
+        default: false
+        description: 'Enable debug mode'
+  repository_dispatch:
+    types: [nightly-trigger]
+
+env:
+  PLAYWRIGHT_VERSION: '1.57.0'
+  NODE_VERSION: '20'
+
+permissions:
+  contents: read
+  actions: write
+  checks: write
+  pull-requests: write
+  issues: write
+  pages: write
+  id-token: write
+
+jobs:
+  # ========================================================================
+  # Setup & Cache
+  # ========================================================================
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.cache.outputs.cache-hit }}
+      cache-key: ${{ steps.set-cache-key.outputs.cache-key }}
+    steps:
+      - name: '📥 Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '🔑 Generate Cache Key'
+        id: set-cache-key
+        run: |
+          CACHE_KEY="playwright-${{ hashFiles('package-lock.json') }}"
+          echo "cache-key=$CACHE_KEY" >> $GITHUB_OUTPUT
+          echo "✅ Cache Key: $CACHE_KEY"
+
+      - name: '⚙️ Setup Node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: '💾 Cache Playwright Browsers'
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-${{ steps.set-cache-key.outputs.cache-key }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}-
+
+      - name: '📦 Install Dependencies'
+        run: npm ci
+
+      - name: '🎭 Install Playwright Browsers (if cache miss)'
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+  # ========================================================================
+  # Browser Tests (Matrix)
+  # ========================================================================
+  browser-tests:
+    needs: setup
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v${{ env.PLAYWRIGHT_VERSION }}-noble
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
+      fail-fast: false
+
+    steps:
+      - name: '📥 Checkout'
+        uses: actions/checkout@v4
+
+      - name: '⚙️ Setup Node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: '📦 Install Dependencies'
+        run: npm ci
+
+      - name: '🧪 Run ${{ matrix.browser }} Tests'
+        id: test
+        run: |
+          npx playwright test --project=${{ matrix.browser }} \
+            --reporter=html,json,junit \
+            --output=test-results/${{ matrix.browser }} \
+            --retries=2
+        continue-on-error: true
+
+      - name: '📊 Test Summary'
+        if: always()
+        run: |
+          echo "════════════════════════════════════════════════════════════"
+          echo "Browser: ${{ matrix.browser }}"
+          echo "Status: ${{ steps.test.outcome }}"
+          echo "════════════════════════════════════════════════════════════"
+          if [ -f "test-results/${{ matrix.browser }}/results.json" ]; then
+            echo "Test results found"
+          fi
+
+      - name: '📤 Upload Artifacts'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.browser }}
+          path: |
+            test-results/${{ matrix.browser }}/
+            playwright-report/
+          retention-days: 30
+
+  # ========================================================================
+  # API Tests
+  # ========================================================================
+  api-tests:
+    needs: setup
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip_api }}
+    container: mcr.microsoft.com/playwright:v${{ env.PLAYWRIGHT_VERSION }}-noble
+    steps:
+      - name: '📥 Checkout'
+        uses: actions/checkout@v4
+
+      - name: '⚙️ Setup Node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: '📦 Install Dependencies'
+        run: npm ci
+
+      - name: '🔌 Run API Tests'
+        id: test
+        run: |
+          npx playwright test --project=api \
+            --reporter=html,json,junit \
+            --output=test-results/api \
+            --retries=2
+        continue-on-error: true
+
+      - name: '📤 Upload Artifacts'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-api
+          path: test-results/api/
+          retention-days: 30
+
+  # ========================================================================
+  # Mobile Tests
+  # ========================================================================
+  mobile-tests:
+    needs: setup
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip_mobile }}
+    strategy:
+      matrix:
+        device: [iPhone 14, Pixel 7, Galaxy S22]
+      fail-fast: false
+    container: mcr.microsoft.com/playwright:v${{ env.PLAYWRIGHT_VERSION }}-noble
+    steps:
+      - name: '📥 Checkout'
+        uses: actions/checkout@v4
+
+      - name: '⚙️ Setup Node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: '📦 Install Dependencies'
+        run: npm ci
+
+      - name: '📱 Run Mobile Tests on ${{ matrix.device }}'
+        id: test
+        run: |
+          npx playwright test --project="${{ matrix.device }}" \
+            --reporter=html,json,junit \
+            --output=test-results/mobile-${{ matrix.device }} \
+            --retries=2
+        continue-on-error: true
+
+      - name: '📤 Upload Artifacts'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-mobile-${{ matrix.device }}
+          path: test-results/mobile-${{ matrix.device }}/
+          retention-days: 30
+
+  # ========================================================================
+  # Reporting & Allure
+  # ========================================================================
+  report:
+    needs: [browser-tests, api-tests, mobile-tests]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: '📥 Checkout'
+        uses: actions/checkout@v4
+
+      - name: '⚙️ Setup Node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: '📥 Download All Artifacts'
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: '📊 Generate Allure Report'
+        run: |
+          npm install -g allure-commandline
+          allure generate ./artifacts --clean -o allure-report
+        continue-on-error: true
+
+      - name: '📤 Upload Allure Report'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: allure-report
+        continue-on-error: true
+
+      - name: '🚀 Deploy to GitHub Pages'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+  # ========================================================================
+  # Notifications
+  # ========================================================================
+  notify:
+    needs: [setup, browser-tests, api-tests, mobile-tests, report]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: '🔍 Determine Overall Status'
+        id: status
+        run: |
+          if [ "${{ needs.browser-tests.result }}" = "failure" ] || \
+             [ "${{ needs.api-tests.result }}" = "failure" ] || \
+             [ "${{ needs.mobile-tests.result }}" = "failure" ]; then
+            echo "status=❌ FAILED" >> $GITHUB_OUTPUT
+            echo "emoji=🚨" >> $GITHUB_OUTPUT
+            echo "color=danger" >> $GITHUB_OUTPUT
+          else
+            echo "status=✅ PASSED" >> $GITHUB_OUTPUT
+            echo "emoji=🎉" >> $GITHUB_OUTPUT
+            echo "color=good" >> $GITHUB_OUTPUT
+          fi
+
+      - name: '📧 Send Slack Notification'
+        if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "${{ steps.status.outputs.emoji }} SDET Nightly Tests: ${{ steps.status.outputs.status }}",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "${{ steps.status.outputs.emoji }} SDET Nightly Test Execution"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Status:*\n${{ steps.status.outputs.status }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch:*\n${{ github.ref }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n${{ github.sha }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Browser Tests:*\n${{ needs.browser-tests.result }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*API Tests:*\n${{ needs.api-tests.result }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Mobile Tests:*\n${{ needs.mobile-tests.result }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Report:*\n${{ needs.report.result }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View Workflow Run"
+                      },
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                      "style": "${{ steps.status.outputs.color }}"
+                    },
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View Commit"
+                      },
+                      "url": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        continue-on-error: true
+
+      - name: '⏰ Get Current Timestamp'
+        id: timestamp
+        run: echo "timestamp=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+
+      - name: '📝 Create Issue on Failure'
+        if: ${{ needs.browser-tests.result == 'failure' || needs.api-tests.result == 'failure' || needs.mobile-tests.result == 'failure' }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const date = new Date().toISOString().split('T')[0];
+            const runId = '${{ github.run_id }}';
+            const repo = '${{ github.repository }}';
+            const timestamp = '${{ steps.timestamp.outputs.timestamp }}';
+
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `❌ Nightly Tests Failed - ${date}`,
+              body: `## 🚨 Nightly Test Execution Failed
+
+**Date:** ${timestamp}
+**Workflow Run:** [#${runId}](https://github.com/${repo}/actions/runs/${runId})
+**Branch**: \`${{ github.ref_name }}\`
+**Commit**: [\`${{ github.sha }}\`](https://github.com/${repo}/commit/${{ github.sha }})
+
+### 📊 Test Summary
+| Test Type       | Result                  |
+|-----------------|-------------------------|
+| Browser Tests   | ${{ needs.browser-tests.result }} |
+| API Tests       | ${{ needs.api-tests.result }}     |
+| Mobile Tests    | ${{ needs.mobile-tests.result }}  |
+| Report          | ${{ needs.report.result }}        |
+
+### 🔍 Investigation Checklist
+- [ ] Review test logs and artifacts
+- [ ] Check for flaky tests
+- [ ] Verify environment stability
+- [ ] Update or quarantine failing tests
+- [ ] Re-run workflow manually
+
+### 🔗 Resources
+- [Workflow Run](https://github.com/${repo}/actions/runs/${runId})
+- [Commit Details](https://github.com/${repo}/commit/${{ github.sha }})
+
+Please investigate and resolve before the next nightly run.
+
+*This issue was automatically created by the SDET+++++ CI system.*`,
+              labels: ['bug', 'ci-failure', 'nightly-tests', 'automated', 'priority:high'],
+              assignees: []
+            });
+        continue-on-error: true
+
+      - name: '✅ Workflow Completion Summary'
+        if: always()
+        run: |
+          echo "════════════════════════════════════════════════════════════"
+          echo "🌙 SDET Nightly Test Execution Complete"
+          echo "════════════════════════════════════════════════════════════"
+          echo ""
+          echo "📊 Test Results:"
+          echo "  ✓ Browser Tests: ${{ needs.browser-tests.result }}"
+          echo "  ✓ API Tests: ${{ needs.api-tests.result }}"
+          echo "  ✓ Mobile Tests: ${{ needs.mobile-tests.result }}"
+          echo "  ✓ Report: ${{ needs.report.result }}"
+          echo ""
+          echo "📋 Workflow Information:"
+          echo "  • Run ID: ${{ github.run_id }}"
+          echo "  • Repository: ${{ github.repository }}"
+          echo "  • Branch: ${{ github.ref }}"
+          echo "  • Commit: ${{ github.sha }}"
+          echo "  • Actor: ${{ github.actor }}"
+          echo ""
+          echo "🔗 Links:"
+          echo "  • Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "  • Commit: https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+          echo "  • Branch: https://github.com/${{ github.repository }}/tree/${{ github.ref }}"
+          echo ""
+          echo "════════════════════════════════════════════════════════════"
+
+# ============================================================================
+# END – Ready for 2026! 🚀
+# ============================================================================

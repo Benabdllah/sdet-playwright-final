@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { handlePrompt } from '../utils/alert-utils';
+import { handlePrompt } from '../helpers/alertHelper';
 
 
 test('Alert with Ok @guest', async ({page }) => {

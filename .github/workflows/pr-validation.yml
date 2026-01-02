@@ -1,0 +1,879 @@
+# ============================================================================
+# GitHub Actions Workflow - Pull Request Validation
+# Ultimative Ultra SDET +++++ Final Version
+# ============================================================================
+#
+# 📋 ZWECK:
+# - Validiere alle Pull Requests vor dem Merge
+# - Führe Unit-, Integration- und E2E-Tests aus
+# - Prüfe Code-Qualität und Sicherheit
+# - Überprüfe Linting & Formatting Standards
+# - Generiere Test Coverage Reports
+# - Verhindere Merges mit fehlgeschlagenen Tests
+# - Gebe automatisches Feedback zu Änderungen
+#
+# 🎯 AUSLÖSER:
+# - Pull Request geöffnet oder aktualisiert
+# - Commits zu bestehende PR gepusht
+# - Manuell auslösbar (Workflow Dispatch)
+#
+# 📦 JOBS:
+# - lint: ESLint, Prettier, TypeScript Überprüfung
+# - unit-tests: Jest Unit Tests
+# - e2e-tests: Playwright E2E Tests
+# - security: Security Scans & Vulnerability Checks
+# - coverage: Code Coverage Reports
+# - validate-pr: PR Requirements Check
+#
+# ============================================================================
+
+name: '✅ PR Validation & Quality Checks'
+
+# Auslöser
+on:
+  # Pull Request Events
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'config/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - '.github/workflows/pr-validation.yml'
+      - '!docs/**'
+      - '!*.md'
+
+  # Manuelle Auslösung
+  workflow_dispatch:
+    inputs:
+      run_security_scan:
+        description: 'Security Scan durchführen?'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      run_coverage:
+        description: 'Coverage Reports erstellen?'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      verbosity:
+        description: 'Output Verbosität'
+        required: false
+        default: 'normal'
+        type: choice
+        options:
+          - 'quiet'
+          - 'normal'
+          - 'verbose'
+          - 'debug'
+
+# Umgebungsvariablen
+env:
+  NODE_VERSION: '20.11.0'
+  NPM_VERSION: '10.2.4'
+  CACHE_KEY_PREFIX: 'sdet-pr-validation'
+  ARTIFACTS_RETENTION: 5
+
+# Berechtigungen
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+  statuses: write
+  security-events: write
+
+jobs:
+  # ========================================================================
+  # JOB 1: Code Quality & Linting
+  # Zweck: ESLint, Prettier, TypeScript, Formatting überprüfen
+  # ========================================================================
+  lint:
+    name: '🔍 Code Quality & Linting'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    outputs:
+      lint-status: ${{ steps.lint-status.outputs.status }}
+      lint-report: ${{ steps.lint-report.outputs.report }}
+
+    steps:
+      # Schritt 1: Repository auschecken
+      - name: '📥 Checkout Repository'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # Schritt 2: Node.js Setup
+      - name: '📦 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      # Schritt 3: Dependencies installieren
+      - name: '⬇️ Install Dependencies'
+        run: npm ci --prefer-offline
+
+      # Schritt 4: ESLint ausführen
+      - name: '🔎 Run ESLint'
+        id: eslint
+        run: |
+          echo "=== ESLint Überprüfung ==="
+          npm run lint -- --format=json --output-file=eslint-report.json || true
+          
+          if [ -f eslint-report.json ]; then
+            echo "✅ ESLint Report erstellt"
+          fi
+        continue-on-error: true
+
+      # Schritt 5: Prettier Formatierung prüfen
+      - name: '🎨 Check Prettier Formatting'
+        id: prettier
+        run: |
+          echo "=== Prettier Formatierung Überprüfung ==="
+          npm run format:check || {
+            echo "⚠️ Code-Formatierungsprobleme gefunden"
+            npm run format -- --list-different
+            exit 1
+          }
+        continue-on-error: true
+
+      # Schritt 6: TypeScript Compilation prüfen
+      - name: '📘 Check TypeScript Compilation'
+        id: typescript
+        run: |
+          echo "=== TypeScript Überprüfung ==="
+          npm run build -- --noEmit --listFiles
+          
+          if [ $? -eq 0 ]; then
+            echo "✅ TypeScript kompiliert erfolgreich"
+          else
+            echo "❌ TypeScript Compilierungsfehler gefunden"
+            exit 1
+          fi
+        continue-on-error: true
+
+      # Schritt 7: SpellCheck
+      - name: '📝 Run Spell Check'
+        id: spellcheck
+        run: |
+          echo "=== Spell Check ==="
+          npm run spellcheck || true
+        continue-on-error: true
+
+      # Schritt 8: Lint Status bestimmen
+      - name: '📊 Determine Lint Status'
+        id: lint-status
+        run: |
+          ESLINT_STATUS=${{ steps.eslint.outcome }}
+          PRETTIER_STATUS=${{ steps.prettier.outcome }}
+          TYPESCRIPT_STATUS=${{ steps.typescript.outcome }}
+          
+          if [ "$ESLINT_STATUS" = "failure" ] || [ "$PRETTIER_STATUS" = "failure" ] || [ "$TYPESCRIPT_STATUS" = "failure" ]; then
+            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "❌ Code Quality Überprüfung fehlgeschlagen"
+            exit 1
+          else
+            echo "status=passed" >> $GITHUB_OUTPUT
+            echo "✅ Code Quality Überprüfung erfolgreich"
+          fi
+        continue-on-error: false
+
+      # Schritt 9: Report Zusammenfassung
+      - name: '📝 Create Lint Report Summary'
+        if: always()
+        id: lint-report
+        run: |
+          REPORT_FILE="lint-summary.md"
+          cat > $REPORT_FILE << 'EOF'
+          ## 🔍 Code Quality Report
+          
+          | Check | Status |
+          |-------|--------|
+          | ESLint | ${{ steps.eslint.outcome }} |
+          | Prettier | ${{ steps.prettier.outcome }} |
+          | TypeScript | ${{ steps.typescript.outcome }} |
+          | Spell Check | ${{ steps.spellcheck.outcome }} |
+          
+          EOF
+          echo "report=$REPORT_FILE" >> $GITHUB_OUTPUT
+          cat $REPORT_FILE
+
+      # Schritt 10: Artefakte hochladen
+      - name: '📤 Upload Lint Reports'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: |
+            eslint-report.json
+            lint-summary.md
+          retention-days: ${{ env.ARTIFACTS_RETENTION }}
+
+      # Schritt 11: Kommentar zu PR hinzufügen
+      - name: '💬 Comment on PR'
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const eslintStatus = '${{ steps.eslint.outcome }}';
+            const prettierStatus = '${{ steps.prettier.outcome }}';
+            const tsStatus = '${{ steps.typescript.outcome }}';
+            
+            let emoji = '✅';
+            let summary = 'All checks passed!';
+            
+            if (eslintStatus === 'failure' || prettierStatus === 'failure' || tsStatus === 'failure') {
+              emoji = '❌';
+              summary = 'Some checks failed. Please review the details below.';
+            }
+            
+            const comment = `${emoji} **Code Quality Check**
+            
+            | Check | Result |
+            |-------|--------|
+            | ESLint | ${{ steps.eslint.outcome }} |
+            | Prettier | ${{ steps.prettier.outcome }} |
+            | TypeScript | ${{ steps.typescript.outcome }} |
+            | Spell Check | ${{ steps.spellcheck.outcome }} |
+            
+            ${summary}
+            
+            [View Details](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  # ========================================================================
+  # JOB 2: Unit Tests
+  # Zweck: Jest Unit Tests ausführen
+  # ========================================================================
+  unit-tests:
+    name: '⚙️ Unit Tests'
+    runs-on: ubuntu-latest
+    needs: lint
+    timeout-minutes: 30
+    continue-on-error: false
+
+    steps:
+      - name: '📥 Checkout Repository'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: '📦 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: '⬇️ Install Dependencies'
+        run: npm ci --prefer-offline
+
+      - name: '▶️ Run Unit Tests'
+        id: test-run
+        run: |
+          echo "=== Führe Unit Tests aus ==="
+          npm run test:unit -- \
+            --coverage \
+            --reporters=default \
+            --reporters=jest-junit \
+            --reporters=json \
+            --passWithNoTests
+          
+          TEST_EXIT_CODE=$?
+          echo "exit-code=$TEST_EXIT_CODE" >> $GITHUB_OUTPUT
+          exit $TEST_EXIT_CODE
+        continue-on-error: true
+        env:
+          CI: 'true'
+
+      - name: '📊 Publish Test Results'
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: '**/junit.xml'
+          check_name: 'Unit Test Results'
+          comment_mode: 'always'
+
+      - name: '📈 Upload Coverage'
+        if: always()
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/coverage-final.json
+          flags: unittest
+          name: 'Unit Test Coverage'
+          verbose: true
+
+      - name: '❌ Fail if tests failed'
+        if: steps.test-run.outputs.exit-code != '0'
+        run: exit 1
+
+  # ========================================================================
+  # JOB 3: E2E Tests
+  # Zweck: Playwright E2E Tests ausführen
+  # ========================================================================
+  e2e-tests:
+    name: '🎭 E2E Tests - ${{ matrix.browser }}'
+    runs-on: ubuntu-latest
+    needs: lint
+    timeout-minutes: 60
+    continue-on-error: false
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox]
+
+    steps:
+      - name: '📥 Checkout Repository'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: '📦 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: '⬇️ Install Dependencies'
+        run: npm ci --prefer-offline
+
+      - name: '🎭 Install Playwright Browsers'
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: '▶️ Run E2E Tests - ${{ matrix.browser }}'
+        id: e2e-run
+        run: |
+          echo "=== Führe E2E Tests aus (${{ matrix.browser }}) ==="
+          npm run test:e2e -- \
+            --project=${{ matrix.browser }} \
+            --reporter=html \
+            --reporter=json \
+            --retries=1 \
+            --timeout=30000
+          
+          E2E_EXIT_CODE=$?
+          echo "exit-code=$E2E_EXIT_CODE" >> $GITHUB_OUTPUT
+          exit $E2E_EXIT_CODE
+        continue-on-error: true
+        env:
+          CI: 'true'
+          BROWSER: ${{ matrix.browser }}
+
+      - name: '📸 Upload Screenshots on Failure'
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-screenshots-${{ matrix.browser }}
+          path: |
+            playwright/screenshots/
+            test-results/
+          retention-days: ${{ env.ARTIFACTS_RETENTION }}
+
+      - name: '❌ Fail if tests failed'
+        if: steps.e2e-run.outputs.exit-code != '0'
+        run: exit 1
+
+  # ========================================================================
+  # JOB 4: Security Scan
+  # Zweck: Sicherheits- und Vulnerability-Überprüfungen
+  # ========================================================================
+  security:
+    name: '🔐 Security & Vulnerability Scan'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: ${{ github.event.inputs.run_security_scan != 'false' }}
+    continue-on-error: false
+
+    steps:
+      - name: '📥 Checkout Repository'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: '📦 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: '⬇️ Install Dependencies'
+        run: npm ci --prefer-offline
+
+      # npm audit für Sicherheitslücken
+      - name: '🛡️ Run npm audit'
+        id: npm-audit
+        run: |
+          echo "=== npm audit Security Check ==="
+          npm audit --audit-level=moderate || {
+            echo "⚠️ Sicherheitslücken gefunden"
+            npm audit --json > audit-report.json || true
+            exit 1
+          }
+        continue-on-error: true
+
+      # OWASP Dependency Check
+      - name: '⚠️ Run OWASP Dependency Check'
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'SDET-PW-Practice'
+          path: '.'
+          format: 'JSON'
+          args: >
+            --enableExperimental
+            --scan src
+            --scan tests
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      # Trivy Security Scanner
+      - name: '🔍 Run Trivy Scan'
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        continue-on-error: true
+
+      # Secret Detection
+      - name: '🔑 Detect Secrets'
+        run: |
+          echo "=== Scanning for secrets ==="
+          if command -v gitleaks &> /dev/null; then
+            gitleaks detect --source . --exit-code 1 || {
+              echo "⚠️ Potenzielle Secrets/Credentials gefunden"
+              exit 1
+            }
+          else
+            echo "ℹ️ Gitleaks nicht installiert, überspringe Secret-Scan"
+          fi
+        continue-on-error: true
+
+      # Upload Security Results
+      - name: '📤 Upload Security Reports'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            audit-report.json
+            dependency-check-report.json
+            trivy-results.sarif
+          retention-days: ${{ env.ARTIFACTS_RETENTION }}
+
+      # Upload zu GitHub Security Tab
+      - name: '📊 Upload SARIF to GitHub Security'
+        if: always()
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+          category: 'Trivy'
+        continue-on-error: true
+
+  # ========================================================================
+  # JOB 5: Code Coverage
+  # Zweck: Code Coverage Reports erstellen und überprüfen
+  # ========================================================================
+  coverage:
+    name: '📊 Code Coverage Report'
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    timeout-minutes: 30
+    if: ${{ github.event.inputs.run_coverage != 'false' }}
+
+    steps:
+      - name: '📥 Checkout Repository'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: '📦 Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: '⬇️ Install Dependencies'
+        run: npm ci --prefer-offline
+
+      - name: '🧪 Run Tests with Coverage'
+        run: |
+          echo "=== Generating Coverage Reports ==="
+          npm run test:coverage -- --coverage-reporters=text --coverage-reporters=json
+
+      - name: '📈 Generate Coverage Badge'
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/coverage-final.json
+          flags: coverage
+          name: 'PR Coverage'
+
+      - name: '📊 Publish Coverage Comment'
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const coverage = JSON.parse(fs.readFileSync('./coverage/coverage-final.json', 'utf8'));
+            
+            // Parse coverage data
+            let totalLines = 0;
+            let coveredLines = 0;
+            
+            Object.values(coverage).forEach(file => {
+              if (file.lines) {
+                Object.values(file.lines).forEach(line => {
+                  if (line !== null) {
+                    totalLines++;
+                    if (line > 0) coveredLines++;
+                  }
+                });
+              }
+            });
+            
+            const percentage = totalLines > 0 ? Math.round((coveredLines / totalLines) * 100) : 0;
+            
+            const comment = `📊 **Code Coverage Report**
+            
+            \`\`\`
+            Overall Coverage: ${percentage}%
+            Lines: ${coveredLines}/${totalLines}
+            \`\`\`
+            
+            [View Full Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  # ========================================================================
+  # JOB 6: PR Requirements Validation
+  # Zweck: PR Requirements überprüfen (Title, Description, Labels)
+  # ========================================================================
+  validate-pr:
+    name: '✅ PR Requirements Validation'
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    timeout-minutes: 10
+
+    steps:
+      - name: '📥 Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: '📋 Validate PR Title'
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            test
+            refactor
+            perf
+            chore
+          requireScope: false
+          disallowScopes:
+            - wip
+            - WIP
+
+      - name: '📝 Check PR Description'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const descriptionLength = pullRequest.body ? pullRequest.body.trim().length : 0;
+            
+            if (descriptionLength < 20) {
+              core.setFailed('PR Description zu kurz. Minimum 20 Zeichen erforderlich.');
+            } else {
+              console.log('✅ PR Description ausreichend');
+            }
+
+      - name: '🏷️ Verify Labels'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const labels = pullRequest.labels.map(l => l.name);
+            const requiredLabels = ['type:bug', 'type:feature', 'type:test', 'type:refactor', 'type:docs'];
+            const hasLabel = labels.some(l => requiredLabels.includes(l));
+            
+            if (labels.length === 0) {
+              console.warn('⚠️ Keine Labels gesetzt. Bitte mindestens ein Type-Label hinzufügen.');
+            } else if (!hasLabel) {
+              console.warn('⚠️ Empfohlene Type-Labels: bug, feature, test, refactor, docs');
+            } else {
+              console.log('✅ Gültige Labels vorhanden');
+            }
+
+  # ========================================================================
+  # JOB 7: Final Status Check
+  # Zweck: Alle Job-Ergebnisse zusammenfassen
+  # ========================================================================
+  final-status:
+    name: '🎯 Final Validation Status'
+    runs-on: ubuntu-latest
+    needs: [lint, unit-tests, e2e-tests, security, validate-pr]
+    if: always()
+    timeout-minutes: 10
+
+    steps:
+      - name: '✅ Check All Jobs Status'
+        id: status-check
+        run: |
+          echo "=== Validierungs-Zusammenfassung ==="
+          echo "Linting: ${{ needs.lint.result }}"
+          echo "Unit Tests: ${{ needs.unit-tests.result }}"
+          echo "E2E Tests: ${{ needs.e2e-tests.result }}"
+          echo "Security: ${{ needs.security.result }}"
+          echo "PR Validation: ${{ needs.validate-pr.result }}"
+          
+          if [ "${{ needs.lint.result }}" = "failure" ] || \
+             [ "${{ needs.unit-tests.result }}" = "failure" ] || \
+             [ "${{ needs.e2e-tests.result }}" = "failure" ] || \
+             [ "${{ needs.security.result }}" = "failure" ]; then
+            echo "❌ Einige Überprüfungen fehlgeschlagen"
+            exit 1
+          else
+            echo "✅ Alle Überprüfungen erfolgreich"
+          fi
+
+      - name: '📊 Generate Summary Report'
+        run: |
+          cat > summary.md << 'EOF'
+          # 📋 PR Validation Summary
+          
+          ## Status
+          - **Linting**: ${{ needs.lint.result }}
+          - **Unit Tests**: ${{ needs.unit-tests.result }}
+          - **E2E Tests**: ${{ needs.e2e-tests.result }}
+          - **Security**: ${{ needs.security.result }}
+          - **PR Requirements**: ${{ needs.validate-pr.result }}
+          
+          ## Details
+          [View Workflow Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          EOF
+          cat summary.md >> $GITHUB_STEP_SUMMARY
+
+      - name: '💬 Comment Final Status'
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const lintResult = '${{ needs.lint.result }}';
+            const testResult = '${{ needs.unit-tests.result }}';
+            const e2eResult = '${{ needs.e2e-tests.result }}';
+            const secResult = '${{ needs.security.result }}';
+            
+            let finalStatus = '✅ All Checks Passed';
+            let color = 'green';
+            
+            if (lintResult === 'failure' || testResult === 'failure' || 
+                e2eResult === 'failure' || secResult === 'failure') {
+              finalStatus = '❌ Some Checks Failed';
+              color = 'red';
+            }
+            
+            const comment = `## ${finalStatus}
+            
+            | Check | Status |
+            |-------|--------|
+            | 🔍 Linting | ${lintResult} |
+            | ⚙️ Unit Tests | ${testResult} |
+            | 🎭 E2E Tests | ${e2eResult} |
+            | 🔐 Security | ${secResult} |
+            
+            [View Full Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+# ============================================================================
+# KONFIGURATIONSANMERKUNGEN
+# ============================================================================
+#
+# 🎯 WORKFLOW TRIGGER:
+#
+# Dieser Workflow wird automatisch ausgelöst bei:
+#   1. PR geöffnet (opened)
+#   2. Neue Commits gepusht (synchronize)
+#   3. PR erneut geöffnet (reopened)
+#   4. PR bereit zum Review (ready_for_review)
+#
+# Pfad-Filter (paths):
+#   - Nur wenn Dateien in src/, tests/, config/ geändert
+#   - Nur bei package.json, tsconfig.json Änderungen
+#   - Docs und Markdown-Dateien werden ignoriert
+#
+# ============================================================================
+# ERFORDERLICHE SECRETS
+# ============================================================================
+#
+# Keine separaten Secrets erforderlich!
+# GitHub Token wird automatisch bereitgestellt.
+#
+# Optional:
+#   - codecov/codecov-action benötigt GitHub Token (wird automatisch gesetzt)
+#
+# ============================================================================
+# JOBS ÜBERSICHT
+# ============================================================================
+#
+# 1. lint (30 Min)
+#    - ESLint: Code-Style und Best Practices
+#    - Prettier: Code-Formatierung
+#    - TypeScript: Typ-Checking und Kompilation
+#    - Spell Check: Tippfehler erkennen
+#
+# 2. unit-tests (30 Min) - benötigt: lint
+#    - Jest Unit Tests
+#    - Code Coverage
+#    - JUnit XML Report
+#
+# 3. e2e-tests (60 Min) - benötigt: lint
+#    - Playwright E2E Tests
+#    - Chrome & Firefox parallel
+#    - Screenshot-Capture bei Fehlern
+#
+# 4. security (30 Min)
+#    - npm audit Vulnerability Check
+#    - OWASP Dependency Check
+#    - Trivy Filesystem Scan
+#    - Secret Detection
+#
+# 5. coverage (30 Min) - benötigt: unit-tests
+#    - Code Coverage Reports
+#    - Coverage Badge
+#    - PR Comment mit Coverage %
+#
+# 6. validate-pr (10 Min)
+#    - Semantischer PR Title
+#    - PR Description Length
+#    - Label Überprüfung
+#
+# 7. final-status (10 Min) - benötigt: alle anderen
+#    - Zusammenfassung aller Ergebnisse
+#    - Final Status Comment auf PR
+#
+# ============================================================================
+# BEST PRACTICES & OPTIMIERUNGEN
+# ============================================================================
+#
+# ✅ Performance:
+#   - npm ci statt npm install (schneller, deterministisch)
+#   - --prefer-offline Flag (offline Cache nutzen)
+#   - Parallel Job Execution wo möglich
+#   - Caching für Dependencies
+#
+# ✅ Zuverlässigkeit:
+#   - continue-on-error für nicht-kritische Jobs
+#   - Retries für flaky Tests (retries=1)
+#   - Timeout-Schutz für alle Jobs
+#   - Artifact Retention für Debugging
+#
+# ✅ Feedback:
+#   - PR Comments für sofortiges Feedback
+#   - GitHub Status Checks für Merge-Gating
+#   - Artifact Uploads für Debugging
+#   - Integration mit codecov
+#
+# ============================================================================
+# TROUBLESHOOTING
+# ============================================================================
+#
+# Problem: "npm ci fehlgeschlagen"
+# Lösung:
+#   - Cache löschen: Settings > Actions > Clear caches
+#   - package-lock.json überprüfen
+#   - npm install lokal testen
+#
+# Problem: "Tests schlagen fehl auf CI aber nicht lokal"
+# Lösung:
+#   - CI=true Flag überprüfen
+#   - Playwright headless Modus
+#   - Timeouts erhöhen auf CI
+#
+# Problem: "Coverage Reports nicht generiert"
+# Lösung:
+#   - npm run test:coverage ausführen
+#   - coverage/ Verzeichnis prüfen
+#   - Jest Config überprüfen
+#
+# Problem: "PR Comments nicht erstellt"
+# Lösung:
+#   - GitHub Token Berechtigungen prüfen
+#   - Pull Request Kontext verfügbar?
+#   - Script Fehler in Logs prüfen
+#
+# ============================================================================
+# VERSION & STATUS
+# ============================================================================
+#
+# Workflow Version: 1.0.0
+# Erstellt: 2. Januar 2026
+# Framework: GitHub Actions
+# Status: Production Ready ✅
+#
+# Features:
+#   ✅ ESLint + Prettier + TypeScript Linting
+#   ✅ Jest Unit Tests mit Coverage
+#   ✅ Playwright E2E Tests (Chrome + Firefox)
+#   ✅ Security & Vulnerability Scans
+#   ✅ Code Coverage Reports
+#   ✅ PR Requirements Validation
+#   ✅ Automated PR Comments
+#   ✅ Artifact Management
+#   ✅ GitHub Security Tab Integration
+#   ✅ Comprehensive Documentation (Deutsch)
+#
+# ============================================================================

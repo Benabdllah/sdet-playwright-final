@@ -1,0 +1,147 @@
+{
+  "default": {
+    "paths": ["src/cuc_tests/features/**/*.feature"],
+    "requireModule": ["ts-node/register/transpile-only", "tsconfig-paths/register"],
+    "require": [
+      "src/cuc_tests/support/env.ts",
+      "src/cuc_tests/support/world.ts",
+      "src/cuc_tests/support/hooks.ts",
+      "src/cuc_tests/step_definitions/**/*.ts",
+      "src/cuc_tests/support/plugins/**/*.ts"
+    ],
+    "import": ["src/tests/support/**/*.ts"],
+    "formatOptions": {
+      "snippetInterface": "async-await",
+      "snippetSyntax": "./src/cuc_tests/support/snippetSyntax.ts",
+      "colorsEnabled": true,
+      "theme": {
+        "feature keyword": ["magenta", "bold"],
+        "scenario keyword": ["cyan", "bold"],
+        "step keyword": ["green"],
+        "datatable": ["yellow"]
+      }
+    },
+    "format": [
+      "progress-bar",
+      "summary",
+      "@cucumber/pretty-formatter",
+      "message:playwright-report/cucumber/messages.ndjson",
+      "json:playwright-report/cucumber/report.json",
+      "html:playwright-report/cucumber/report.html",
+      "junit:playwright-report/cucumber/junit.xml",
+      "rerun:playwright-report/cucumber/rerun.txt",
+      "usage:playwright-report/cucumber/usage.json"
+    ],
+    "parallel": 4,
+    "retry": 1,
+    "retryTagFilter": "@flaky or @unstable",
+    "failFast": false,
+    "strict": true,
+    "publishQuiet": true,
+    "tags": "not @ignore and not @wip and not @manual and not @skip",
+    "backtrace": true,
+    "order": "defined",
+    "worldParameters": {
+      "baseUrl": "${BASE_URL:-https://the-internet.herokuapp.com}",
+      "apiUrl": "${API_URL:-https://api.example.com}",
+      "timeout": 30000,
+      "defaultTimeout": 30000,
+      "navigationTimeout": 60000,
+      "actionTimeout": 15000,
+      "browser": "${BROWSER:-chromium}",
+      "headless": "${HEADLESS:-true}",
+      "trace": "on-first-retry",
+      "screenshot": "only-on-failure",
+      "video": "retain-on-failure",
+      "viewport": { "width": 1280, "height": 720 },
+      "locale": "${LOCALE:-de-DE}",
+      "timezone": "${TIMEZONE:-Europe/Berlin}",
+      "geolocation": { "latitude": 50.7374, "longitude": 7.0982 },
+      "permissions": ["geolocation", "notifications"],
+      "colorScheme": "light",
+      "deviceScaleFactor": 1,
+      "isMobile": false,
+      "hasTouch": false,
+      "acceptDownloads": true,
+      "recordHar": false,
+      "recordVideo": false,
+      "slowMo": 0,
+      "contextOptions": {
+        "ignoreHTTPSErrors": true,
+        "bypassCSP": false,
+        "javaScriptEnabled": true
+      },
+      "launchOptions": {
+        "args": [
+          "--disable-dev-shm-usage",
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--disable-gpu",
+          "--disable-extensions",
+          "--disable-background-networking",
+          "--disable-default-apps",
+          "--disable-sync",
+          "--metrics-recording-only",
+          "--no-first-run"
+        ],
+        "chromiumSandbox": false
+      },
+      "env": "${ENV:-dev}",
+      "logLevel": "${LOG_LEVEL:-info}",
+      "enableMetrics": true,
+      "enablePerformanceMonitoring": true,
+      "enableAccessibilityTests": false,
+      "enableVisualRegression": false,
+      "retryDelay": 1000
+    }
+  },
+
+  "ci": {
+    "extends": "default",
+    "parallel": 12,
+    "retry": 2,
+    "retryTagFilter": "@flaky or @unstable or @integration",
+    "failFast": true,
+    "publish": true,
+    "publishQuiet": false,
+    "worldParameters": {
+      "headless": true,
+      "trace": "on",
+      "screenshot": "on",
+      "video": "on",
+      "recordHar": true,
+      "recordVideo": true,
+      "timeout": 45000,
+      "navigationTimeout": 90000
+    }
+  },
+
+  "ci-parallel": {
+    "extends": "ci",
+    "parallel": "${CI_NODE_TOTAL:-16}",
+    "tags": "not @serial",
+    "worldParameters": {
+      "shardIndex": "${CI_NODE_INDEX:-0}",
+      "shardTotal": "${CI_NODE_TOTAL:-16}"
+    }
+  },
+
+  "smoke": { "extends": "default", "tags": "@smoke and not @slow", "parallel": 6, "retry": 0, "failFast": true },
+  "regression": { "extends": "default", "tags": "@regression", "parallel": 8, "retry": 2 },
+  "sanity": { "extends": "default", "tags": "@sanity", "parallel": 4, "retry": 1 },
+  "critical": { "extends": "default", "tags": "@critical", "parallel": 6, "retry": 3 },
+  "e2e": { "extends": "default", "tags": "@e2e", "parallel": 4, "retry": 2 },
+  "integration": { "extends": "default", "tags": "@integration", "parallel": 6, "retry": 1 },
+  "api": { "extends": "default", "tags": "@api", "parallel": 10, "retry": 1, "worldParameters": { "headless": true, "screenshot": "off", "video": "off" } },
+  "performance": { "extends": "default", "tags": "@performance", "parallel": 2, "retry": 0, "worldParameters": { "enablePerformanceMonitoring": true, "enableMetrics": true } },
+  "accessibility": { "extends": "default", "tags": "@accessibility", "parallel": 3, "retry": 0, "worldParameters": { "enableAccessibilityTests": true } },
+  "visual": { "extends": "default", "tags": "@visual", "parallel": 2, "retry": 0, "worldParameters": { "enableVisualRegression": true } },
+  "mobile": { "extends": "default", "tags": "@mobile", "parallel": 4, "retry": 1, "worldParameters": { "viewport": { "width": 375, "height": 667 }, "isMobile": true, "hasTouch": true } },
+  "tablet": { "extends": "default", "tags": "@tablet", "parallel": 3, "worldParameters": { "viewport": { "width": 768, "height": 1024 }, "isMobile": true, "hasTouch": true } },
+  "cross-browser": { "extends": "default", "tags": "@cross-browser", "parallel": 9, "retry": 1, "worldParameters": { "browsers": ["chromium","firefox","webkit"] } },
+  "debug": { "extends": "default", "parallel": 1, "retry": 0, "tags": "@debug or @focus", "worldParameters": { "headless": false, "slowMo": 500, "trace": "on", "screenshot": "on", "video": "on", "logLevel": "debug" } },
+  "headed": { "extends": "default", "parallel": 1, "worldParameters": { "headless": false, "slowMo": 300, "devtools": true } },
+  "ui": { "extends": "debug", "parallel": 1, "worldParameters": { "slowMo": 1000, "headless": false, "devtools": true } },
+  "dry-run": { "extends": "default", "dryRun": true, "format": ["summary","progress","snippets"], "strict": true },
+  "lint": { "extends": "default", "dryRun": true, "strict": true, "format": ["summary","usage:playwright-report/cucumber/usage.json"] }
+}

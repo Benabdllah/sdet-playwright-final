@@ -1,0 +1,517 @@
+# ============================================================================
+# .nvmrc - Ultimative Ultra SDET +++++ Final Version
+# ============================================================================
+# Node Version Manager (nvm) Configuration für SDET Automation Framework
+#
+# 📋 PURPOSE:
+# - Specify Node.js version for project
+# - Ensure consistent development environment across team
+# - Prevent version conflicts between developers
+# - Align with production Node.js version
+# - Enable automatic version switching with nvm
+# - Improve CI/CD reproducibility
+#
+# 🎯 NODE.JS VERSION SELECTION:
+# Current Recommended: 20.11.0
+# - LTS (Long Term Support) release
+# - Stable & production-ready
+# - Security patches included
+# - Full npm 10+ support
+# - ESM (ES Modules) fully supported
+# - Performance optimizations
+#
+# 📝 HOW TO USE:
+# 1. Install nvm: https://github.com/nvm-sh/nvm#installing-and-updating
+# 2. Install Node version: nvm install
+# 3. Use Node version: nvm use
+# 4. Verify version: node --version
+#
+# ============================================================================
+# VERSION SPECIFICATION
+# ============================================================================
+
+# SDET Framework Recommended Node.js Version (LTS)
+20.11.0
+
+# ============================================================================
+# VERSION NOTES & COMPATIBILITY
+# ============================================================================
+#
+# SELECTED VERSION: 20.11.0 (LTS)
+#
+# ✅ FEATURES & BENEFITS:
+# - Long Term Support (until April 2026)
+# - Stable & production-ready
+# - Full ESM (ES Modules) support
+# - TypeScript 5.x compatible
+# - Playwright 1.40+ compatible
+# - Jest 29+ compatible
+# - Cucumber.js fully supported
+# - npm 10.x included
+# - Security patches included
+# - Performance optimizations
+#
+# 📦 COMPATIBLE PACKAGES:
+# - @playwright/test 1.40+
+# - TypeScript 5.x
+# - Jest 29.x
+# - @types/node 20.x
+# - ts-node 10.x
+# - ESLint 8.x
+# - Prettier 3.x
+# - Webpack 5.x
+# - Babel 7.x
+#
+# 🔐 SECURITY:
+# - Regular security updates
+# - CVE patches
+# - Dependency vulnerabilities fixed
+# - LTS until April 2026
+#
+# ⚡ PERFORMANCE:
+# - Improved V8 engine
+# - Better memory management
+# - Faster startup times
+# - Optimized for testing
+#
+# ============================================================================
+# ALTERNATIVE VERSIONS
+# ============================================================================
+#
+# If version 20.11.0 causes issues, alternatives:
+#
+# Production (Stable LTS):
+#   20.10.0  - Previous LTS patch
+#   20.9.0   - Earlier LTS patch
+#   18.18.0  - Previous LTS (until April 2025)
+#
+# Bleeding Edge (Cutting Edge):
+#   21.x.x   - Current development
+#   22.x.x   - Future LTS candidate
+#
+# Note: Always use LTS versions for production!
+#
+# ============================================================================
+# SWITCHING NODE VERSIONS
+# ============================================================================
+#
+# Install specified version:
+#   nvm install
+#   # or specifically:
+#   nvm install 20.11.0
+#
+# Use specified version in current shell:
+#   nvm use
+#   # or specifically:
+#   nvm use 20.11.0
+#
+# Set default version globally:
+#   nvm alias default 20.11.0
+#   nvm alias stable 20.11.0
+#
+# Verify current version:
+#   node --version
+#   npm --version
+#
+# List installed versions:
+#   nvm list
+#
+# List available versions:
+#   nvm list-remote
+#   nvm list-remote | grep 20
+#
+# ============================================================================
+# NVM INSTALLATION & SETUP
+# ============================================================================
+#
+# 1. INSTALL NVM (if not already installed):
+#
+#    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+#
+#    Or using Homebrew (macOS):
+#    brew install nvm
+#
+# 2. LOAD NVM IN SHELL:
+#
+#    Add to ~/.bashrc, ~/.zshrc, or ~/.bash_profile:
+#
+#    export NVM_DIR="$HOME/.nvm"
+#    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+#
+# 3. VERIFY INSTALLATION:
+#
+#    nvm --version
+#
+# ============================================================================
+# TEAM ONBOARDING
+# ============================================================================
+#
+# For new team members:
+#
+# 1. Clone repository
+#    git clone <repo-url>
+#
+# 2. Install Node.js version
+#    cd <project-directory>
+#    nvm install
+#
+# 3. Verify installation
+#    node --version  # Should be 20.11.0
+#    npm --version   # Should be 10.x
+#
+# 4. Install dependencies
+#    npm install
+#
+# 5. Run tests
+#    npm test
+#
+# ============================================================================
+# CI/CD INTEGRATION
+# ============================================================================
+#
+# GitHub Actions:
+# ```yaml
+# - name: Setup Node.js
+#   uses: actions/setup-node@v3
+#   with:
+#     node-version-file: '.nvmrc'
+# ```
+#
+# GitLab CI:
+# ```yaml
+# image: node:$(cat .nvmrc)
+# ```
+#
+# Jenkins:
+# ```groovy
+# def nodeVersion = readFile('.nvmrc').trim()
+# sh "nvm use ${nodeVersion}"
+# sh "npm ci"
+# ```
+#
+# Docker:
+# ```dockerfile
+# FROM node:20.11.0-alpine
+# WORKDIR /app
+# COPY .nvmrc .
+# RUN node --version
+# ```
+#
+# ============================================================================
+# DOCKER INTEGRATION
+# ============================================================================
+#
+# Use in Dockerfile:
+#
+# # Read Node version from .nvmrc
+# ARG NODE_VERSION=20.11.0
+# FROM node:${NODE_VERSION}-alpine
+#
+# WORKDIR /app
+# COPY .nvmrc .
+# COPY package*.json ./
+#
+# RUN npm ci
+#
+# COPY . .
+#
+# CMD ["npm", "start"]
+#
+# ============================================================================
+# TROUBLESHOOTING
+# ============================================================================
+#
+# Problem: "nvm: command not found"
+# Solution:
+#   - Verify nvm is installed: which nvm
+#   - Add to shell config: ~/.bashrc, ~/.zshrc
+#   - Source config: source ~/.bashrc or source ~/.zshrc
+#   - Restart terminal
+#
+# Problem: "Node version not installed"
+# Solution:
+#   - Install version: nvm install 20.11.0
+#   - List versions: nvm list
+#   - Check .nvmrc file
+#
+# Problem: "npm version mismatch"
+# Solution:
+#   - npm is bundled with Node.js
+#   - Reinstall Node: nvm install 20.11.0
+#   - Upgrade npm: npm install -g npm@latest
+#
+# Problem: "Global packages not working"
+# Solution:
+#   - Use nvm's local npm-g directory
+#   - Or reinstall global packages
+#   - Add to PATH: ~/.nvm/versions/node/*/bin
+#
+# Problem: "Different versions between developers"
+# Solution:
+#   - Ensure .nvmrc is committed
+#   - Run: nvm use
+#   - Verify: node --version
+#
+# ============================================================================
+# WINDOWS USERS
+# ============================================================================
+#
+# nvm not available on Windows!
+#
+# ALTERNATIVES:
+#
+# 1. nvm-windows (third-party):
+#    https://github.com/coreybutler/nvm-windows
+#
+# 2. fnm (Fast Node Manager):
+#    https://github.com/Schniz/fnm
+#    fnm use
+#
+# 3. volta (Node.js version manager):
+#    https://docs.volta.sh/guide/
+#    Create volta.json instead
+#
+# 4. Docker (recommended):
+#    Use Docker with this Node version
+#
+# 5. GitHub Actions on Windows:
+#    actions/setup-node@v3 automatically handles .nvmrc
+#
+# ============================================================================
+# VERSION UPGRADE STRATEGY
+# ============================================================================
+#
+# When to upgrade:
+#   - New LTS version released
+#   - Critical security fixes
+#   - Required for new features
+#   - Team consensus reached
+#
+# How to upgrade:
+#   1. Review breaking changes
+#   2. Update dependencies if needed
+#   3. Run full test suite
+#   4. Update .nvmrc
+#   5. Commit & push
+#   6. Notify team
+#   7. All team members: nvm use
+#
+# Upgrade timeline:
+#   - Test in feature branch first
+#   - Run all tests
+#   - Check CI/CD pipeline
+#   - Get team approval
+#   - Merge to main
+#   - Update in production
+#
+# ============================================================================
+# PACKAGE COMPATIBILITY MATRIX
+# ============================================================================
+#
+# Node 20.11.0 Compatibility:
+#
+# ✅ Playwright 1.40+
+#    npm install @playwright/test@latest
+#
+# ✅ TypeScript 5.x
+#    npm install typescript@5 ts-node
+#
+# ✅ Jest 29.x
+#    npm install jest@29 ts-jest
+#
+# ✅ Cucumber.js 9.x
+#    npm install @cucumber/cucumber
+#
+# ✅ ESLint 8.x
+#    npm install eslint
+#
+# ✅ Prettier 3.x
+#    npm install prettier
+#
+# ✅ Express 4.x
+#    npm install express
+#
+# ✅ React 18.x (if using)
+#    npm install react react-dom
+#
+# Verify compatibility:
+#   npm outdated
+#   npm audit
+#
+# ============================================================================
+# ENVIRONMENT-SPECIFIC VERSIONS
+# ============================================================================
+#
+# Development:
+#   Node 20.11.0 (as specified in .nvmrc)
+#
+# Staging:
+#   Node 20.11.0 (matches development)
+#
+# Production:
+#   Docker: node:20.11.0-alpine
+#   AWS: Node 20.x runtime
+#   Heroku: Node 20.x specified in Procfile
+#
+# CI/CD:
+#   GitHub Actions: actions/setup-node with .nvmrc
+#   GitLab CI: node:20.11.0 image
+#   Jenkins: nvm or Docker
+#
+# ============================================================================
+# MONOREPO CONSIDERATIONS
+# ============================================================================
+#
+# For monorepos with workspaces:
+#
+# - Use single .nvmrc at root
+# - All workspaces share Node version
+# - Specify in package.json "engines"
+# - Enforce with "engines-strict"
+#
+# Example in package.json:
+# {
+#   "engines": {
+#     "node": ">=20.11.0",
+#     "npm": ">=10.0.0"
+#   }
+# }
+#
+# ============================================================================
+# SDET-SPECIFIC REQUIREMENTS
+# ============================================================================
+#
+# Playwright Requirements:
+#   ✓ Node 16+ (20.11.0 fully supported)
+#   ✓ npm 8+ (npm 10 included with Node 20.11.0)
+#   ✓ Browsers: Chromium, Firefox, WebKit
+#   ✓ Memory: 2GB+ recommended
+#
+# Testing Framework:
+#   ✓ Jest: Requires Node 14+ (20.11.0 optimal)
+#   ✓ Mocha: Full support
+#   ✓ Cucumber: Full support
+#
+# TypeScript:
+#   ✓ TypeScript 5.x fully supported
+#   ✓ ts-node works without issues
+#   ✓ Type definitions: @types/node 20.x
+#
+# Build Tools:
+#   ✓ Webpack 5: Full support
+#   ✓ Babel 7: Full support
+#   ✓ esbuild: Full support
+#
+# ============================================================================
+# UPDATING STRATEGY
+# ============================================================================
+#
+# Check for Node.js updates:
+#   nvm list-remote | grep 20
+#
+# When new 20.x patch releases:
+#   1. Review release notes
+#   2. Test in development
+#   3. Update .nvmrc if needed
+#   4. Run npm install (no changes needed)
+#   5. Run test suite
+#   6. Commit update
+#
+# Example update process:
+#   nvm install 20.12.0  # When 20.12.0 releases
+#   nvm use 20.12.0
+#   npm install           # Reinstall deps if needed
+#   npm test             # Verify everything works
+#   echo "20.12.0" > .nvmrc
+#   git add .nvmrc
+#   git commit -m "chore: update Node.js to 20.12.0"
+#
+# ============================================================================
+# USEFUL COMMANDS REFERENCE
+# ============================================================================
+#
+# NVM Commands:
+#   nvm --version                # Check nvm version
+#   nvm install                  # Install version from .nvmrc
+#   nvm use                       # Use version from .nvmrc
+#   nvm alias default 20.11.0    # Set default version
+#   nvm list                      # List installed versions
+#   nvm list-remote              # List available versions
+#   nvm uninstall 20.11.0        # Remove version
+#
+# Node/NPM Verification:
+#   node --version               # Current Node version
+#   npm --version                # Current NPM version
+#   npm list -g                  # Global packages
+#   npm outdated                 # Check for updates
+#
+# SDET Commands:
+#   npm install                  # Install dependencies
+#   npm test                      # Run tests
+#   npm run playwright           # Run Playwright tests
+#   npm run cucumber             # Run Cucumber tests
+#   npm audit                    # Check vulnerabilities
+#
+# ============================================================================
+# VERSION HISTORY
+# ============================================================================
+#
+# 20.11.0 (2. Januar 2026) - CURRENT
+#   ✓ LTS release until April 2026
+#   ✓ npm 10.2.4 included
+#   ✓ Full ESM support
+#   ✓ Production ready
+#   ✓ Recommended for SDET
+#
+# 18.18.0 (Previous LTS until April 2025)
+#   - Still supported but older
+#   - Missing some features
+#   - Not recommended for new projects
+#
+# ============================================================================
+# ADDITIONAL RESOURCES
+# ============================================================================
+#
+# NVM Documentation:
+#   https://github.com/nvm-sh/nvm
+#   https://github.com/nvm-sh/nvm#readme
+#
+# Node.js Documentation:
+#   https://nodejs.org/docs/
+#   https://nodejs.org/en/docs/
+#
+# npm Documentation:
+#   https://docs.npmjs.com/
+#
+# Node.js Releases:
+#   https://nodejs.org/en/about/releases/
+#
+# LTS Release Schedule:
+#   https://nodejs.org/en/about/previous-releases/
+#
+# ============================================================================
+# CONTACT & SUPPORT
+# ============================================================================
+#
+# For Node.js issues:
+#   - Check GitHub issues: https://github.com/nodejs/node/issues
+#   - npm audit for security
+#   - Stack Overflow for general help
+#
+# For nvm issues:
+#   - nvm GitHub: https://github.com/nvm-sh/nvm
+#   - nvm-windows: https://github.com/coreybutler/nvm-windows
+#
+# For SDET Framework:
+#   - Check project documentation
+#   - Review package.json "engines"
+#   - Verify CI/CD configuration
+#
+# ============================================================================
+# SDET Framework - Node Version Configuration
+# Version: 1.0.0
+# Node.js: 20.11.0 (LTS)
+# Generated: 2. Januar 2026
+# Status: Production Ready ✅
+# ============================================================================
