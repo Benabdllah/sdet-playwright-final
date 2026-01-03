@@ -1,3 +1,5 @@
+
+//Key-basierte Secrets, flache Struktur, manuelle Fallbacks
 import * as fs from 'fs';
 import * as path from 'path';
 
