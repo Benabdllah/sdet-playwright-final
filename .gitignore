@@ -446,3 +446,7 @@ jenkins-logs/
 # ============================================================================
 .vscode/extensions/
 ~/.vscode/
+
+# VS Code Extensions (Submodule)
+.vscode/extensions/
+~/.vscode/extensions/
