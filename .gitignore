@@ -444,3 +444,5 @@ jenkins-logs/
 # Generated: 2. Januar 2026
 # Status: Production Ready ✅
 # ============================================================================
+.vscode/extensions/
+~/.vscode/
