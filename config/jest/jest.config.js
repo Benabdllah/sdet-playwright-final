@@ -67,19 +67,30 @@ module.exports = {
   /** Files to not transform */
   transformIgnorePatterns: [
     'node_modules/(?!(@playwright|@cucumber|@babel|@angular|@types)/)',
-    '\\.pnp\\.js$',
+    String.raw`\.pnp\.js$`,
   ],
 
   // ============================================================================
   // TEST EXECUTION CONFIGURATION
   // ============================================================================
 
-  /** Test file patterns */
+  /** Test file patterns - ONLY unit and API tests, NOT Playwright E2E tests */
   testMatch: [
+    '<rootDir>/src/tests/unit/**/*.{spec,test}.{js,jsx,ts,tsx}',
+    '<rootDir>/src/tests/api/**/*.{spec,test}.{js,jsx,ts,tsx}',
     '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
-    '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
-    '<rootDir>/scripts/**/__tests__/**/*.{js,jsx,ts,tsx}',
-    '<rootDir>/scripts/**/*.{spec,test}.{js,jsx,ts,tsx}',
+  ],
+
+  /** Test path ignore patterns - exclude Playwright E2E tests */
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/src/tests/e2e/',           // 🚫 Playwright E2E tests
+    '<rootDir>/src/tests/features/',       // 🚫 Cucumber BDD features
+    '<rootDir>/src/tests/integration/',    // 🚫 Integration tests
+    '<rootDir>/src/tests/visual/',         // 🚫 Visual regression
+    '<rootDir>/src/tests/performance/',    // 🚫 Performance tests
+    '<rootDir>/src/tests/security/',       // 🚫 Security tests
+    '<rootDir>/src/tests/accessibility/',  // 🚫 Accessibility tests
   ],
 
   /** Test timeout in milliseconds */
@@ -148,13 +159,13 @@ module.exports = {
     '/node_modules/',
     '/dist/',
     '/build/',
-    '\\.config\\.',
+    String.raw`\.config\.`,
     'jest.config',
     'webpack.config',
     '__mocks__',
     '__fixtures__',
     '__tests__',
-    '\\.d\\.ts$',
+    String.raw`\.d\.ts$`,
   ],
 
   /** Coverage thresholds */
@@ -182,17 +193,6 @@ module.exports = {
   // ============================================================================
   // TESTING LIBRARIES CONFIGURATION
   // ============================================================================
-
-  /** Test match ignore patterns */
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/dist/',
-    '/build/',
-    '/.angular/',
-    '/playwright-report/',
-    '/allure-results/',
-    '/test-results/',
-  ],
 
   /** Test path whitelist patterns */
   testPathWhitelist: [
@@ -278,32 +278,12 @@ module.exports = {
   // ENVIRONMENT VARIABLES & GLOBALS
   // ============================================================================
 
-  /** Global test timeout (fallback) */
-  testTimeout: 30000,
-
   /** Environment variables */
   preset: 'ts-jest',
-
-  /** Module resolution */
-  moduleNameMapper: {
-    '^@api/(.*)$': '<rootDir>/src/api/$1',
-    '^@components/(.*)$': '<rootDir>/src/components/$1',
-    '^@config/(.*)$': '<rootDir>/src/config/$1',
-    '^@constants/(.*)$': '<rootDir>/src/constants/$1',
-    '^@data/(.*)$': '<rootDir>/src/data/$1',
-    '^@fixtures/(.*)$': '<rootDir>/src/fixtures/$1',
-    '^@helpers/(.*)$': '<rootDir>/src/helpers/$1',
-    '^@pages/(.*)$': '<rootDir>/src/pages/$1',
-    '^@types/(.*)$': '<rootDir>/src/types/$1',
-    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
-  },
 
   // ============================================================================
   // ADVANCED OPTIONS
   // ============================================================================
-
-  /** Bail on first test failure in CI */
-  bail: process.env.CI ? 1 : 0,
 
   /** Clear mocks between tests */
   clearMocks: true,
@@ -323,6 +303,7 @@ module.exports = {
   /** Custom test environment */
   testEnvironmentOptions: {
     NODE_ENV: 'test',
+    url: process.env.BASE_URL || 'http://localhost:3000',
   },
 
   /** Error on deprecated APIs */
@@ -330,11 +311,6 @@ module.exports = {
 
   /** Expand expected/received in snapshots */
   expand: true,
-
-  /** Extra globals for test environment */
-  testEnvironmentOptions: {
-    url: process.env.BASE_URL || 'http://localhost:3000',
-  },
 
   // ============================================================================
   // CI/CD SPECIFIC CONFIGURATION
@@ -358,12 +334,6 @@ module.exports = {
   // ADDITIONAL PROJECT SETTINGS
   // ============================================================================
 
-  /** Automatically reset mocks before each test */
-  clearMocks: true,
-
-  /** Restore all mocks between test cases */
-  restoreAllMocks: true,
-
   /** Collect coverage from ignored files */
   collectCoverageFrom: [
     'src/**/*.{ts,tsx,js,jsx}',
@@ -379,12 +349,4 @@ module.exports = {
 
   /** Jest cache directory */
   cacheDirectory: '<rootDir>/.jest-cache',
-
-  /** Coverage ignore patterns */
-  coveragePathIgnorePatterns: [
-    '/node_modules/',
-    '/test-results/',
-    '/dist/',
-    '/build/',
-  ],
 };

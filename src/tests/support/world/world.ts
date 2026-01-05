@@ -2,24 +2,23 @@
 import {
   setWorldConstructor,
   World as CucumberWorld,
-  IWorldOptions,
-  
 } from '@cucumber/cucumber';
 
-import {
-  Browser,
-  BrowserContext,
-  Page,
-  chromium,
-  firefox,
-  webkit,
-  APIRequestContext,
-  Locator,
-} from '@playwright/test';
+// Type for World constructor options
+type IWorldOptions = any;
+
+// Playwright types and imports
+import * as pw from '@playwright/test';
+const { chromium, firefox, webkit } = pw;
+
+type Browser = any;
+type BrowserContext = any;
+type Page = any;
+type Locator = any;
 
 // ✅ FIXED: Import CONFIG as default + named exports
-import CONFIG from './env';
-import type { EnvironmentConfig } from './env';
+import CONFIG from '../env.ts';
+import type { EnvironmentConfig } from '../env.ts';
 import {
   BROWSER,
   BASE_URL,
@@ -29,7 +28,7 @@ import {
   ACTION_TIMEOUT,
   LAUNCH_OPTIONS,
   CONTEXT_OPTIONS,
-} from './env';
+} from '../env.ts';
 
 import { promises as fs } from 'fs';
 import * as path from 'path';
@@ -59,7 +58,7 @@ export interface CustomWorld extends CucumberWorld {
   browser?: Browser;
   context?: BrowserContext;
   page?: Page;
-  apiContext?: APIRequestContext;
+  apiContext?: any;
 
   // Scenario metadata (für hooks.ts)
   scenarioName?: string;
@@ -111,7 +110,7 @@ export class World implements CustomWorld {
   browser?: Browser;
   context?: BrowserContext;
   page?: Page;
-  apiContext?: APIRequestContext;
+  apiContext?: any;
 
   scenarioName?: string;
   featureName?: string;
@@ -208,7 +207,7 @@ export class World implements CustomWorld {
       this.page.setDefaultNavigationTimeout(NAVIGATION_TIMEOUT);
 
       // Add console log listener
-      this.page.on('console', (msg) => {
+      this.page.on('console', (msg: any) => {
         const entry = `[${msg.type()}] ${msg.text()}`;
         this.logs.push(entry);
         
@@ -218,16 +217,16 @@ export class World implements CustomWorld {
       });
 
       // Add page error listener
-      this.page.on('pageerror', (error) => {
+      this.page.on('pageerror', (error: any) => {
         this.log(`Page error: ${error.message}`, 'error');
       });
 
       // Log debug info
       if (this.config.logLevel === 'debug') {
-        this.page.on('request', (req) => 
+        this.page.on('request', (req: any) => 
           this.log(`→ ${req.method()} ${req.url()}`, 'debug')
         );
-        this.page.on('response', (res) => 
+        this.page.on('response', (res: any) => 
           this.log(`← ${res.status()} ${res.url()}`, 'debug')
         );
       }

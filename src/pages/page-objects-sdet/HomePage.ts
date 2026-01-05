@@ -1,17 +1,14 @@
 import { Locator, Page } from '@playwright/test';
-import { LoginPage ,LoginPageRecommended} from './LoginPage';
-import { handleAlert, handlePrompt } from '../utils/alert-utils';     
+import { LoginPage ,LoginPageRecommended} from './LoginPage';     
 
 export class HomePage extends LoginPage
 {
-    //readonly page: Page;
     readonly cart: Locator;
     readonly addToCartBtn:Locator;
 
 
     constructor(page: Page) {
         super(page)
-        //this.page = page;
         this.cart = page.locator('#cartur');
         this.addToCartBtn=page.locator("//a[normalize-space()='Add to cart']")//normalize-space() entfernt führende und nachfolgende Leerzeichen
      
@@ -20,8 +17,6 @@ export class HomePage extends LoginPage
     get productList() {
         return this.page.locator("//*[@id='tbodyid']/div/div/div/h4/a").all();
     }
-    
-    //const addToCartBtn = this.page.locator("//a[normalize-space()='Add to cart']");
 
     async addProductToCart(productName: string) {
         const products = await this.productList
@@ -48,10 +43,6 @@ export class HomePage extends LoginPage
         }
        
     
-        //const addToCartBtn = this.page.locator("//a[normalize-space()='Add to cart']");
-
-        //await addToCartBtn.waitFor({ state: 'visible', timeout: 15000 });
-
         // Dialog-Handler vorbereiten
         this.page.once('dialog', async dialog => {
             if (dialog.message().includes('Product added')) {
@@ -147,7 +138,6 @@ export class HomePageRecommended extends LoginPageRecommended{
 
     // "Add to cart" klicken
     
-    //await this.page.getByText('Add to cart').click({ force: true });
     const addToCartBtn = this.page.getByText('Add to cart', { exact: true });
     await addToCartBtn.waitFor({ state: 'visible', timeout: 1000 });
     await addToCartBtn.click({ force: true });

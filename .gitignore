@@ -125,6 +125,11 @@ docs/build/
 .history/
 .ionide/
 
+# Playwright Config Files
+playwright.config copy.ts
+playwright.config.*.ts
+!config/playwright/playwright.config.ts
+
 # IntelliJ IDEA
 /.idea
 *.iml

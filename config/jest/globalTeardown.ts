@@ -105,8 +105,8 @@ export default async function globalTeardown() {
 
     if (process.env.ARCHIVE_LOGS === 'true') {
       console.log('\n📦 Archiving test logs...');
-      const logsDir = path.resolve(__dirname, '../../logs');
-      const archiveDir = path.resolve(__dirname, '../../logs/archive');
+      const logsDir = path.resolve(__dirname, '../../test-results/logs');
+      const archiveDir = path.resolve(__dirname, '../../test-results/logs/archive');
 
       if (fs.existsSync(logsDir)) {
         if (!fs.existsSync(archiveDir)) {

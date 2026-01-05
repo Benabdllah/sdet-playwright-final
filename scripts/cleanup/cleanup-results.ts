@@ -462,9 +462,9 @@ class CleanupManager {
     this.logger.subheader('Cleaning Old Artifacts');
 
     const artifactDirs = [
-      path.join(this.projectRoot, 'logs'),
-      path.join(this.projectRoot, 'metrics'),
-      path.join(this.projectRoot, 'coverage'),
+      path.join(this.projectRoot, 'test-results/logs'),
+      path.join(this.projectRoot, 'test-results/metrics'),
+      path.join(this.projectRoot, 'test-results/coverage'),
       path.join(this.projectRoot, '.cache'),
       path.join(this.projectRoot, '.turbo'),
     ];

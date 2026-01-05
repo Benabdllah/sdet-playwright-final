@@ -206,7 +206,7 @@ const videoPlugin: PluginInterface = {
       return;
     }
 
-    const videoDir = path.resolve(process.cwd(), 'videos');
+    const videoDir = path.resolve(process.cwd(), 'test-results/playwright/videos');
     if (!fs.existsSync(videoDir)) {
       fs.mkdirSync(videoDir, { recursive: true });
     }

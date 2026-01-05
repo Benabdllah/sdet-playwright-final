@@ -24,7 +24,7 @@ export {
   type TimezoneMeta,
   type QuarterInfo,
   type WeekInfo,
-} from './dateUtil';
+} from './date-util';
 
 // ============================================================================
 // STRING UTILITIES
@@ -38,7 +38,7 @@ export {
   type StringSimilarityResult,
   type StringMetrics,
   type StringValidationResult,
-} from './stringUtil';
+} from './string-util';
 
 // ============================================================================
 // ARRAY & COLLECTION UTILITIES
@@ -132,7 +132,7 @@ export {
   type LogEntry,
   type LogMetrics,
   type LogFilter,
-} from './loggerUtil';
+} from './logger-util';
 
 // ============================================================================
 // PERFORMANCE & METRICS UTILITIES
@@ -157,7 +157,7 @@ export {
   type RetryResult,
   type CircuitBreakerConfig,
   type BackoffConfig,
-} from './retryUtil';
+} from './retry-util';
 
 // ============================================================================
 // RANDOM & GENERATION UTILITIES
@@ -168,7 +168,7 @@ export {
   type RandomGeneratorOptions,
   type RandomDataSet,
   type RandomPersona,
-} from './randomUtil';
+} from './random-util';
 
 // ============================================================================
 // COMPARISON & ASSERTION UTILITIES
@@ -225,7 +225,7 @@ export {
   type WaitCondition,
   type WaitOptions,
   type PollingResult,
-} from './waitUtil';
+} from './wait-util';
 
 // ============================================================================
 // CONVERSION UTILITIES

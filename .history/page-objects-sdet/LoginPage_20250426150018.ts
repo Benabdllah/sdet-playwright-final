@@ -1,8 +1,0 @@
-export.LoginPage=
-class LoginPage{
-
-
-
-
-    
-}

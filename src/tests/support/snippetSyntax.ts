@@ -27,6 +27,11 @@ class CustomSnippetSyntax implements SnippetInterface {
   }): string {
     const { comment, functionName, generatedExpressions, stepKeyword, stepText } = options;
 
+    // Validate inputs
+    if (!stepKeyword || !stepText) {
+      return `Given('step', async function() {\n  // TODO: Implement\n});`;
+    }
+
     // Extract parameter types from generated expressions
     const parameters = this.buildParameters(generatedExpressions);
     const parameterList = parameters.length > 0 ? parameters.join(', ') : '';
@@ -88,6 +93,10 @@ ${stepKeyword}('${this.escapeSpecialChars(stepText)}', async function(${paramete
     stepText: string,
     expressions: GeneratedExpression[]
   ): string {
+    if (!stepKeyword || !stepText || !expressions || expressions.length === 0) {
+      return `/**\n * Step Definition\n */`;
+    }
+    
     const params = expressions?.[0]?.parameterNames || [];
     const paramDocs = params.map((name, index) => {
       const type = this.inferParameterType(expressions[0], index);
@@ -106,6 +115,9 @@ ${paramDocs ? ` * ${paramDocs}\n` : ''}${exampleUsage ? ` * \n * @example\n * ${
 
   private generateExampleUsage(stepKeyword: string, stepText: string): string {
     // Generate example usage in Gherkin format
+    if (!stepKeyword || !stepText) {
+      return '';
+    }
     const keyword = stepKeyword.trim();
     return `${keyword} ${stepText}`;
   }
@@ -114,6 +126,9 @@ ${paramDocs ? ` * ${paramDocs}\n` : ''}${exampleUsage ? ` * \n * @example\n * ${
     stepKeyword: string,
     expressions: GeneratedExpression[]
   ): string {
+    if (!stepKeyword) {
+      return '';
+    }
     const keyword = stepKeyword.trim().toLowerCase();
     const params = expressions?.[0]?.parameterNames || [];
 
@@ -146,6 +161,9 @@ ${paramDocs ? ` * ${paramDocs}\n` : ''}${exampleUsage ? ` * \n * @example\n * ${
   }
 
   private escapeSpecialChars(text: string): string {
+    if (!text) {
+      return '';
+    }
     return text
       .replace(/\\/g, '\\\\')
       .replace(/'/g, "\\'")

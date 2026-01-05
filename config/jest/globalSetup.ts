@@ -23,10 +23,10 @@ export default async function globalSetup() {
       path.resolve(__dirname, '../../test-results/junit'),
       path.resolve(__dirname, '../../test-results/jest-html'),
       path.resolve(__dirname, '../../test-results/coverage'),
+      path.resolve(__dirname, '../../test-results/logs'),
+      path.resolve(__dirname, '../../test-results/metrics'),
       path.resolve(__dirname, '../../allure-results'),
       path.resolve(__dirname, '../../playwright-report'),
-      path.resolve(__dirname, '../../logs'),
-      path.resolve(__dirname, '../../metrics'),
     ];
 
     requiredDirs.forEach((dir) => {

@@ -7,7 +7,7 @@
  */
 
 import dotenv from 'dotenv';
-import path from 'path';
+import path from 'node:path';
 import { beforeEach, afterEach, afterAll, jest as jestGlobal } from '@jest/globals';
 
 // Load environment variables
@@ -22,13 +22,13 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env.test') });
 jestGlobal.setTimeout(30000);
 
 /** Suppress console warnings in tests (optional) */
-global.console = {
+globalThis.console = {
   ...console,
-  debug: jest.fn(),
-  log: jest.fn(),
-  info: jest.fn(),
-  warn: jest.fn(),
-  error: jest.fn(),
+  debug: jestGlobal.fn(),
+  log: jestGlobal.fn(),
+  info: jestGlobal.fn(),
+  warn: jestGlobal.fn(),
+  error: jestGlobal.fn(),
 };
 
 /** Restore console for specific test output */
@@ -36,7 +36,7 @@ const originalLog = console.log;
 const originalError = console.error;
 const originalWarn = console.warn;
 
-global.testLog = {
+globalThis.testLog = {
   log: originalLog,
   error: originalError,
   warn: originalWarn,
@@ -72,10 +72,10 @@ declare global {
 }
 
 // Global test config
-global.testConfig = {
+globalThis.testConfig = {
   baseUrl: process.env.BASE_URL || 'http://localhost:3000',
   apiUrl: process.env.API_URL || 'http://localhost:3001/api',
-  timeout: parseInt(process.env.TEST_TIMEOUT || '30000', 10),
+  timeout: Number.parseInt(process.env.TEST_TIMEOUT || '30000', 10),
   CI: !!process.env.CI,
 };
 
@@ -94,7 +94,7 @@ afterEach(() => {
   const duration = testEndTime - testStartTime;
 
   if (duration > 5000) {
-    global.testLog.warn(`⚠️  Test took ${duration.toFixed(2)}ms (slow)`);
+    globalThis.testLog.warn(`⚠️  Test took ${duration.toFixed(2)}ms (slow)`);
   }
 });
 
@@ -103,17 +103,17 @@ afterEach(() => {
 // ============================================================================
 
 /** Mock fetch if not available */
-if (!global.fetch) {
+if (!globalThis.fetch) {
   const fetch = require('node-fetch');
-  global.fetch = fetch;
+  globalThis.fetch = fetch;
 }
 
 // ============================================================================
 // ABORT CONTROLLER MOCK
 // ============================================================================
 
-if (!global.AbortController) {
-  global.AbortController = class AbortController {
+if (!globalThis.AbortController) {
+  globalThis.AbortController = class AbortController {
     signal = new AbortSignal();
     abort() {
       this.signal.dispatchEvent(new Event('abort'));
@@ -121,8 +121,8 @@ if (!global.AbortController) {
   } as any;
 }
 
-if (!global.AbortSignal) {
-  global.AbortSignal = EventTarget as any;
+if (!globalThis.AbortSignal) {
+  globalThis.AbortSignal = EventTarget as any;
 }
 
 // ============================================================================
@@ -131,12 +131,12 @@ if (!global.AbortSignal) {
 
 /** Handle unhandled promise rejections */
 process.on('unhandledRejection', (reason, promise) => {
-  global.testLog.error(`❌ Unhandled Rejection at: ${promise}, reason:`, reason);
+  globalThis.testLog.error(`❌ Unhandled Rejection, reason:`, reason);
 });
 
 /** Handle uncaught exceptions */
 process.on('uncaughtException', (error) => {
-  global.testLog.error(`❌ Uncaught Exception: ${error.message}`, error);
+  globalThis.testLog.error(`❌ Uncaught Exception: ${error.message}`, error);
 });
 
 // ============================================================================
@@ -148,11 +148,11 @@ const slowTestWarningTime = 10000; // 10 seconds
 
 let currentTestName: string;
 
-beforeEach(function (this) {
+beforeEach(function (this: any) {
   currentTestName = this.currentTestName;
 });
 
-afterEach(function (this) {
+afterEach(function (this: any) {
   if (this.currentTestName && currentTestName === this.currentTestName) {
     // Test completed successfully
   }
@@ -167,5 +167,3 @@ afterAll(async () => {
   jestGlobal.clearAllMocks();
   jestGlobal.restoreAllMocks();
 });
-
-export {};

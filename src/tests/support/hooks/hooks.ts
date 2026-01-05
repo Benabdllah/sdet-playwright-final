@@ -1,7 +1,13 @@
 import { BeforeAll, AfterAll, Before, After, Status, setDefaultTimeout } from '@cucumber/cucumber';
-import { chromium, firefox, webkit, Browser, BrowserContext, Page } from '@playwright/test';
-import { CustomWorld } from './world';
-import { CONFIG } from './env';
+import * as pw from '@playwright/test';
+const { chromium, firefox, webkit } = pw;
+
+type Browser = any;
+type BrowserContext = any;
+type Page = any;
+
+import { World } from '../world/world.ts';
+import { CONFIG } from '../env.ts';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 
@@ -32,7 +38,29 @@ BeforeAll(async () => {
   console.log('🔧 ========================================\n');
 
   // Ensure directories
-  const dirs = ['screenshots', 'videos', 'traces', 'reports', 'metrics', 'logs', 'downloads'];
+  const dirs = [
+    'test-results/playwright/screenshots/failed',
+    'test-results/playwright/screenshots/passed',
+    'test-results/playwright/screenshots/comparison',
+    'test-results/playwright/videos/failed',
+    'test-results/playwright/videos/passed',
+    'test-results/playwright/traces/failed',
+    'test-results/playwright/traces/passed',
+    'test-results/playwright/downloads',
+    'test-results/playwright/har',
+    'test-results/cucumber',
+    'test-results/allure',
+    'test-results/junit',
+    'test-results/coverage',
+    'test-results/performance',
+    'test-results/accessibility',
+    'test-results/visual',
+    'test-results/security',
+    'test-results/api',
+    'test-results/logs',
+    'test-results/metrics',
+    'test-results/summary'
+  ];
   console.log(`📁 Creating ${dirs.length} output directories...`);
   for (const dir of dirs) {
     await fs.mkdir(path.resolve(dir), { recursive: true });
@@ -70,7 +98,7 @@ BeforeAll(async () => {
 /**
  * 🎬 BEFORE - Scenario Setup
  */
-Before(async function (this: CustomWorld, { pickle, gherkinDocument }) {
+Before(async function (this: World, { pickle, gherkinDocument }) {
   this.scenarioName = pickle.name;
   this.featureName = gherkinDocument.feature?.name ?? 'Unknown';
   this.startTime = Date.now();
@@ -85,7 +113,7 @@ Before(async function (this: CustomWorld, { pickle, gherkinDocument }) {
 
   try {
     // Video recording per scenario
-    const recordVideo = CONFIG.features.video ? { dir: 'videos' } : undefined;
+    const recordVideo = CONFIG.features.video ? { dir: path.resolve(process.cwd(), 'test-results/playwright/videos') } : undefined;
 
     // Create context & page
     console.log('📄 Creating new browser context...');
@@ -121,7 +149,7 @@ Before(async function (this: CustomWorld, { pickle, gherkinDocument }) {
 /**
  * 📸 AFTER - Scenario Teardown
  */
-After(async function (this: CustomWorld, { result, pickle }) {
+After(async function (this: World, { result, pickle }) {
   const duration = Date.now() - (this.startTime ?? Date.now());
   const status: StatusValue = (result?.status as StatusValue) ?? 'UNKNOWN';
   const scenarioName = pickle.name;
@@ -134,13 +162,18 @@ After(async function (this: CustomWorld, { result, pickle }) {
   console.log('🏁 ========================================\n');
 
   try {
-    // Capture artifacts on failure
-    if (status === 'FAILED' && this.page) {
-      console.log('📸 Capturing failure artifacts...');
+    // Determine status folder for artifacts
+    const statusFolder = status === 'FAILED' ? 'failed' : status === 'PASSED' ? 'passed' : 'unknown';
+
+    // Capture artifacts based on status and configuration
+    if (this.page && (status === 'FAILED' || (status === 'PASSED' && CONFIG.features?.capturePassedScreenshots))) {
+      console.log(`📸 Capturing ${statusFolder} artifacts...`);
       
-      // Screenshot
+      // Screenshot - organized by status
       try {
-        const screenshotPath = path.join('screenshots', `${sanitizeFilename(scenarioName)}_${Date.now()}.png`);
+        const screenshotDir = path.join('test-results/playwright/screenshots', statusFolder);
+        await fs.mkdir(screenshotDir, { recursive: true });
+        const screenshotPath = path.join(screenshotDir, `${sanitizeFilename(scenarioName)}_${Date.now()}.png`);
         await this.page.screenshot({ path: screenshotPath, fullPage: true });
         await this.attach(await fs.readFile(screenshotPath), 'image/png');
         console.log(`   ✅ Screenshot saved: ${screenshotPath}`);
@@ -148,16 +181,18 @@ After(async function (this: CustomWorld, { result, pickle }) {
         console.error('   ❌ Failed to save screenshot:', err);
       }
 
-      // HTML snapshot
-      try {
-        await this.attach(await this.page.content(), 'text/html');
-        console.log('   ✅ HTML snapshot attached');
-      } catch (err) {
-        console.error('   ❌ Failed to attach HTML:', err);
+      // HTML snapshot - only for failures
+      if (status === 'FAILED') {
+        try {
+          await this.attach(await this.page.content(), 'text/html');
+          console.log('   ✅ HTML snapshot attached');
+        } catch (err) {
+          console.error('   ❌ Failed to attach HTML:', err);
+        }
       }
 
-      // Console logs
-      if (this.logs?.length) {
+      // Console logs - only for failures
+      if (status === 'FAILED' && this.logs?.length) {
         try {
           await this.attach(this.logs.join('\n'), 'text/plain');
           console.log(`   ✅ Console logs attached (${this.logs.length} entries)`);
@@ -166,8 +201,8 @@ After(async function (this: CustomWorld, { result, pickle }) {
         }
       }
 
-      // Error message
-      if (result?.message) {
+      // Error message - only for failures
+      if (status === 'FAILED' && result?.message) {
         try {
           await this.attach(`Error: ${result.message}`, 'text/plain');
           console.log('   ✅ Error details attached');
@@ -177,19 +212,28 @@ After(async function (this: CustomWorld, { result, pickle }) {
       }
     }
 
-    // Stop tracing
-    if (CONFIG.features.trace && this.context) {
+    // Stop tracing - organized by status
+    if (CONFIG.features.trace && this.context && status === 'FAILED') {
       try {
         console.log('🔍 Saving trace...');
-        const tracePath = path.join('traces', `${sanitizeFilename(scenarioName)}_${Date.now()}.zip`);
+        const traceDir = path.join('test-results/playwright/traces', 'failed');
+        await fs.mkdir(traceDir, { recursive: true });
+        const tracePath = path.join(traceDir, `${sanitizeFilename(scenarioName)}_${Date.now()}.zip`);
         await this.context.tracing.stop({ path: tracePath });
         console.log(`✅ Trace saved: ${tracePath}`);
       } catch (err) {
         console.error('❌ Failed to save trace:', err);
       }
+    } else if (CONFIG.features.trace && this.context) {
+      // Stop tracing without saving for passed tests
+      try {
+        await this.context.tracing.stop();
+      } catch (err) {
+        // Silently ignore
+      }
     }
 
-  if (CONFIG.features.video && this.page) {
+  if (CONFIG.features.video && this.page && status === 'FAILED') {
   try {
     console.log('🎥 Saving video recording...');
 
@@ -199,8 +243,10 @@ After(async function (this: CustomWorld, { result, pickle }) {
     await this.page.close();
 
     if (video) {
+      const videoDir = path.join('test-results/playwright/videos', 'failed');
+      await fs.mkdir(videoDir, { recursive: true });
       const videoPath = path.join(
-        'videos',
+        videoDir,
         `${sanitizeFilename(scenarioName)}_${Date.now()}.webm`
       );
 
@@ -212,10 +258,17 @@ After(async function (this: CustomWorld, { result, pickle }) {
   } catch (err) {
     console.error('❌ Failed to save video:', err);
   }
+} else if (CONFIG.features.video && this.page) {
+  try {
+    // Close page without saving video for passed tests
+    await this.page.close();
+  } catch (err) {
+    // Silently ignore
+  }
 }
 
     // Metrics
-    if (CONFIG.features.metrics && this.page) {
+    if (CONFIG.features.metrics && this.page && !this.page.isClosed?.()) {
       try {
         console.log('📊 Collecting performance metrics...');
         const metrics = await this.page.evaluate(() => {

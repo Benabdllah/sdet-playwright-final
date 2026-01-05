@@ -1,30 +1,45 @@
 {
   "name": "sdet-pw-practice",
   "version": "1.0.0",
+  "private": true,
   "license": "MIT",
+  "description": "Enterprise-grade SDET Automation Framework using Playwright + Cucumber",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Benabdllah/Sdet-pw-practice-app.git"
   },
+
   "scripts": {
-    "test:cuc": "npx cucumber-js --profile default",
-    "test:cuc:smoke": "npx cucumber-js --profile smoke",
-    "test:cuc:regression": "npx cucumber-js --profile regression",
-    "test:cuc:debug": "npx cucumber-js --profile debug",
-    "test:debug": "npx playwright test --debug",
-    "test:ci": "npx cucumber-js --profile ci --reporter=dot --reporter=html --reporter=allure-playwright",
-    "test:headless": "npx playwright test --headless",
-    "test:headed": "npx playwright test --headed",
-    "test:local": "npx playwright test",
-    "test:docker": "docker exec pw-dev npx playwright test",
-    "dev": "tsx",
-    "test": "playwright test",
-    "pageObjects-chrome": "npx playwright test assertion.spec.ts --project=chromium",
-    "pageObjects-firefox": "npx playwright test assertion.spec.ts --project=firefox",
-    "pageObjects-all": "npm run pageObjects-chrome && npm run pageObjects-firefox",
-    "allure:generate": "allure generate --clean allure-results -o allure-report",
-    "allure:open": "allure open -p 5252 allure-report"
+    "pw:test": "playwright test --config=config/playwright/playwright.config.ts",
+    "pw:headed": "npm run pw:test -- --headed",
+    "pw:headless": "npm run pw:test -- --headless",
+    "pw:debug": "npm run pw:test -- --debug",
+    "pw:allure": "mkdir -p test-results/allure/allure-results && ALLURE_ENABLED=true npm run pw:test && bash scripts/move-allure-results.sh",
+    "pw:headed:allure": "mkdir -p test-results/allure/allure-results && ALLURE_ENABLED=true npm run pw:headed && bash scripts/move-allure-results.sh",
+    "pw:headless:allure": "mkdir -p test-results/allure/allure-results && ALLURE_ENABLED=true npm run pw:headless && bash scripts/move-allure-results.sh",
+    "pw:debug:allure": "mkdir -p test-results/allure/allure-results && ALLURE_ENABLED=true npm run pw:debug && bash scripts/move-allure-results.sh",
+
+    "bdd:test": "cucumber-js --config config/cucumber/cucumber.json --profile default",
+    "bdd:smoke": "cucumber-js --config config/cucumber/cucumber.json --profile smoke",
+    "bdd:regression": "cucumber-js --config config/cucumber/cucumber.json --profile regression",
+    "bdd:debug": "cucumber-js --config config/cucumber/cucumber.json --profile debug",
+    "bdd:ci": "cucumber-js --config config/cucumber/cucumber.json --profile ci --reporter=dot --reporter=html --reporter=allure-playwright",
+
+    "unit:test": "jest --config=config/jest/jest.config.simple.js",
+    "unit:watch": "jest --watch --config=config/jest/jest.config.simple.js",
+    "unit:coverage": "jest --coverage --coverageDirectory=test-results/coverage --config=config/jest/jest.config.simple.js",
+
+    "allure:generate": "allure generate --clean test-results/allure/allure-results -o test-results/allure/allure-report",
+    "allure:open": "allure open -p 5252 test-results/allure/allure-report",
+    "allure:report": "npm run pw:allure && npm run allure:generate && npm run allure:open",
+
+    "docker:test": "docker exec pw-dev npm run pw:test",
+    "docker:allure": "docker exec pw-dev npm run pw:allure",
+
+    "clean": "rimraf test-results playwright-report .nyc_output coverage",
+    "dev": "tsx"
   },
+
   "dependencies": {
     "@angular/animations": "^19.2.17",
     "@angular/cdk": "^19.2.19",
@@ -71,6 +86,7 @@
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.15.0"
   },
+
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.19",
     "@angular/cli": "^19.2.19",
@@ -86,20 +102,24 @@
     "@types/axios": "^0.9.36",
     "@types/cucumber": "^6.0.1",
     "@types/dotenv": "^6.1.1",
+    "@types/jest": "^30.0.0",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^20.19.27",
     "allure-commandline": "^2.36.0",
     "allure-playwright": "^3.4.3",
     "conventional-changelog-cli": "^5.0.0",
     "husky": "^9.1.7",
+    "jest": "^29.7.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^6.1.2",
     "stylelint": "^16.26.1",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.21.0",
     "typescript": "^5.8.3"
   },
+
   "engines": {
     "node": ">=18",
     "npm": ">=9"

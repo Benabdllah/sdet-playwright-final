@@ -2,21 +2,26 @@
 import dotenv from 'dotenv';
 
 import * as path from 'path';
-import { BrowserContextOptions, LaunchOptions, ViewportSize } from '@playwright/test';
+import type { ViewportSize } from '@playwright/test';
 
 // ================================
 // 1. ENV-LADEN MIT PRIORITÄT
 // ================================
-// Reihenfolge: .env.local → .env.[env] → .env → fallback defaults
+// Reihenfolge (Priorität von niedrig zu hoch):
+// 1. .env (Basis-Defaults)
+// 2. .env.development/production (Umgebungsspezifisch)
+// 3. .env.local (Lokale Overrides - HÖCHSTE PRIORITÄT)
 const envFiles = [
-  '.env.local',
-  `.env.${process.env.NODE_ENV || 'development'}`,
-  '.env',
+  '.env',                                    // Basis-Defaults
+  `.env.${process.env.NODE_ENV || 'development'}`, // Umgebungsspezifisch
+  '.env.local',                             // Lokale Overrides
 ];
 
 envFiles.forEach(file => {
   const envPath = path.resolve(process.cwd(), file);
-  dotenv.config({ path: envPath, override: true });
+  // override: false = Bereits gesetzte Variablen nicht überschreiben
+  // Das sorgt dafür, dass .env.local höchste Priorität hat
+  dotenv.config({ path: envPath, override: false });
 });
 
 // ================================
@@ -34,6 +39,14 @@ export interface Geolocation {
   latitude: number;
   longitude: number;
   accuracy?: number;
+}
+
+export interface BrowserContextOptions {
+  [key: string]: any;
+}
+
+export interface LaunchOptions {
+  [key: string]: any;
 }
 
 export interface EnvironmentConfig {
@@ -68,6 +81,7 @@ export interface EnvironmentConfig {
     visualRegression: boolean;
     apiTesting: boolean;
     recordHar: boolean;
+    capturePassedScreenshots?: boolean;
   };
   retryDelay: number;
   viewport: ViewportSize;
@@ -257,11 +271,11 @@ export const CONTEXT_OPTIONS: BrowserContextOptions = {
   deviceScaleFactor: DEVICE_SCALE_FACTOR,
   userAgent: USER_AGENT || undefined,
   recordHar: RECORD_HAR ? {
-    path: `test-results/har/${Date.now()}.har`,
+    path: path.resolve(process.cwd(), `test-results/playwright/har/${Date.now()}.har`),
     mode: 'minimal',
   } as any : undefined,
   recordVideo: VIDEO !== 'off' ? {
-    dir: 'test-results/videos',
+    dir: path.resolve(process.cwd(), 'test-results/playwright/videos'),
     size: VIEWPORT,
   } : undefined,
 };
@@ -294,7 +308,7 @@ export const DATABASE = {
 // ================================
 export const REPORTING = {
   outputDir: getOptionalEnvVar('REPORT_OUTPUT_DIR', 'test-results'),
-  screenshotDir: getOptionalEnvVar('SCREENSHOT_DIR', 'test-results/screenshots'),
+  screenshotDir: getOptionalEnvVar('SCREENSHOT_DIR', 'test-results/playwright/screenshots'),
   videoDir: getOptionalEnvVar('VIDEO_DIR', 'test-results/videos'),
   traceDir: getOptionalEnvVar('TRACE_DIR', 'test-results/traces'),
   harDir: getOptionalEnvVar('HAR_DIR', 'test-results/har'),
@@ -346,6 +360,7 @@ export const CONFIG: EnvironmentConfig = {
     visualRegression: ENABLE_VISUAL_REGRESSION,
     apiTesting: ENABLE_API_TESTING,
     recordHar: RECORD_HAR,
+    capturePassedScreenshots: true,
   },
   retryDelay: RETRY_DELAY,
   viewport: VIEWPORT,

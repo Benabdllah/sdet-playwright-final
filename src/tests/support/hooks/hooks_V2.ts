@@ -34,7 +34,25 @@ BeforeAll(async function () {
   console.log('🔧 ========================================\n');
 
   // Create output directories
-  const dirs = ['screenshots', 'videos', 'traces', 'reports', 'metrics', 'logs', 'downloads'];
+  const dirs = [
+    'test-results/playwright/screenshots',
+    'test-results/playwright/videos',
+    'test-results/playwright/traces',
+    'test-results/playwright/downloads',
+    'test-results/playwright/har',
+    'test-results/cucumber',
+    'test-results/allure',
+    'test-results/junit',
+    'test-results/coverage',
+    'test-results/performance',
+    'test-results/accessibility',
+    'test-results/visual',
+    'test-results/security',
+    'test-results/api',
+    'test-results/logs',
+    'test-results/metrics',
+    'test-results/summary'
+  ];
   for (const dir of dirs) {
     const dirPath = path.resolve(process.cwd(), dir);
     await fs.mkdir(dirPath, { recursive: true }).catch(() => {});
@@ -66,7 +84,7 @@ BeforeAll(async function () {
     if (CONFIG.features.video || CONFIG.features.trace) {
       globalContext = await browser.newContext({
         viewport: CONFIG.viewport,
-        recordVideo: CONFIG.features.video ? { dir: 'videos' } : undefined,
+        recordVideo: CONFIG.features.video ? { dir: path.resolve(process.cwd(), 'test-results/playwright/videos') } : undefined,
         ignoreHTTPSErrors: true,
         locale: CONFIG.locale ?? 'en-US',
         timezoneId: CONFIG.timezone ?? 'Europe/Berlin',

@@ -25,12 +25,12 @@
       "progress-bar",
       "summary",
       "@cucumber/pretty-formatter",
-      "message:playwright-report/cucumber/messages.ndjson",
-      "json:playwright-report/cucumber/report.json",
-      "html:playwright-report/cucumber/report.html",
-      "junit:playwright-report/cucumber/junit.xml",
-      "rerun:playwright-report/cucumber/rerun.txt",
-      "usage:playwright-report/cucumber/usage.json"
+      "message:test-results/cucumber/messages.ndjson",
+      "json:test-results/cucumber/report.json",
+      "html:test-results/cucumber/report.html",
+      "junit:test-results/cucumber/junit.xml",
+      "rerun:test-results/cucumber/rerun.txt",
+      "usage:test-results/cucumber/usage.json"
     ],
     "parallel": 4,
     "retry": 1,
@@ -143,5 +143,5 @@
   "headed": { "extends": "default", "parallel": 1, "worldParameters": { "headless": false, "slowMo": 300, "devtools": true } },
   "ui": { "extends": "debug", "parallel": 1, "worldParameters": { "slowMo": 1000, "headless": false, "devtools": true } },
   "dry-run": { "extends": "default", "dryRun": true, "format": ["summary","progress","snippets"], "strict": true },
-  "lint": { "extends": "default", "dryRun": true, "strict": true, "format": ["summary","usage:playwright-report/cucumber/usage.json"] }
+  "lint": { "extends": "default", "dryRun": true, "strict": true, "format": ["summary","usage:test-results/cucumber/usage.json"] }
 }
