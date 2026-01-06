@@ -197,56 +197,54 @@ $RECYCLE.BIN/
 .directory
 
 # ============================================================================
-# TEST RESULTS & REPORTS
+# TEST RESULTS & REPORTS (TEMPORARY)
 # ============================================================================
+# Note: test-results/ is temporary (cleaned by Playwright)
+#       reports/ and artifacts/ are persistent (VCS-tracked where needed)
 
-# Playwright Test Results
+# Temporary Test Results (gitignored - cleaned on each run)
+test-results/
+test-results/**
 .playwright-browsers/
 playwright-report/
-test-results/
 blob-report/
 playwright/.cache/
 playwright/.auth/
 
-# Allure Report
+# Allure Report (temporary - moved to reports/allure after generation)
 allure-results/
 allure-report/
 allure.properties
 
-# Jest Coverage
+# Jest Coverage (temporary)
 /coverage
 .coverage/
 coverage-report/
 htmlcov/
 .nyc_output/
 
-# Cucumber Reports
+# Cucumber Reports (temporary - moved to reports/cucumber after generation)
 cucumber-report/
 cucumber-report.html
 
-# JUnit Reports
+# JUnit Reports (temporary - moved to reports/junit after generation)
 junit.xml
 junit-*.xml
 test-*.xml
 
 # ============================================================================
-# SCREENSHOTS, VIDEOS & TRACES
+# SCREENSHOTS, VIDEOS & TRACES (TEMPORARY)
 # ============================================================================
+# These are generated in test-results/ and cleaned on each run
 
-# Playwright Artifacts
-playwright/
+# Playwright Artifacts (temporary - in test-results/)
 screenshots/
 videos/
 traces/
 downloads/
 
-# Test Media
-*.mp4
-*.mov
-*.avi
-*.webm
-*.mkv
-*.flv
+# Note: Persistent artifacts stored in artifacts/visual/, artifacts/performance/, etc.
+# are NOT ignored and are VCS-tracked
 
 # ============================================================================
 # LOGS & LOG FILES

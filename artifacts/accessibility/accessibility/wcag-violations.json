@@ -1,0 +1,254 @@
+{
+  "config": {
+    "configFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /config/playwright/playwright.config.ts",
+    "rootDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /src/tests/e2e/auth",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 3600000,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never",
+          "outputFolder": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /test-results/playwright/html"
+        }
+      ],
+      [
+        "blob",
+        {
+          "outputDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /test-results/blob"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/summary/test-summary.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "../../test-results/junit/e2e.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/playwright/playwright-results.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/junit/api.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/api/api-report.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/junit/integration.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/accessibility/axe-results.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/accessibility/wcag-violations.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/security/vulnerabilities.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/performance/load-times.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/performance/web-vitals.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/performance/lighthouse.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/coverage/coverage-summary.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /test-results/metrics/execution-times.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /test-results/metrics/flaky-tests.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /test-results/metrics/test-trends.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/visual/visual-report.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/cucumber/report.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/cucumber/messages.ndjson"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/cucumber/junit.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/cucumber/usage.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/summary/ci-summary.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /test-results/playwright/screenshots",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/Archiv/SDET-PW-Practice /src/tests/e2e/auth",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "3way",
+    "version": "1.57.0",
+    "workers": 5,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "alerts.spec.ts",
+      "file": "alerts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Alert with Ok @guest",
+          "ok": true,
+          "tags": [
+            "guest"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2014,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-01-06T00:53:29.482Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ace1c4120cace0e80d20-a7ad583a7d6214156bcb",
+          "file": "alerts.spec.ts",
+          "line": 5,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-01-06T00:53:28.897Z",
+    "duration": 2888.5299999999115,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

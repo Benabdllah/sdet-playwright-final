@@ -1,7 +1,7 @@
 // src/tests/support/plugins/index.ts
-import CONFIG from '../env';
-import * as fs from 'fs';
-import * as path from 'path';
+import CONFIG from "../env";
+import * as fs from "fs";
+import * as path from "path";
 
 /**
  * 🔌 PLUGIN SYSTEM
@@ -31,13 +31,13 @@ class PluginManager {
    */
   async initializeAll(): Promise<void> {
     if (this.initialized) {
-      console.warn('⚠️  Plugins already initialized');
+      console.warn("⚠️  Plugins already initialized");
       return;
     }
 
-    console.log('\n🔌 ========================================');
-    console.log('🔌           INITIALIZING PLUGINS');
-    console.log('🔌   ========================================\n');
+    console.log("\n🔌 ========================================");
+    console.log("🔌           INITIALIZING PLUGINS");
+    console.log("🔌   ========================================\n");
 
     for (const plugin of this.plugins) {
       try {
@@ -49,14 +49,14 @@ class PluginManager {
     }
 
     this.initialized = true;
-    console.log('\n✅ All plugins initialized\n');
+    console.log("\n✅ All plugins initialized\n");
   }
 
   /**
    * Cleanup all plugins
    */
   async cleanupAll(): Promise<void> {
-    console.log('\n🧹 Cleaning up plugins...\n');
+    console.log("\n🧹 Cleaning up plugins...\n");
 
     for (const plugin of this.plugins) {
       if (plugin.cleanup) {
@@ -79,66 +79,86 @@ const pluginManager = new PluginManager();
  * Collects and aggregates test metrics
  */
 const metricsPlugin: PluginInterface = {
-  name: 'Metrics Plugin',
-  
+  name: "Metrics Plugin",
+
   initialize: async () => {
     if (!CONFIG.features.metrics) {
-      console.log('   ⏭️  Metrics disabled in config');
+      console.log("   ⏭️  Metrics disabled in config");
       return;
     }
 
-    const metricsDir = path.resolve(process.cwd(), 'metrics');
+    const metricsDir = path.resolve(process.cwd(), "metrics");
     if (!fs.existsSync(metricsDir)) {
       fs.mkdirSync(metricsDir, { recursive: true });
     }
 
     // Initialize metrics storage
-    const metricsFile = path.join(metricsDir, 'aggregated_metrics.json');
+    const metricsFile = path.join(metricsDir, "aggregated_metrics.json");
     if (!fs.existsSync(metricsFile)) {
-      fs.writeFileSync(metricsFile, JSON.stringify({
-        testRuns: [],
-        summary: {
-          totalTests: 0,
-          passed: 0,
-          failed: 0,
-          skipped: 0,
-          avgDuration: 0
-        }
-      }, null, 2));
+      fs.writeFileSync(
+        metricsFile,
+        JSON.stringify(
+          {
+            testRuns: [],
+            summary: {
+              totalTests: 0,
+              passed: 0,
+              failed: 0,
+              skipped: 0,
+              avgDuration: 0,
+            },
+          },
+          null,
+          2
+        )
+      );
     }
 
-    console.log('   📊 Metrics collection enabled');
+    console.log("   📊 Metrics collection enabled");
     console.log(`   📂 Metrics directory: ${metricsDir}`);
   },
 
   cleanup: async () => {
     // Aggregate all metrics
-    const metricsDir = path.resolve(process.cwd(), 'metrics');
-    const files = fs.readdirSync(metricsDir).filter(f => f.endsWith('.json') && f !== 'aggregated_metrics.json');
-    
-    const allMetrics = files.map(file => {
-      const content = fs.readFileSync(path.join(metricsDir, file), 'utf-8');
+    const metricsDir = path.resolve(process.cwd(), "metrics");
+    const files = fs
+      .readdirSync(metricsDir)
+      .filter((f) => f.endsWith(".json") && f !== "aggregated_metrics.json");
+
+    const allMetrics = files.map((file) => {
+      const content = fs.readFileSync(path.join(metricsDir, file), "utf-8");
       return JSON.parse(content);
     });
 
     // Calculate aggregates
     const summary = {
       totalTests: allMetrics.length,
-      passed: allMetrics.filter(m => m.status === 'PASSED').length,
-      failed: allMetrics.filter(m => m.status === 'FAILED').length,
-      skipped: allMetrics.filter(m => m.status === 'SKIPPED').length,
-      avgDuration: allMetrics.reduce((sum, m) => sum + m.duration, 0) / allMetrics.length || 0,
-      timestamp: new Date().toISOString()
+      passed: allMetrics.filter((m) => m.status === "PASSED").length,
+      failed: allMetrics.filter((m) => m.status === "FAILED").length,
+      skipped: allMetrics.filter((m) => m.status === "SKIPPED").length,
+      avgDuration:
+        allMetrics.reduce((sum, m) => sum + m.duration, 0) /
+          allMetrics.length || 0,
+      timestamp: new Date().toISOString(),
     };
 
-    const aggregatedPath = path.join(metricsDir, 'aggregated_metrics.json');
-    fs.writeFileSync(aggregatedPath, JSON.stringify({
-      testRuns: allMetrics,
-      summary
-    }, null, 2));
+    const aggregatedPath = path.join(metricsDir, "aggregated_metrics.json");
+    fs.writeFileSync(
+      aggregatedPath,
+      JSON.stringify(
+        {
+          testRuns: allMetrics,
+          summary,
+        },
+        null,
+        2
+      )
+    );
 
-    console.log(`   📊 Aggregated metrics: ${summary.totalTests} tests, ${summary.passed} passed, ${summary.failed} failed`);
-  }
+    console.log(
+      `   📊 Aggregated metrics: ${summary.totalTests} tests, ${summary.passed} passed, ${summary.failed} failed`
+    );
+  },
 };
 
 /**
@@ -146,23 +166,23 @@ const metricsPlugin: PluginInterface = {
  * Automated accessibility testing integration
  */
 const accessibilityPlugin: PluginInterface = {
-  name: 'Accessibility Plugin',
-  
+  name: "Accessibility Plugin",
+
   initialize: async () => {
     if (!CONFIG.features.accessibility) {
-      console.log('   ⏭️  Accessibility testing disabled in config');
+      console.log("   ⏭️  Accessibility testing disabled in config");
       return;
     }
 
-    const a11yDir = path.resolve(process.cwd(), 'accessibility-reports');
+    const a11yDir = path.resolve(process.cwd(), "accessibility-reports");
     if (!fs.existsSync(a11yDir)) {
       fs.mkdirSync(a11yDir, { recursive: true });
     }
 
-    console.log('   ♿ Accessibility testing enabled');
-    console.log('   📌 WCAG Level: AA (default)');
+    console.log("   ♿ Accessibility testing enabled");
+    console.log("   📌 WCAG Level: AA (default)");
     console.log(`   📂 Reports directory: ${a11yDir}`);
-  }
+  },
 };
 
 /**
@@ -170,27 +190,27 @@ const accessibilityPlugin: PluginInterface = {
  * Visual comparison and regression testing
  */
 const visualRegressionPlugin: PluginInterface = {
-  name: 'Visual Regression Plugin',
-  
+  name: "Visual Regression Plugin",
+
   initialize: async () => {
     if (!CONFIG.features.visualRegression) {
-      console.log('   ⏭️  Visual regression disabled in config');
+      console.log("   ⏭️  Visual regression disabled in config");
       return;
     }
 
-    const dirs = ['visual-baseline', 'visual-actual', 'visual-diff'];
-    dirs.forEach(dir => {
+    const dirs = ["visual-baseline", "visual-actual", "visual-diff"];
+    dirs.forEach((dir) => {
       const dirPath = path.resolve(process.cwd(), dir);
       if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
       }
     });
 
-    console.log('   🎨 Visual regression testing enabled');
-    console.log('   📂 Baseline: ./visual-baseline');
-    console.log('   📂 Actual: ./visual-actual');
-    console.log('   📂 Diff: ./visual-diff');
-  }
+    console.log("   🎨 Visual regression testing enabled");
+    console.log("   📂 Baseline: ./visual-baseline");
+    console.log("   📂 Actual: ./visual-actual");
+    console.log("   📂 Diff: ./visual-diff");
+  },
 };
 
 /**
@@ -198,23 +218,23 @@ const visualRegressionPlugin: PluginInterface = {
  * Automated video capture configuration
  */
 const videoPlugin: PluginInterface = {
-  name: 'Video Recording Plugin',
-  
+  name: "Video Recording Plugin",
+
   initialize: async () => {
     if (!CONFIG.features.video) {
-      console.log('   ⏭️  Video recording disabled in config');
+      console.log("   ⏭️  Video recording disabled in config");
       return;
     }
 
-    const videoDir = path.resolve(process.cwd(), 'test-results/playwright/videos');
+    const videoDir = path.resolve(process.cwd(), "artifacts/videos");
     if (!fs.existsSync(videoDir)) {
       fs.mkdirSync(videoDir, { recursive: true });
     }
 
-    console.log('   📹 Video recording enabled');
+    console.log("   📹 Video recording enabled");
     console.log(`   📂 Videos directory: ${videoDir}`);
-    console.log('   ⚙️  Video will be saved for failed tests');
-  }
+    console.log("   ⚙️  Video will be saved for failed tests");
+  },
 };
 
 /**
@@ -222,23 +242,25 @@ const videoPlugin: PluginInterface = {
  * Playwright trace configuration
  */
 const tracingPlugin: PluginInterface = {
-  name: 'Tracing Plugin',
-  
+  name: "Tracing Plugin",
+
   initialize: async () => {
     if (!CONFIG.features.trace) {
-      console.log('   ⏭️  Tracing disabled in config');
+      console.log("   ⏭️  Tracing disabled in config");
       return;
     }
 
-    const traceDir = path.resolve(process.cwd(), 'traces');
+    const traceDir = path.resolve(process.cwd(), "traces");
     if (!fs.existsSync(traceDir)) {
       fs.mkdirSync(traceDir, { recursive: true });
     }
 
-    console.log('   🔍 Tracing enabled');
+    console.log("   🔍 Tracing enabled");
     console.log(`   📂 Traces directory: ${traceDir}`);
-    console.log('   💡 View traces with: npx playwright show-trace <trace-file>');
-  }
+    console.log(
+      "   💡 View traces with: npx playwright show-trace <trace-file>"
+    );
+  },
 };
 
 /**
@@ -246,21 +268,21 @@ const tracingPlugin: PluginInterface = {
  * Advanced HTML report generation
  */
 const reportingPlugin: PluginInterface = {
-  name: 'Reporting Plugin',
-  
+  name: "Reporting Plugin",
+
   initialize: async () => {
-    const reportDir = path.resolve(process.cwd(), 'reports');
+    const reportDir = path.resolve(process.cwd(), "reports");
     if (!fs.existsSync(reportDir)) {
       fs.mkdirSync(reportDir, { recursive: true });
     }
 
-    console.log('   📝 HTML reporting enabled');
+    console.log("   📝 HTML reporting enabled");
     console.log(`   📂 Reports directory: ${reportDir}`);
   },
 
   cleanup: async () => {
-    const reportDir = path.resolve(process.cwd(), 'reports');
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const reportDir = path.resolve(process.cwd(), "reports");
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     const reportFile = path.join(reportDir, `test-report-${timestamp}.html`);
 
     const htmlReport = `
@@ -296,19 +318,29 @@ const reportingPlugin: PluginInterface = {
             <ul>
                 <li><strong>Browser:</strong> ${CONFIG.browser}</li>
                 <li><strong>Environment:</strong> ${CONFIG.env}</li>
-                <li><strong>Headless:</strong> ${CONFIG.launchOptions.headless ? 'Yes' : 'No'}</li>
-                <li><strong>Viewport:</strong> ${CONFIG.viewport.width}x${CONFIG.viewport.height}</li>
+                <li><strong>Headless:</strong> ${
+                  CONFIG.launchOptions.headless ? "Yes" : "No"
+                }</li>
+                <li><strong>Viewport:</strong> ${CONFIG.viewport.width}x${
+      CONFIG.viewport.height
+    }</li>
             </ul>
         </div>
 
         <h2>📊 Features Enabled</h2>
         <div class="config">
             <ul>
-                <li>📹 Video Recording: ${CONFIG.features.video ? '✅' : '❌'}</li>
-                <li>🔍 Tracing: ${CONFIG.features.trace ? '✅' : '❌'}</li>
-                <li>📊 Metrics: ${CONFIG.features.metrics ? '✅' : '❌'}</li>
-                <li>♿ Accessibility: ${CONFIG.features.accessibility ? '✅' : '❌'}</li>
-                <li>🎨 Visual Regression: ${CONFIG.features.visualRegression ? '✅' : '❌'}</li>
+                <li>📹 Video Recording: ${
+                  CONFIG.features.video ? "✅" : "❌"
+                }</li>
+                <li>🔍 Tracing: ${CONFIG.features.trace ? "✅" : "❌"}</li>
+                <li>📊 Metrics: ${CONFIG.features.metrics ? "✅" : "❌"}</li>
+                <li>♿ Accessibility: ${
+                  CONFIG.features.accessibility ? "✅" : "❌"
+                }</li>
+                <li>🎨 Visual Regression: ${
+                  CONFIG.features.visualRegression ? "✅" : "❌"
+                }</li>
             </ul>
         </div>
 
@@ -322,7 +354,7 @@ const reportingPlugin: PluginInterface = {
 
     fs.writeFileSync(reportFile, htmlReport);
     console.log(`   📝 HTML report generated: ${reportFile}`);
-  }
+  },
 };
 
 /**

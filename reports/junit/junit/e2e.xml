@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="2.8885299999999114">
+<testsuite name="alerts.spec.ts" timestamp="2026-01-06T00:53:29.245Z" hostname="chromium" tests="1" failures="0" skipped="0" time="2.014" errors="0">
+<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="2.014">
+</testcase>
+</testsuite>
+</testsuites>

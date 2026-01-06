@@ -28,7 +28,7 @@
       "message:reports/cucumber/messages.ndjson",
       "json:reports/cucumber/report.json",
       "html:reports/cucumber/report.html",
-      "junit:reports/cucumber/junit.xml",
+      "junit:reports/junit/cucumber.xml",
       "rerun:reports/cucumber/rerun.txt",
       "usage:reports/cucumber/usage.json"
     ],

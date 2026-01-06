@@ -14,10 +14,10 @@
     "pw:headed": "npm run pw:test -- --headed",
     "pw:headless": "npm run pw:test -- --headless",
     "pw:debug": "npm run pw:test -- --debug",
-    "pw:allure": "mkdir -p reports/allure && ALLURE_ENABLED=true npm run pw:test && bash scripts/move-allure-results.sh",
-    "pw:headed:allure": "mkdir -p reports/allure && ALLURE_ENABLED=true npm run pw:headed && bash scripts/move-allure-results.sh",
-    "pw:headless:allure": "mkdir -p reports/allure && ALLURE_ENABLED=true npm run pw:headless && bash scripts/move-allure-results.sh",
-    "pw:debug:allure": "mkdir -p reports/allure && ALLURE_ENABLED=true npm run pw:debug && bash scripts/move-allure-results.sh",
+    "pw:allure": "mkdir -p reports/allure/allure-results && ALLURE_ENABLED=true npm run pw:test && bash scripts/move-allure-results.sh",
+    "pw:headed:allure": "mkdir -p reports/allure/allure-results && ALLURE_ENABLED=true npm run pw:headed && bash scripts/move-allure-results.sh",
+    "pw:headless:allure": "mkdir -p reports/allure/allure-results && ALLURE_ENABLED=true npm run pw:headless && bash scripts/move-allure-results.sh",
+    "pw:debug:allure": "mkdir -p reports/allure/allure-results && ALLURE_ENABLED=true npm run pw:debug && bash scripts/move-allure-results.sh",
 
     "bdd:test": "cucumber-js --config config/cucumber/cucumber.json --profile default",
     "bdd:smoke": "cucumber-js --config config/cucumber/cucumber.json --profile smoke",
@@ -29,14 +29,15 @@
     "unit:watch": "jest --watch --config=config/jest/jest.config.simple.js",
     "unit:coverage": "jest --coverage --coverageDirectory=test-results/coverage --config=config/jest/jest.config.simple.js",
 
-    "allure:generate": "allure generate --clean reports/allure -o reports/allure-report",
-    "allure:open": "allure open -p 5252 reports/allure-report",
+    "allure:generate": "allure generate --clean reports/allure/allure-results -o reports/allure/allure-report",
+    "allure:open": "allure open -p 5252 reports/allure/allure-report",
     "allure:report": "npm run pw:allure && npm run allure:generate && npm run allure:open",
 
     "docker:test": "docker exec pw-dev npm run pw:test",
     "docker:allure": "docker exec pw-dev npm run pw:allure",
 
-    "clean": "rimraf test-results reports .nyc_output coverage",
+    "clean": "rimraf test-results .nyc_output",
+    "clean:temp": "rimraf test-results .nyc_output",
     "dev": "tsx"
   },
 

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Script zum Verschieben von Allure Results aus dem Root in das test-results/allure Verzeichnis
+# Script zum Verschieben von Allure Results ins reports/allure Verzeichnis
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SOURCE_DIR="$PROJECT_ROOT/allure-results"
-TARGET_DIR="$PROJECT_ROOT/test-results/allure/allure-results"
+TARGET_DIR="$PROJECT_ROOT/reports/allure/allure-results"
 
 # Erstelle das Zielverzeichnis, falls es nicht existiert
-mkdir -p "$PROJECT_ROOT/test-results/allure"
+mkdir -p "$PROJECT_ROOT/reports/allure"
 
 # Wenn der Source-Ordner existiert, verschiebe ihn
 if [ -d "$SOURCE_DIR" ]; then

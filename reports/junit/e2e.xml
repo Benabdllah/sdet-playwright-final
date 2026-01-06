@@ -1,89 +1,39 @@
-<testsuites id="" name="" tests="3" failures="2" skipped="0" errors="0" time="21.687872">
-<testsuite name="alerts.spec.ts" timestamp="2026-01-06T03:41:37.177Z" hostname="chromium" tests="3" failures="2" skipped="0" time="43.932" errors="0">
-<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="21.012">
-<failure message="alerts.spec.ts:4:5 Alert with Ok @guest" type="FAILURE">
-<![CDATA[  [chromium] › alerts.spec.ts:4:5 › Alert with Ok @guest ───────────────────────────────────────────
-
-    TimeoutError: page.click: Timeout 20000ms exceeded.
-    Call log:
-      - waiting for locator('#alertBtn')
-
-
-      11 |     await dialog.accept();
-      12 |   });
-    > 13 |   await page.click('#alertBtn');
-         |              ^
-      14 | });
-      15 |
-      16 | test('Confirmation Dialog-Alert with Ok and cancel @guest', async ({ page }) => {
-        at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:13:14
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../../../test-results/playwright/alerts-Alert-with-Ok-guest-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../../test-results/playwright/alerts-Alert-with-Ok-guest-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../../../test-results/playwright/alerts-Alert-with-Ok-guest-chromium/error-context.md
-]]>
-</failure>
+<testsuites id="" name="" tests="3" failures="0" skipped="0" errors="0" time="2.309424">
+<testsuite name="alerts.spec.ts" timestamp="2026-01-06T23:41:44.633Z" hostname="chromium" tests="3" failures="0" skipped="0" time="4.776" errors="0">
+<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="1.33">
 <system-out>
 <![CDATA[
-[[ATTACHMENT|../../test-results/playwright/alerts-Alert-with-Ok-guest-chromium/test-failed-1.png]]
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/test-finished-1.png]]
 
-[[ATTACHMENT|../../test-results/playwright/alerts-Alert-with-Ok-guest-chromium/video.webm]]
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/video.webm]]
 
-[[ATTACHMENT|../../test-results/playwright/alerts-Alert-with-Ok-guest-chromium/error-context.md]]
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/trace.zip]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="21.01">
-<failure message="alerts.spec.ts:16:5 Confirmation Dialog-Alert with Ok and cancel @guest" type="FAILURE">
-<![CDATA[  [chromium] › alerts.spec.ts:16:5 › Confirmation Dialog-Alert with Ok and cancel @guest ───────────
-
-    TimeoutError: page.click: Timeout 20000ms exceeded.
-    Call log:
-      - waiting for locator('#confirmBtn')
-
-
-      25 |
-      26 |   // 3. Button klicken
-    > 27 |   await page.click('#confirmBtn');
-         |              ^
-      28 |   await expect(page.locator('#demo')).toHaveText('You pressed OK!');
-      29 | });
-      30 |
-        at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:27:14
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    ../../../../test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    ../../../../test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: ../../../../test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/error-context.md
-]]>
-</failure>
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="1.747">
 <system-out>
 <![CDATA[
-[[ATTACHMENT|../../test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/test-failed-1.png]]
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/test-finished-1.png]]
 
-[[ATTACHMENT|../../test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/video.webm]]
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/video.webm]]
 
-[[ATTACHMENT|../../test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/error-context.md]]
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/trace.zip]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="1.91">
+<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="1.699">
 <system-out>
 <![CDATA[🚨 Dialog erkannt: prompt
 📩 Nachricht: Please enter your name:
 💬 Default-Wert: Harry Potter
 ✅ Prompt akzeptiert mit Eingabe: "Mohamed"
+
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/test-finished-1.png]]
+
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/video.webm]]
+
+[[ATTACHMENT|../../test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/trace.zip]]
 ]]>
 </system-out>
 </testcase>

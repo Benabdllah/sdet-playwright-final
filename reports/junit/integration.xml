@@ -4,7 +4,7 @@
     "rootDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth",
     "forbidOnly": false,
     "fullyParallel": true,
-    "globalSetup": null,
+    "globalSetup": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/config/playwright/globalSetup.ts",
     "globalTeardown": null,
     "globalTimeout": 3600000,
     "grep": {},
@@ -23,19 +23,19 @@
         "html",
         {
           "open": "never",
-          "outputFolder": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/reports/html-report"
+          "outputFolder": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/reports/playwright/html"
         }
       ],
       [
         "blob",
         {
-          "outputDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/blob"
+          "outputDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/blob"
         }
       ],
       [
         "json",
         {
-          "outputFile": "../../reports/json/test-summary.json"
+          "outputFile": "../../reports/playwright/html/test-summary.json"
         }
       ],
       [
@@ -47,7 +47,7 @@
       [
         "json",
         {
-          "outputFile": "../../reports/json/playwright-results.json"
+          "outputFile": "../../reports/playwright/html/playwright-results.json"
         }
       ],
       [
@@ -71,37 +71,37 @@
       [
         "json",
         {
-          "outputFile": "../../test-results/accessibility/axe-results.json"
+          "outputFile": "../../artifacts/accessibility/axe-results.json"
         }
       ],
       [
         "json",
         {
-          "outputFile": "../../test-results/accessibility/wcag-violations.json"
+          "outputFile": "../../artifacts/accessibility/wcag-violations.json"
         }
       ],
       [
         "json",
         {
-          "outputFile": "../../test-results/security/vulnerabilities.json"
+          "outputFile": "../../artifacts/security/vulnerabilities.json"
         }
       ],
       [
         "json",
         {
-          "outputFile": "../../test-results/performance/load-times.json"
+          "outputFile": "../../artifacts/performance/load-times.json"
         }
       ],
       [
         "json",
         {
-          "outputFile": "../../test-results/performance/web-vitals.json"
+          "outputFile": "../../artifacts/performance/web-vitals.json"
         }
       ],
       [
         "json",
         {
-          "outputFile": "../../test-results/performance/lighthouse.json"
+          "outputFile": "../../artifacts/performance/lighthouse.json"
         }
       ],
       [
@@ -113,25 +113,25 @@
       [
         "json",
         {
-          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/metrics/execution-times.json"
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/artifacts/metrics/execution-times.json"
         }
       ],
       [
         "json",
         {
-          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/metrics/flaky-tests.json"
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/artifacts/metrics/flaky-tests.json"
         }
       ],
       [
         "json",
         {
-          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/metrics/test-trends.json"
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/artifacts/metrics/test-trends.json"
         }
       ],
       [
         "json",
         {
-          "outputFile": "../../test-results/visual/visual-report.json"
+          "outputFile": "../../artifacts/visual/visual-report.json"
         }
       ],
       [
@@ -161,8 +161,12 @@
       [
         "json",
         {
-          "outputFile": "../../reports/json/ci-summary.json"
+          "outputFile": "../../reports/playwright/html/ci-summary.json"
         }
+      ],
+      [
+        "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/support/reporters/ArtifactOrganizerReporter.ts",
+        null
       ]
     ],
     "reportSlowTests": {
@@ -172,7 +176,7 @@
     "quiet": false,
     "projects": [
       {
-        "outputDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright",
+        "outputDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -205,7 +209,7 @@
       "specs": [
         {
           "title": "Alert with Ok @guest",
-          "ok": false,
+          "ok": true,
           "tags": [
             "guest"
           ],
@@ -220,58 +224,34 @@
                 {
                   "workerIndex": 0,
                   "parallelIndex": 0,
-                  "status": "failed",
-                  "duration": 21012,
-                  "error": {
-                    "message": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#alertBtn')\u001b[22m\n",
-                    "stack": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#alertBtn')\u001b[22m\n\n    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:13:14",
-                    "location": {
-                      "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
-                      "column": 14,
-                      "line": 13
-                    },
-                    "snippet": "\u001b[0m \u001b[90m 11 |\u001b[39m     \u001b[36mawait\u001b[39m dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m   })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'#alertBtn'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m\n \u001b[90m 16 |\u001b[39m test(\u001b[32m'Confirmation Dialog-Alert with Ok and cancel @guest'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
-                        "column": 14,
-                        "line": 13
-                      },
-                      "message": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#alertBtn')\u001b[22m\n\n\n\u001b[0m \u001b[90m 11 |\u001b[39m     \u001b[36mawait\u001b[39m dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m   })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'#alertBtn'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m\n \u001b[90m 16 |\u001b[39m test(\u001b[32m'Confirmation Dialog-Alert with Ok and cancel @guest'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:13:14\u001b[22m"
-                    }
-                  ],
+                  "status": "passed",
+                  "duration": 1330,
+                  "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-01-06T03:41:37.452Z",
+                  "startTime": "2026-01-06T23:41:44.919Z",
                   "annotations": [],
                   "attachments": [
                     {
                       "name": "screenshot",
                       "contentType": "image/png",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Alert-with-Ok-guest-chromium/test-failed-1.png"
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/test-finished-1.png"
                     },
                     {
                       "name": "video",
                       "contentType": "video/webm",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Alert-with-Ok-guest-chromium/video.webm"
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/video.webm"
                     },
                     {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Alert-with-Ok-guest-chromium/error-context.md"
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/trace.zip"
                     }
-                  ],
-                  "errorLocation": {
-                    "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
-                    "column": 14,
-                    "line": 13
-                  }
+                  ]
                 }
               ],
-              "status": "unexpected"
+              "status": "expected"
             }
           ],
           "id": "ace1c4120cace0e80d20-a7ad583a7d6214156bcb",
@@ -281,7 +261,7 @@
         },
         {
           "title": "Confirmation Dialog-Alert with Ok and cancel @guest",
-          "ok": false,
+          "ok": true,
           "tags": [
             "guest"
           ],
@@ -296,58 +276,34 @@
                 {
                   "workerIndex": 1,
                   "parallelIndex": 1,
-                  "status": "failed",
-                  "duration": 21010,
-                  "error": {
-                    "message": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#confirmBtn')\u001b[22m\n",
-                    "stack": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#confirmBtn')\u001b[22m\n\n    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:27:14",
-                    "location": {
-                      "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
-                      "column": 14,
-                      "line": 27
-                    },
-                    "snippet": "\u001b[0m \u001b[90m 25 |\u001b[39m\n \u001b[90m 26 |\u001b[39m   \u001b[90m// 3. Button klicken\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'#confirmBtn'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'#demo'\u001b[39m))\u001b[33m.\u001b[39mtoHaveText(\u001b[32m'You pressed OK!'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
-                        "column": 14,
-                        "line": 27
-                      },
-                      "message": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#confirmBtn')\u001b[22m\n\n\n\u001b[0m \u001b[90m 25 |\u001b[39m\n \u001b[90m 26 |\u001b[39m   \u001b[90m// 3. Button klicken\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'#confirmBtn'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'#demo'\u001b[39m))\u001b[33m.\u001b[39mtoHaveText(\u001b[32m'You pressed OK!'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\u001b[0m\n\u001b[2m    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:27:14\u001b[22m"
-                    }
-                  ],
+                  "status": "passed",
+                  "duration": 1747,
+                  "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-01-06T03:41:37.453Z",
+                  "startTime": "2026-01-06T23:41:44.919Z",
                   "annotations": [],
                   "attachments": [
                     {
                       "name": "screenshot",
                       "contentType": "image/png",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/test-failed-1.png"
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/test-finished-1.png"
                     },
                     {
                       "name": "video",
                       "contentType": "video/webm",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/video.webm"
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/video.webm"
                     },
                     {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/error-context.md"
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/trace.zip"
                     }
-                  ],
-                  "errorLocation": {
-                    "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
-                    "column": 14,
-                    "line": 27
-                  }
+                  ]
                 }
               ],
-              "status": "unexpected"
+              "status": "expected"
             }
           ],
           "id": "ace1c4120cace0e80d20-e0a1bf63c25ef506b6d6",
@@ -373,7 +329,7 @@
                   "workerIndex": 2,
                   "parallelIndex": 2,
                   "status": "passed",
-                  "duration": 1910,
+                  "duration": 1699,
                   "errors": [],
                   "stdout": [
                     {
@@ -391,9 +347,25 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-01-06T03:41:37.453Z",
+                  "startTime": "2026-01-06T23:41:44.921Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/trace.zip"
+                    }
+                  ]
                 }
               ],
               "status": "expected"
@@ -401,7 +373,7 @@
           ],
           "id": "ace1c4120cace0e80d20-ecd5900f1e8ed9db23a4",
           "file": "alerts.spec.ts",
-          "line": 47,
+          "line": 51,
           "column": 5
         }
       ]
@@ -409,11 +381,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-01-06T03:41:37.145Z",
-    "duration": 21687.872,
-    "expected": 1,
+    "startTime": "2026-01-06T23:41:44.604Z",
+    "duration": 2309.424,
+    "expected": 3,
     "skipped": 0,
-    "unexpected": 2,
+    "unexpected": 0,
     "flaky": 0
   }
 }
