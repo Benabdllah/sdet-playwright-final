@@ -25,6 +25,28 @@
     // ========================================================================
 
     {
+      "name": "🎭 Playwright: Debug E2E Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@playwright/test/cli.js",
+      "args": [
+        "test",
+        "${file}",
+        "--project=chromium",
+        "--debug",
+        "--headed",
+        "--workers=1"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "presentation": {
+        "group": "playwright",
+        "order": 1
+      }
+    },
+
+    {
       "name": "🎭 Playwright: Debug (Chromium - Single Test)",
       "type": "node",
       "request": "launch",
@@ -41,7 +63,7 @@
       "internalConsoleOptions": "neverOpen",
       "presentation": {
         "group": "playwright",
-        "order": 1
+        "order": 2
       }
     },
 

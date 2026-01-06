@@ -1,0 +1,33 @@
+<testsuites id="" name="" tests="1" failures="1" skipped="0" errors="0" time="35.633573">
+<testsuite name="auth/alerts.spec.ts" timestamp="2026-01-06T03:39:01.752Z" hostname="chromium" tests="1" failures="1" skipped="0" time="35.021" errors="0">
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="auth/alerts.spec.ts" time="35.021">
+<failure message="alerts.spec.ts:16:5 Confirmation Dialog-Alert with Ok and cancel @guest" type="FAILURE">
+<![CDATA[  [chromium] › auth/alerts.spec.ts:16:5 › Confirmation Dialog-Alert with Ok and cancel @guest ──────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#confirmBtn')
+
+
+      25 |
+      26 |   // 3. Button klicken
+    > 27 |   await page.click('#confirmBtn');
+         |              ^
+      28 |   await expect(page.locator('#demo')).toHaveText('You pressed OK!');
+      29 | });
+      30 |
+        at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:27:14
+
+    Error Context: ../../../test-results/auth-alerts-Confirmation-D-6c430-rt-with-Ok-and-cancel-guest-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../test-results/auth-alerts-Confirmation-D-6c430-rt-with-Ok-and-cancel-guest-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

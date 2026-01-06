@@ -25,12 +25,12 @@
       "progress-bar",
       "summary",
       "@cucumber/pretty-formatter",
-      "message:test-results/cucumber/messages.ndjson",
-      "json:test-results/cucumber/report.json",
-      "html:test-results/cucumber/report.html",
-      "junit:test-results/cucumber/junit.xml",
-      "rerun:test-results/cucumber/rerun.txt",
-      "usage:test-results/cucumber/usage.json"
+      "message:reports/cucumber/messages.ndjson",
+      "json:reports/cucumber/report.json",
+      "html:reports/cucumber/report.html",
+      "junit:reports/cucumber/junit.xml",
+      "rerun:reports/cucumber/rerun.txt",
+      "usage:reports/cucumber/usage.json"
     ],
     "parallel": 4,
     "retry": 1,

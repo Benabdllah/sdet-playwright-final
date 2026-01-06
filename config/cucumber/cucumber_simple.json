@@ -7,6 +7,6 @@
             "snippetInterface":"async-await"
         },
         "requireModule":["ts-node/register"],
-        "format":["html:test-results/cucumber/report.html"]
+        "format":["html:reports/cucumber/report.html"]
     }
 }

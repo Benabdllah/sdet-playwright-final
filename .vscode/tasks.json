@@ -1,0 +1,68 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🎭 Playwright: Run Current Test",
+      "type": "shell",
+      "command": "npx",
+      "args": [
+        "playwright",
+        "test",
+        "${file}",
+        "--headed",
+        "--project=chromium"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🎭 Playwright: Debug Current Test",
+      "type": "shell",
+      "command": "npx",
+      "args": [
+        "playwright",
+        "test",
+        "${file}",
+        "--debug",
+        "--headed",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "group": {
+        "kind": "test"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🎭 Playwright: Run All E2E Tests",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "pw:test"
+      ],
+      "group": {
+        "kind": "test"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

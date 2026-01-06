@@ -1,28 +1,33 @@
 /**
  * Zentralisierte Export-Datei für alle Helper-Funktionen
- * 
+ *
  * Importiere Helper direkt aus diesem Modul statt aus einzelnen Dateien:
- * 
+ *
  * ❌ NICHT: import { ValidationHelper } from '@helpers/validation-helper'
  * ✅ JA: import { ValidationHelper } from '@helpers'
- * 
+ *
  * Diese Struktur bietet bessere Wartbarkeit und DX
  */
 
 // ============================================================================
 // Alert & Dialog Helpers
 // ============================================================================
-export { handleAlert, handlePrompt } from '@helpers/alert-helper';
+export { handleAlert, handlePrompt } from "./alert-helper";
 
 // ============================================================================
 // Assertion Helpers
 // ============================================================================
-export { AssertionHelper } from './assertion-helper';
+export { AssertionHelper } from "./assertion-helper";
 
 // ============================================================================
 // Authentication Helpers
 // ============================================================================
-export { AuthHelper, AuthMethod, SocialProvider, MFAMethod } from './auth-helper';
+export {
+  AuthHelper,
+  AuthMethod,
+  SocialProvider,
+  MFAMethod,
+} from "./auth-helper";
 
 // ============================================================================
 // Base Helpers
@@ -39,7 +44,12 @@ export { AuthHelper, AuthMethod, SocialProvider, MFAMethod } from './auth-helper
 // ============================================================================
 // Data Helpers
 // ============================================================================
-export { DataHelper, TestDataBuilder, DataSource, DataType } from './data-helper';
+export {
+  DataHelper,
+  TestDataBuilder,
+  DataSource,
+  DataType,
+} from "./data-helper";
 
 // ============================================================================
 // Dropdown Helpers
@@ -130,9 +140,9 @@ export {
   uncheckCheckboxInRow,
   getCellText,
   clickButtonInRow,
-} from './table-helper';
+} from "./table-helper";
 
 // ============================================================================
 // Validation Helpers
 // ============================================================================
-export { ValidationHelper } from './validation-helper';
+export { ValidationHelper } from "./validation-helper";

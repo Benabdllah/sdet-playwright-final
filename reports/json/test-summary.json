@@ -1,0 +1,419 @@
+{
+  "config": {
+    "configFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/config/playwright/playwright.config.ts",
+    "rootDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 3600000,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 3
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never",
+          "outputFolder": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/reports/html-report"
+        }
+      ],
+      [
+        "blob",
+        {
+          "outputDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/blob"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/json/test-summary.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "../../reports/junit/e2e.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/json/playwright-results.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/junit/api.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/api/api-report.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/junit/integration.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/accessibility/axe-results.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/accessibility/wcag-violations.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/security/vulnerabilities.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/performance/load-times.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/performance/web-vitals.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/performance/lighthouse.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/coverage/coverage-summary.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/metrics/execution-times.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/metrics/flaky-tests.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/metrics/test-trends.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test-results/visual/visual-report.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/cucumber/report.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/cucumber/messages.ndjson"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/cucumber/junit.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/cucumber/usage.json"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../reports/json/ci-summary.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 3
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.57.0",
+    "workers": 5,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "alerts.spec.ts",
+      "file": "alerts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Alert with Ok @guest",
+          "ok": false,
+          "tags": [
+            "guest"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 21012,
+                  "error": {
+                    "message": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#alertBtn')\u001b[22m\n",
+                    "stack": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#alertBtn')\u001b[22m\n\n    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:13:14",
+                    "location": {
+                      "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
+                      "column": 14,
+                      "line": 13
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 11 |\u001b[39m     \u001b[36mawait\u001b[39m dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m   })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'#alertBtn'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m\n \u001b[90m 16 |\u001b[39m test(\u001b[32m'Confirmation Dialog-Alert with Ok and cancel @guest'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
+                        "column": 14,
+                        "line": 13
+                      },
+                      "message": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#alertBtn')\u001b[22m\n\n\n\u001b[0m \u001b[90m 11 |\u001b[39m     \u001b[36mawait\u001b[39m dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\n \u001b[90m 12 |\u001b[39m   })\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 13 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'#alertBtn'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 14 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 15 |\u001b[39m\n \u001b[90m 16 |\u001b[39m test(\u001b[32m'Confirmation Dialog-Alert with Ok and cancel @guest'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:13:14\u001b[22m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-01-06T03:41:37.452Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Alert-with-Ok-guest-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Alert-with-Ok-guest-chromium/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Alert-with-Ok-guest-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
+                    "column": 14,
+                    "line": 13
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ace1c4120cace0e80d20-a7ad583a7d6214156bcb",
+          "file": "alerts.spec.ts",
+          "line": 4,
+          "column": 5
+        },
+        {
+          "title": "Confirmation Dialog-Alert with Ok and cancel @guest",
+          "ok": false,
+          "tags": [
+            "guest"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 21010,
+                  "error": {
+                    "message": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#confirmBtn')\u001b[22m\n",
+                    "stack": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#confirmBtn')\u001b[22m\n\n    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:27:14",
+                    "location": {
+                      "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
+                      "column": 14,
+                      "line": 27
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 25 |\u001b[39m\n \u001b[90m 26 |\u001b[39m   \u001b[90m// 3. Button klicken\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'#confirmBtn'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'#demo'\u001b[39m))\u001b[33m.\u001b[39mtoHaveText(\u001b[32m'You pressed OK!'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
+                        "column": 14,
+                        "line": 27
+                      },
+                      "message": "TimeoutError: page.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#confirmBtn')\u001b[22m\n\n\n\u001b[0m \u001b[90m 25 |\u001b[39m\n \u001b[90m 26 |\u001b[39m   \u001b[90m// 3. Button klicken\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'#confirmBtn'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'#demo'\u001b[39m))\u001b[33m.\u001b[39mtoHaveText(\u001b[32m'You pressed OK!'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\u001b[0m\n\u001b[2m    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts:27:14\u001b[22m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-01-06T03:41:37.453Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/e2e/auth/alerts.spec.ts",
+                    "column": 14,
+                    "line": 27
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ace1c4120cace0e80d20-e0a1bf63c25ef506b6d6",
+          "file": "alerts.spec.ts",
+          "line": 16,
+          "column": 5
+        },
+        {
+          "title": "Prompt Dialog approach 2 @guest",
+          "ok": true,
+          "tags": [
+            "guest"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 1910,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "🚨 Dialog erkannt: prompt\n"
+                    },
+                    {
+                      "text": "📩 Nachricht: Please enter your name:\n"
+                    },
+                    {
+                      "text": "💬 Default-Wert: Harry Potter\n"
+                    },
+                    {
+                      "text": "✅ Prompt akzeptiert mit Eingabe: \"Mohamed\"\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-01-06T03:41:37.453Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ace1c4120cace0e80d20-ecd5900f1e8ed9db23a4",
+          "file": "alerts.spec.ts",
+          "line": 47,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-01-06T03:41:37.145Z",
+    "duration": 21687.872,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -49,5 +49,24 @@
   "editor.suggest.showValues": false,
   "editor.suggest.showVariables": false,
   "editor.suggest.showWords": false,
-  "terminal.integrated.suggest.enabled": false
+  "terminal.integrated.suggest.enabled": false,
+  "playwright.reuseBrowser": true,
+  "playwright.showTrace": true,
+  "playwright.outputFolder": "test-results/playwright",
+  "playwright.configFile": "${workspaceFolder}/playwright.config.ts",
+  "testing.automaticallyOpenPeekView": "failureInVisibleDocument",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "jest.disabledWorkspaceFolders": [
+    "src/tests/e2e",
+    "src/tests/features",
+    "src/tests/integration",
+    "src/tests/visual",
+    "src/tests/performance",
+    "src/tests/security",
+    "src/tests/accessibility"
+  ],
+  "jest.runMode": "on-demand"
 }
