@@ -39,6 +39,13 @@
         }
       ],
       [
+        "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/allure-playwright/dist/cjs/index.js",
+        {
+          "resultsDir": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/reports/allure/allure-results",
+          "suiteTitle": "SDET PW Practice - E2E Tests"
+        }
+      ],
+      [
         "junit",
         {
           "outputFile": "../../reports/junit/e2e.xml"
@@ -225,24 +232,14 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1330,
+                  "duration": 1918,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-01-06T23:41:44.919Z",
+                  "startTime": "2026-01-07T01:21:16.925Z",
                   "annotations": [],
                   "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/test-finished-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/video.webm"
-                    },
                     {
                       "name": "trace",
                       "contentType": "application/zip",
@@ -277,24 +274,14 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1747,
+                  "duration": 1773,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-01-06T23:41:44.919Z",
+                  "startTime": "2026-01-07T01:21:16.927Z",
                   "annotations": [],
                   "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/test-finished-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/video.webm"
-                    },
                     {
                       "name": "trace",
                       "contentType": "application/zip",
@@ -329,7 +316,7 @@
                   "workerIndex": 2,
                   "parallelIndex": 2,
                   "status": "passed",
-                  "duration": 1699,
+                  "duration": 1224,
                   "errors": [],
                   "stdout": [
                     {
@@ -347,19 +334,9 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-01-06T23:41:44.921Z",
+                  "startTime": "2026-01-07T01:21:16.926Z",
                   "annotations": [],
                   "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/test-finished-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/video.webm"
-                    },
                     {
                       "name": "trace",
                       "contentType": "application/zip",
@@ -381,8 +358,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-01-06T23:41:44.604Z",
-    "duration": 2309.424,
+    "startTime": "2026-01-07T01:21:16.578Z",
+    "duration": 2497.6459999999997,
     "expected": 3,
     "skipped": 0,
     "unexpected": 0,

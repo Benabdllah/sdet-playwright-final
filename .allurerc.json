@@ -1,0 +1,4 @@
+{
+  "name": "SDET Playwright Tests",
+  "resultsDir": "reports/allure/allure-results"
+}

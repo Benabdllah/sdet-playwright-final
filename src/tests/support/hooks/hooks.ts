@@ -56,7 +56,7 @@ BeforeAll(async () => {
     "artifacts/downloads",
     "artifacts/har",
     "test-results/cucumber",
-    "test-results/allure",
+
     "test-results/junit",
     "test-results/coverage",
     "test-results/performance",
@@ -321,13 +321,17 @@ After(async function (this: World, { result, pickle }) {
       try {
         const video = this.page.video();
 
-        // Bestimme Video-Status Ordner
+        // Bestimme Video-Status Ordner - IMMER nach Status organisieren
+        // Videos werden ohnehin aufgezeichnet, also in den korrekten Ordner verschieben
         const videoStatusFolder =
           status === "FAILED"
             ? "failed"
-            : status === "PASSED" && CONFIG.features?.capturePassedVideos
+            : status === "PASSED"
             ? "passed"
             : null;
+
+        // Hole den Original-Pfad BEVOR die Page geschlossen wird
+        const originalVideoPath = video ? await video.path() : null;
 
         // Page MUSS geschlossen werden, damit Video finalisiert wird
         await this.page.close();
@@ -343,11 +347,32 @@ After(async function (this: World, { result, pickle }) {
 
           await video.saveAs(videoPath);
           console.log(`   ✅ Video saved: ${videoPath}`);
+
+          // Lösche das Original-Video mit Hash-Namen aus dem Root-Ordner
+          if (originalVideoPath) {
+            try {
+              await fs.unlink(originalVideoPath);
+              console.log(
+                `   🗑️  Original video deleted: ${originalVideoPath}`
+              );
+            } catch (unlinkErr) {
+              // Ignoriere Fehler beim Löschen (z.B. wenn Datei nicht existiert)
+            }
+          }
         } else {
+          // Lösche ungewollte Videos (z.B. bei UNKNOWN status)
+          if (originalVideoPath) {
+            try {
+              await fs.unlink(originalVideoPath);
+              console.log(
+                `   🗑️  Unneeded video deleted: ${originalVideoPath}`
+              );
+            } catch (unlinkErr) {
+              // Ignoriere Fehler
+            }
+          }
           console.log(
-            `   ℹ️  No video saved (status: ${
-              videoStatusFolder || "not configured"
-            })`
+            `   ℹ️  No video saved (status: ${videoStatusFolder || "unknown"})`
           );
         }
       } catch (err) {

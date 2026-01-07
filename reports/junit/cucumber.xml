@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<testsuite name="Cucumber" time="95.206" tests="17" skipped="0" failures="14" errors="0" timestamp="2026-01-07T00:24:37.599Z">
+  <testcase classname="Conduit-Anmelde-Funktionalität" name="Anmeldung und Abmeldung mit gültigen Anmeldedaten" time="1.056">
+    <system-out><![CDATA[Angenommen ich bin auf der Conduit-Anmeldeseite.............................passed
+Wenn ich mich mit gültigen Anmeldedaten anmelde.............................passed
+Und ich auf die Einstellungsschaltfläche klicke.............................passed
+Und ich auf die Abmeldungsschaltfläche klicke...............................passed
+Dann werde ich auf die Anmeldeseite zurückgeleitet..........................passed]]></system-out>
+  </testcase>
+  <testcase classname="Authentifizierung in OrangeHRM" name="Erfolgreiche Anmeldung mit gültigen Anmeldedaten" time="7.803">
+    <failure type="Error" message="[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed&#xA;&#xA;Locator: locator('[class*=&quot;dashboard&quot;], .main-content, [class*=&quot;main&quot;]')&#xA;Expected: visible&#xA;Error: strict mode violation: locator('[class*=&quot;dashboard&quot;], .main-content, [class*=&quot;main&quot;]') resolved to 99 elements:&#xA;    1) &lt;div data-v-636d6b87=&quot;&quot; class=&quot;oxd-main-menu --fixed&quot;>…&lt;/div> aka locator('.oxd-main-menu').first()&#xA;    2) &lt;div data-v-636d6b87=&quot;&quot; class=&quot;oxd-main-menu-search&quot;>…&lt;/div> aka locator('.oxd-main-menu-search')&#xA;    3) &lt;button role=&quot;none&quot; type=&quot;button&quot; data-v-f5c763eb=&quot;&quot; data-v-636d6b87=&quot;&quot; class=&quot;oxd-icon-button oxd-main-menu-button&quot;>…&lt;/button> aka getByRole('navigation', { name: 'Sidepanel' }).getByRole('button')&#xA;    4) &lt;hr data-v-636d6b87=&quot;&quot; class=&quot;oxd-main-menu-divider&quot;/> aka getByRole('navigation', { name: 'Sidepanel' }).getByRole('separator')&#xA;    5) &lt;ul data-v-636d6b87=&quot;&quot; class=&quot;oxd-main-menu&quot;>…&lt;/ul> aka getByText('AdminPIMLeaveTimeRecruitmentMy')&#xA;    6) &lt;li data-v-6475d26d=&quot;&quot; data-v-636d6b87=&quot;&quot; class=&quot;oxd-main-menu-item-wrapper&quot;>…&lt;/li> aka getByRole('listitem').filter({ hasText: /^Admin$/ })&#xA;    7) &lt;a data-v-6475d26d=&quot;&quot; class=&quot;oxd-main-menu-item&quot; href=&quot;/web/index.php/admin/viewAdminModule&quot;>…&lt;/a> aka getByRole('link', { name: 'Admin' })&#xA;    8) &lt;svg width=&quot;22&quot; height=&quot;22&quot; data-v-bddebfba=&quot;&quot; data-v-6475d26d=&quot;&quot; role=&quot;presentation&quot; viewBox=&quot;0 0 500 500&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; class=&quot;oxd-icon oxd-main-menu-item--icon&quot;>…&lt;/svg> aka getByRole('link', { name: 'Admin' })&#xA;    9) &lt;span data-v-7b563373=&quot;&quot; data-v-6475d26d=&quot;&quot; class=&quot;oxd-text oxd-text--span oxd-main-menu-item--name&quot;>Admin&lt;/span> aka getByRole('link', { name: 'Admin' })&#xA;    10) &lt;li data-v-6475d26d=&quot;&quot; data-v-636d6b87=&quot;&quot; class=&quot;oxd-main-menu-item-wrapper&quot;>…&lt;/li> aka getByRole('listitem').filter({ hasText: 'PIM' })&#xA;    ...&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.be.visible&quot; with timeout 10000ms[22m&#xA;[2m  - waiting for locator('[class*=&quot;dashboard&quot;], .main-content, [class*=&quot;main&quot;]')[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/playwright/lib/matchers/expect.js:224:24)
+    at World.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/step_definitions/orangehrm/authentication.steps.ts:43:34)
+    at Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/user_code_runner.ts:37:21)
+    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:59:24
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+    at runInTestCaseScope (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/scope/test_case_scope.ts:15:24)
+    at Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:58:44)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at processImmediate (node:internal/timers:453:9)
+    at process.topLevelDomainCallback (node:domain:161:15)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin auf der OrangeHRM-Anmeldeseite...........................passed
+Wenn ich den Benutzernamen "Admin" eingebe..................................passed
+Und ich das Passwort "admin123" eingebe.....................................passed
+Und ich auf den "Login"-Button klicke.......................................passed
+Dann sollte ich erfolgreich angemeldet sein.................................passed
+Und ich sollte das Dashboard sehen..........................................failed]]></system-out>
+  </testcase>
+  <testcase classname="Authentifizierung in OrangeHRM" name="Anmeldung fehlgeschlagen mit ungültigen Anmeldedaten" time="10.457">
+    <failure type="Error" message="[2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed&#xA;&#xA;Locator: locator('text=&quot;Ungültige Anmeldedaten&quot;').first()&#xA;Expected: visible&#xA;Timeout: 5000ms&#xA;Error: element(s) not found&#xA;&#xA;Call log:&#xA;[2m  - Expect &quot;to.be.visible&quot; with timeout 5000ms[22m&#xA;[2m  - waiting for locator('text=&quot;Ungültige Anmeldedaten&quot;').first()[22m&#xA;"><![CDATA[    at Proxy.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/playwright/lib/matchers/expect.js:224:24)
+    at World.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/step_definitions/orangehrm/authentication.steps.ts:53:38)
+    at Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/user_code_runner.ts:37:21)
+    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:59:24
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+    at runInTestCaseScope (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/scope/test_case_scope.ts:15:24)
+    at Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:58:44)
+    at async TestCaseRunner.invokeStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:151:12)
+    at async TestCaseRunner.runStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:377:20)
+    at async /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:259:34]]></failure>
+    <system-out><![CDATA[Angenommen ich bin auf der OrangeHRM-Anmeldeseite...........................passed
+Wenn ich den Benutzernamen "Admin" eingebe..................................passed
+Und ich das Passwort "wrongpassword" eingebe................................passed
+Und ich auf den "Login"-Button klicke.......................................passed
+Dann sollte ich eine Fehlermeldung "Ungültige Anmeldedaten" sehen...........failed
+Und ich sollte auf der Anmeldeseite bleiben.................................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Authentifizierung in OrangeHRM" name="Anmeldung mit leerem Benutzernamen" time="14.342">
+    <system-out><![CDATA[Angenommen ich bin auf der OrangeHRM-Anmeldeseite...........................passed
+Wenn ich das Benutzernamenfeld leer lasse...................................passed
+Und ich das Passwort "admin123" eingebe.....................................passed
+Und ich auf den "Login"-Button klicke.......................................passed
+Dann sollte ich einen Validierungsfehler sehen..............................passed
+Und das Formular sollte nicht eingereicht werden............................passed]]></system-out>
+  </testcase>
+  <testcase classname="Authentifizierung in OrangeHRM" name="Erfolgreich abmelden" time="9.207">
+    <system-out><![CDATA[Angenommen ich bin als Administrator angemeldet.............................passed
+Wenn ich auf das Benutzerprofilmenü klicke..................................passed
+Und ich auf die Option "Logout" klicke......................................passed
+Dann sollte ich abgemeldet sein.............................................passed
+Und ich sollte auf die Anmeldeseite weitergeleitet werden...................passed]]></system-out>
+  </testcase>
+  <testcase classname="Authentifizierung in OrangeHRM" name="Sitzungszeitüberschreitung nach Inaktivität" time="8.859">
+    <failure type="Error" message="page.goto: net::ERR_TOO_MANY_REDIRECTS at https://opensource-demo.orangehrmlive.com/index.php/admin/viewAdminModule&#xA;Call log:&#xA;[2m  - navigating to &quot;https://opensource-demo.orangehrmlive.com/index.php/admin/viewAdminModule&quot;, waiting until &quot;load&quot;[22m&#xA;"><![CDATA[    at World.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/step_definitions/orangehrm/authentication.steps.ts:123:19)
+    at Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/user_code_runner.ts:37:21)
+    at /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:59:24
+    at runInTestCaseScope (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/scope/test_case_scope.ts:15:24)
+    at Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:58:44)
+    at async TestCaseRunner.invokeStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:151:12)
+    at async TestCaseRunner.runStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:377:20)
+    at async /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:259:34
+    at async TestCaseRunner.aroundTestStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:184:28)
+    at async TestCaseRunner.runAttempt (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:236:7)
+    at async TestCaseRunner.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:202:29)
+    at async Worker.runTestCase (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/worker.ts:159:20)
+    at async ChildProcessWorker.runTestCase (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/parallel/worker.ts:122:21)
+    at async ChildProcessWorker.receiveMessage (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/parallel/worker.ts:113:9)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Administrator angemeldet.............................passed
+Wenn ich 30 Minuten lang keine Aktion ausführe..............................passed
+Und ich versuche, zu einer authentifizierten Seite zu navigieren............failed
+Dann sollte ich auf die Anmeldeseite weitergeleitet werden..................undefined
+Und ich sollte eine Sitzungszeitüberschreitung-Meldung sehen................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Mitarbeiterverwaltung in OrangeHRM" name="Einen neuen Mitarbeiter erfolgreich erstellen" time="39.892">
+    <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:52:14)
+    at listOnTimeout (node:internal/timers:588:17)
+    at processTimers (node:internal/timers:523:7)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Administrator angemeldet.............................passed
+Wenn ich zum Abschnitt Mitarbeiterverwaltung navigiere......................passed
+Und ich auf den "Hinzufügen"-Button klicke..................................failed
+Und ich die folgenden Mitarbeiterinformationen eingebe:.....................skipped
+Und ich auf den "Speichern"-Button klicke...................................skipped
+Dann sollte ich eine Erfolgsmeldung "Erfolgreich gespeichert" sehen.........undefined
+Und der Mitarbeiter "John Automation" sollte in der Mitarbeiterliste erscheinen..skipped]]></system-out>
+  </testcase>
+  <testcase classname="Mitarbeiterverwaltung in OrangeHRM" name="Erforderliche Felder bei der Erstellung von Mitarbeitern validieren" time="39.847">
+    <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:52:14)
+    at listOnTimeout (node:internal/timers:588:17)
+    at processTimers (node:internal/timers:523:7)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Administrator angemeldet.............................passed
+Wenn ich zum Abschnitt Mitarbeiterverwaltung navigiere......................passed
+Und ich auf den "Hinzufügen"-Button klicke..................................failed
+Und ich auf den "Speichern"-Button klicke, ohne Felder auszufüllen..........undefined
+Dann sollte ich Validierungsfehler für erforderliche Felder sehen...........skipped
+Und der Mitarbeiter sollte nicht erstellt werden............................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Mitarbeiterverwaltung in OrangeHRM" name="Nach Mitarbeiter nach Name suchen" time="39.164">
+    <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:52:14)
+    at listOnTimeout (node:internal/timers:588:17)
+    at processTimers (node:internal/timers:523:7)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Administrator angemeldet.............................passed
+Wenn ich zum Abschnitt Mitarbeiterverwaltung navigiere......................passed
+Und ich nach Mitarbeiter "Peter Mac" suche..................................failed
+Dann sollten die Suchergebnisse Mitarbeiter anzeigen, die dem Namen entsprechen..skipped]]></system-out>
+  </testcase>
+  <testcase classname="Mitarbeiterverwaltung in OrangeHRM" name="Einen Mitarbeiter löschen" time="39.416">
+    <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:52:14)
+    at listOnTimeout (node:internal/timers:588:17)
+    at processTimers (node:internal/timers:523:7)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Administrator angemeldet.............................passed
+Angenommen ein Mitarbeiter "Jane Smith" existiert im System.................passed
+Wenn ich zum Abschnitt Mitarbeiterverwaltung navigiere......................passed
+Und ich nach "Jane Smith" suche.............................................failed
+Und ich auf den Löschen-Button für "Jane Smith" klicke......................skipped
+Und ich die Löschaktion bestätige...........................................skipped
+Dann sollte ich eine Erfolgsmeldung "Erfolgreich gelöscht" sehen............undefined
+Und "Jane Smith" sollte nicht mehr in der Mitarbeiterliste erscheinen.......skipped]]></system-out>
+  </testcase>
+  <testcase classname="Mitarbeiterverwaltung in OrangeHRM" name="Mitarbeiterinformationen bearbeiten" time="40.002">
+    <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:52:14)
+    at listOnTimeout (node:internal/timers:588:17)
+    at processTimers (node:internal/timers:523:7)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Administrator angemeldet.............................passed
+Angenommen ein Mitarbeiter "Michael Scott" existiert im System..............passed
+Wenn ich zum Abschnitt Mitarbeiterverwaltung navigiere......................passed
+Und ich nach "Michael Scott" suche..........................................failed
+Und ich auf "Michael Scott" klicke, um zu bearbeiten........................skipped
+Und ich die E-Mail auf "michael.new@example.com" aktualisiere...............skipped
+Und ich auf den "Speichern"-Button klicke...................................skipped
+Dann sollte ich eine Erfolgsmeldung "Erfolgreich aktualisiert" sehen........undefined
+Und die E-Mail für "Michael Scott" sollte "michael.new@example.com" sein....skipped]]></system-out>
+  </testcase>
+  <testcase classname="Mitarbeiterverwaltung in OrangeHRM" name="Mitarbeiterdetails anzeigen" time="40.075">
+    <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:52:14)
+    at listOnTimeout (node:internal/timers:588:17)
+    at processTimers (node:internal/timers:523:7)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Administrator angemeldet.............................passed
+Angenommen ein Mitarbeiter "Peter Parker" existiert im System...............passed
+Wenn ich zum Abschnitt Mitarbeiterverwaltung navigiere......................passed
+Und ich auf "Peter Parker" klicke, um Details anzuzeigen....................failed
+Dann sollte ich alle Mitarbeiterinformationen sehen.........................skipped
+Und die Mitarbeiter-ID sollte angezeigt werden..............................skipped
+Und der Beschäftigungsstatus sollte angezeigt werden........................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Urlaubsgenehmigung in OrangeHRM" name="Manager genehmigt Urlaubsantrag" time="35.795">
+    <failure type="Error" message="function timed out, ensure the promise resolves within 30000 milliseconds"><![CDATA[    at Timeout.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:52:14)
+    at listOnTimeout (node:internal/timers:588:17)
+    at processTimers (node:internal/timers:523:7)]]></failure>
+    <system-out><![CDATA[Angenommen ein Mitarbeiter "Otto Schmidt" hat Urlaub vom "2024-02-01" bis "2024-02-05" beantragt..passed
+Und ich bin als Manager angemeldet..........................................passed
+Wenn ich zu ausstehenden Urlaubsgenehmigungen navigiere.....................failed
+Und ich den Urlaubsantrag von "Otto Schmidt" auswähle.......................skipped
+Und ich auf "Genehmigen" klicke.............................................skipped
+Und ich den Kommentar "Genehmigt" eingebe...................................skipped
+Und ich auf "Bestätigen" klicke.............................................skipped
+Dann sollte ich die Erfolgsmeldung "Urlaub genehmigt" sehen.................skipped
+Und der Urlaub-Status sollte sich in "Genehmigt" ändern.....................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Urlaubssaldo-Validierung in OrangeHRM" name="Urlaub kann nicht mit unzureichendem Saldo beantragt werden" time="9.282">
+    <failure type="Error" message="Button/Link &quot;Urlaub beantragen&quot; nicht gefunden. Versucht: has-text, XPath Button, XPath Link, Partial Match"><![CDATA[    at World.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/step_definitions/orangehrm/leave-management.steps.ts:101:9)
+    at async wrapPromiseWithTimeout (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:55:10)
+    at async Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/user_code_runner.ts:86:16)
+    at async Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:58:20)
+    at async TestCaseRunner.invokeStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:151:12)
+    at async TestCaseRunner.runStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:377:20)
+    at async /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:259:34
+    at async TestCaseRunner.aroundTestStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:184:28)
+    at async TestCaseRunner.runAttempt (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:236:7)
+    at async TestCaseRunner.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:202:29)]]></failure>
+    <system-out><![CDATA[Angenommen mein Jahresurlaub-Saldo beträgt 2 Tage...........................passed
+Und ich bin als Mitarbeiter angemeldet......................................passed
+Wenn ich zum Urlaub-Bereich navigiere.......................................passed
+Und ich auf "Urlaub beantragen" klicke......................................failed
+Und ich den Urlaubstyp "Jahresurlaub" auswähle..............................skipped
+Und ich das Startdatum "2024-02-01" auswähle................................skipped
+Und ich das Enddatum "2024-02-05" auswähle (5 Tage).........................skipped
+Und ich auf "Beantragen" klicke.............................................skipped
+Dann sollte ich die Fehlermeldung "Unzureichender Urlaubssaldo" sehen.......skipped
+Und der Urlaubsantrag sollte nicht eingereicht werden.......................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Urlaubsverwaltung in OrangeHRM" name="Jahresurlaub erfolgreich beantragen" time="8.569">
+    <failure type="Error" message="Button/Link &quot;Urlaub beantragen&quot; nicht gefunden. Versucht: has-text, XPath Button, XPath Link, Partial Match"><![CDATA[    at World.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/step_definitions/orangehrm/leave-management.steps.ts:101:9)
+    at async wrapPromiseWithTimeout (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:55:10)
+    at async Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/user_code_runner.ts:86:16)
+    at async Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:58:20)
+    at async TestCaseRunner.invokeStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:151:12)
+    at async TestCaseRunner.runStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:377:20)
+    at async /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:259:34
+    at async TestCaseRunner.aroundTestStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:184:28)
+    at async TestCaseRunner.runAttempt (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:236:7)
+    at async TestCaseRunner.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:202:29)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Mitarbeiter angemeldet...............................passed
+Wenn ich zum Urlaub-Bereich navigiere.......................................passed
+Und ich auf "Urlaub beantragen" klicke......................................failed
+Und ich den Urlaubstyp "Jahresurlaub" auswähle..............................skipped
+Und ich das Startdatum "2024-02-01" auswähle................................skipped
+Und ich das Enddatum "2024-02-05" auswähle..................................skipped
+Und ich den Kommentar "Urlaub" eingebe......................................skipped
+Und ich auf "Beantragen" klicke.............................................skipped
+Dann sollte ich die Erfolgsmeldung "Urlaubsantrag eingereicht" sehen........skipped
+Und der Urlaub sollte in meiner Urlaubsliste mit Status "Genehmigung ausstehend" erscheinen..skipped]]></system-out>
+  </testcase>
+  <testcase classname="Urlaubsverwaltung in OrangeHRM" name="Urlaub mit ungültigem Datumsbereich kann nicht beantragt werden" time="9.576">
+    <failure type="Error" message="Button/Link &quot;Urlaub beantragen&quot; nicht gefunden. Versucht: has-text, XPath Button, XPath Link, Partial Match"><![CDATA[    at World.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/step_definitions/orangehrm/leave-management.steps.ts:101:9)
+    at async wrapPromiseWithTimeout (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:55:10)
+    at async Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/user_code_runner.ts:86:16)
+    at async Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:58:20)
+    at async TestCaseRunner.invokeStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:151:12)
+    at async TestCaseRunner.runStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:377:20)
+    at async /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:259:34
+    at async TestCaseRunner.aroundTestStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:184:28)
+    at async TestCaseRunner.runAttempt (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:236:7)
+    at async TestCaseRunner.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:202:29)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Mitarbeiter angemeldet...............................passed
+Wenn ich zum Urlaub-Bereich navigiere.......................................passed
+Und ich auf "Urlaub beantragen" klicke......................................failed
+Und ich das Startdatum "2024-02-05" auswähle................................skipped
+Und ich das Enddatum "2024-02-01" auswähle..................................skipped
+Und ich auf "Beantragen" klicke.............................................skipped
+Dann sollte ich die Fehlermeldung "Startdatum muss vor Enddatum liegen" sehen..skipped
+Und der Urlaubsantrag sollte nicht eingereicht werden.......................skipped]]></system-out>
+  </testcase>
+  <testcase classname="Urlaubsverwaltung in OrangeHRM" name="Urlaub-Saldo überprüfen" time="8.721">
+    <failure type="Error" message="Button/Link &quot;Urlaub-Saldo&quot; nicht gefunden. Versucht: has-text, XPath Button, XPath Link, Partial Match"><![CDATA[    at World.<anonymous> (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/src/tests/step_definitions/orangehrm/leave-management.steps.ts:101:9)
+    at async wrapPromiseWithTimeout (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/time.ts:55:10)
+    at async Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/user_code_runner.ts:86:16)
+    at async Object.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/step_runner.ts:58:20)
+    at async TestCaseRunner.invokeStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:151:12)
+    at async TestCaseRunner.runStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:377:20)
+    at async /Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:259:34
+    at async TestCaseRunner.aroundTestStep (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:184:28)
+    at async TestCaseRunner.runAttempt (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:236:7)
+    at async TestCaseRunner.run (/Users/ben/Documents/Projects/Automation/MyWorkspaces/GitRepo/SDET-PW-Final/node_modules/@cucumber/cucumber/src/runtime/test_case_runner.ts:202:29)]]></failure>
+    <system-out><![CDATA[Angenommen ich bin als Mitarbeiter angemeldet...............................passed
+Wenn ich zum Urlaub-Bereich navigiere.......................................passed
+Und ich auf "Urlaub-Saldo" klicke...........................................failed
+Dann sollte ich meine verbleibenden Urlaubstage sehen:......................skipped]]></system-out>
+  </testcase>
+</testsuite>

@@ -3,8 +3,8 @@
 # Script um Allure Results zu generieren aus bestehenden Playwright Test Results
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ALLURE_RESULTS_DIR="$PROJECT_ROOT/test-results/allure/allure-results"
-ALLURE_REPORT_DIR="$PROJECT_ROOT/test-results/allure/allure-report"
+ALLURE_RESULTS_DIR="$PROJECT_ROOT/reports/allure/allure-results"
+ALLURE_REPORT_DIR="$PROJECT_ROOT/reports/allure/allure-report"
 
 # Erstelle die Zielverzeichnisse
 mkdir -p "$ALLURE_RESULTS_DIR"

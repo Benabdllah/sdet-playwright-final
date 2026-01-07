@@ -54,7 +54,7 @@ BeforeAll(async function () {
     "artifacts/downloads",
     "artifacts/har",
     "test-results/cucumber",
-    "test-results/allure",
+
     "test-results/junit",
     "test-results/coverage",
     "test-results/performance",

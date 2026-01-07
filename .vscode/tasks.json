@@ -63,6 +63,62 @@
         "focus": true
       },
       "problemMatcher": []
+    },
+    {
+      "label": "🎥 Video: Open in VLC",
+      "type": "shell",
+      "command": "open",
+      "args": ["-a", "VLC", "${file}"],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🎥 Video: Open All Failed Videos",
+      "type": "shell",
+      "command": "open",
+      "args": ["-a", "VLC", "${workspaceFolder}/artifacts/videos/failed/*.webm"],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🎥 Video: Open in Browser",
+      "type": "shell",
+      "command": "open",
+      "args": ["${file}"],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 Trace: Open in Playwright Viewer",
+      "type": "shell",
+      "command": "npx",
+      "args": ["playwright", "show-trace", "${file}"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 Trace: Open Latest Failed Trace",
+      "type": "shell",
+      "command": "npx playwright show-trace $(ls -t ${workspaceFolder}/artifacts/traces/failed/*.zip | head -1)",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      },
+      "problemMatcher": []
     }
   ]
 }

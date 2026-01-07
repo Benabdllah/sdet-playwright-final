@@ -1,37 +1,25 @@
-<testsuites id="" name="" tests="3" failures="0" skipped="0" errors="0" time="2.309424">
-<testsuite name="alerts.spec.ts" timestamp="2026-01-06T23:41:44.633Z" hostname="chromium" tests="3" failures="0" skipped="0" time="4.776" errors="0">
-<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="1.33">
+<testsuites id="" name="" tests="3" failures="0" skipped="0" errors="0" time="2.4976459999999996">
+<testsuite name="alerts.spec.ts" timestamp="2026-01-07T01:21:16.606Z" hostname="chromium" tests="3" failures="0" skipped="0" time="4.915" errors="0">
+<testcase name="Alert with Ok @guest" classname="alerts.spec.ts" time="1.918">
 <system-out>
 <![CDATA[
-[[ATTACHMENT|../../test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/test-finished-1.png]]
-
-[[ATTACHMENT|../../test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/video.webm]]
-
 [[ATTACHMENT|../../test-results/playwright/raw/alerts-Alert-with-Ok-guest-chromium/trace.zip]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="1.747">
+<testcase name="Confirmation Dialog-Alert with Ok and cancel @guest" classname="alerts.spec.ts" time="1.773">
 <system-out>
 <![CDATA[
-[[ATTACHMENT|../../test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/test-finished-1.png]]
-
-[[ATTACHMENT|../../test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/video.webm]]
-
 [[ATTACHMENT|../../test-results/playwright/raw/alerts-Confirmation-Dialog-Alert-with-Ok-and-cancel-guest-chromium/trace.zip]]
 ]]>
 </system-out>
 </testcase>
-<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="1.699">
+<testcase name="Prompt Dialog approach 2 @guest" classname="alerts.spec.ts" time="1.224">
 <system-out>
 <![CDATA[🚨 Dialog erkannt: prompt
 📩 Nachricht: Please enter your name:
 💬 Default-Wert: Harry Potter
 ✅ Prompt akzeptiert mit Eingabe: "Mohamed"
-
-[[ATTACHMENT|../../test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/test-finished-1.png]]
-
-[[ATTACHMENT|../../test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/video.webm]]
 
 [[ATTACHMENT|../../test-results/playwright/raw/alerts-Prompt-Dialog-approach-2-guest-chromium/trace.zip]]
 ]]>

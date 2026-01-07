@@ -214,8 +214,8 @@ PLAYWRIGHT_HTML_REPORT=./test-results/playwright/html
 # ============================================================================
 REPORT_FORMAT=html,json,junit
 ALLURE_ENABLED=true
-ALLURE_REPORT_DIR=./test-results/allure
-ALLURE_RESULTS_DIR=./test-results/allure/allure-results
+ALLURE_REPORT_DIR=./reports/allure/allure-report
+ALLURE_RESULTS_DIR=./reports/allure/allure-results
 CUCUMBER_REPORT_ENABLED=true
 CUCUMBER_REPORT_DIR=./test-results/cucumber
 JEST_REPORT_ENABLED=true

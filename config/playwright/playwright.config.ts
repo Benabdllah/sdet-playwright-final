@@ -111,11 +111,12 @@ function getReporters() {
   ];
 
   // Allure Reporter nur wenn explizit aktiviert
+  // Seit allure-playwright v3 wird resultsDir über .allurerc.json oder ENV gesteuert
   if (process.env.ALLURE_ENABLED === "true") {
     reporters.splice(4, 0, [
       "allure-playwright",
       {
-        outputFolder: path.resolve(
+        resultsDir: path.resolve(
           __dirname,
           "../../reports/allure/allure-results"
         ),
@@ -329,7 +330,7 @@ export default defineConfig({
      *
      * Alternative: 'only-on-failure' = Nur bei Fehlern (spart Speicher)
      */
-    screenshot: "on",
+    screenshot: "only-on-failure",
     // screenshotDir wird vom Reporter organisiert (ArtifactOrganizerReporter)
 
     /**
