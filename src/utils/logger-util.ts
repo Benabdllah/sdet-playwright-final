@@ -1,3 +1,8 @@
+  // BONUS: Debug-Puffer für N letzte Debug-Logs
+  private debugBuffer: string[] = [];
+  private debugBufferSize: number = 20; // Anzahl der gepufferten Debug-Logs
+  private failureDetected: boolean = false;
+
 /**
  * ============================================================================
  * ULTIMATE SDET LOGGER (FINAL) +++++
@@ -229,6 +234,9 @@ export class Logger extends EventEmitter {
   /**
    * Core logging method
    */
+  /**
+   * Erweiterte Logik: DEBUG-Logs werden gepuffert und nur bei Failure ausgespült
+   */
   private log(level: LogLevel, message: string, meta?: Record<string, any>): void {
     // Check log level
     if (level < this.config.level) {
@@ -260,8 +268,42 @@ export class Logger extends EventEmitter {
     // Update metrics
     this.updateMetrics(entry);
 
-    // Output log
+    // DEBUG-Buffer-Logik
+    if (level === LogLevel.DEBUG) {
+      const entryStr = this.formatEntry(entry);
+      this.debugBuffer.push(entryStr);
+      if (this.debugBuffer.length > this.debugBufferSize) {
+        this.debugBuffer.shift(); // Älteste entfernen
+      }
+      // Nur ausgeben, wenn Failure erkannt wurde
+      if (this.failureDetected) {
+        this.flushDebugBuffer();
+      }
+      return;
+    }
+
+    // Bei ERROR/FATAL: Failure markieren und Debug-Buffer ausgeben
+    if (level >= LogLevel.ERROR) {
+      this.failureDetected = true;
+      this.flushDebugBuffer();
+    }
+
+    // Output log (alle anderen Level)
     this.output(entry);
+
+  /**
+   * Gibt alle gepufferten Debug-Logs aus und leert den Buffer
+   */
+  private flushDebugBuffer(): void {
+    if (this.debugBuffer.length > 0) {
+      for (const entry of this.debugBuffer) {
+        // eslint-disable-next-line no-console
+        console.log(entry);
+      }
+      this.debugBuffer = [];
+    }
+    this.failureDetected = false;
+  }
 
     // Emit event
     this.emit('log', entry);

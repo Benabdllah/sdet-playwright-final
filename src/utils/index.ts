@@ -24,7 +24,7 @@ export {
   type TimezoneMeta,
   type QuarterInfo,
   type WeekInfo,
-} from './date-util';
+} from "./date-util";
 
 // ============================================================================
 // STRING UTILITIES
@@ -38,7 +38,7 @@ export {
   type StringSimilarityResult,
   type StringMetrics,
   type StringValidationResult,
-} from './string-util';
+} from "./string-util";
 
 // ============================================================================
 // ARRAY & COLLECTION UTILITIES
@@ -51,7 +51,7 @@ export {
   type ArrayFlattenOptions,
   type ArrayDiffResult,
   type ArrayStatistics,
-} from './array';
+} from "./array";
 
 // ============================================================================
 // OBJECT UTILITIES
@@ -64,7 +64,7 @@ export {
   type ObjectFlattenOptions,
   type ObjectMergeOptions,
   type ObjectSearchResult,
-} from './object';
+} from "./object";
 
 // ============================================================================
 // FILE & FILESYSTEM UTILITIES
@@ -78,7 +78,7 @@ export {
   type FileSearchOptions,
   type FileSearchResult,
   type FileComparisonResult,
-} from './file';
+} from "./file";
 
 // ============================================================================
 // HTTP & NETWORK UTILITIES
@@ -92,7 +92,7 @@ export {
   type HttpResponse,
   type HttpRequestOptions,
   type CacheConfig,
-} from './http';
+} from "./http";
 
 // ============================================================================
 // VALIDATION UTILITIES
@@ -105,7 +105,7 @@ export {
   type ValidationSchema,
   type ValidationError,
   type ValidationOptions,
-} from './validator';
+} from "./validator";
 
 // ============================================================================
 // ENCRYPTION & SECURITY UTILITIES
@@ -118,7 +118,7 @@ export {
   type CryptoConfig,
   type EncryptedData,
   type KeyDerivationOptions,
-} from './crypto';
+} from "./crypto";
 
 // ============================================================================
 // LOGGING UTILITIES
@@ -132,7 +132,7 @@ export {
   type LogEntry,
   type LogMetrics,
   type LogFilter,
-} from './logger-util';
+} from "./logger-util";
 
 // ============================================================================
 // PERFORMANCE & METRICS UTILITIES
@@ -144,7 +144,7 @@ export {
   type PerformanceBenchmark,
   type MemoryUsage,
   type TimingMetrics,
-} from './performance';
+} from "./performance";
 
 // ============================================================================
 // RETRY & ERROR HANDLING UTILITIES
@@ -157,7 +157,7 @@ export {
   type RetryResult,
   type CircuitBreakerConfig,
   type BackoffConfig,
-} from './retry-util';
+} from "./retry-util";
 
 // ============================================================================
 // RANDOM & GENERATION UTILITIES
@@ -168,7 +168,7 @@ export {
   type RandomGeneratorOptions,
   type RandomDataSet,
   type RandomPersona,
-} from './random-util';
+} from "./random-util";
 
 // ============================================================================
 // COMPARISON & ASSERTION UTILITIES
@@ -179,7 +179,7 @@ export {
   type ComparisonOptions,
   type ComparisonResult,
   type AssertionOptions,
-} from './comparison';
+} from "./comparison";
 
 // ============================================================================
 // PAGINATION & DATA HANDLING UTILITIES
@@ -190,7 +190,7 @@ export {
   type PaginationConfig,
   type PaginatedResult,
   type PageMetadata,
-} from './pagination';
+} from "./pagination";
 
 // ============================================================================
 // TEMPLATE & FORMAT UTILITIES
@@ -201,7 +201,7 @@ export {
   type TemplateContext,
   type TemplateOptions,
   type TemplateCompileOptions,
-} from './template';
+} from "./template";
 
 // ============================================================================
 // CACHING UTILITIES
@@ -213,7 +213,7 @@ export {
   type CacheConfig,
   type CacheEntry,
   type CacheStatistics,
-} from './cache';
+} from "./cache";
 
 // ============================================================================
 // WAIT & POLLING UTILITIES
@@ -225,7 +225,7 @@ export {
   type WaitCondition,
   type WaitOptions,
   type PollingResult,
-} from './wait-util';
+} from "./wait-util";
 
 // ============================================================================
 // CONVERSION UTILITIES
@@ -235,7 +235,7 @@ export {
   ConversionUtil,
   type ConversionOptions,
   type ConversionResult,
-} from './conversion';
+} from "./conversion";
 
 // ============================================================================
 // BATCH PROCESSING UTILITIES
@@ -246,7 +246,7 @@ export {
   type BatchOptions,
   type BatchProcessResult,
   type BatchStatistics,
-} from './batch';
+} from "./batch";
 
 // ============================================================================
 // UTILITY AGGREGATOR CLASS
@@ -261,26 +261,27 @@ export class UtilityAggregator {
    * Get all available utility classes
    */
   static getAll() {
+    // Dynamische Imports für ESM-Kompatibilität
     return {
-      date: require('./date').DateUtil,
-      string: require('./string').StringUtil,
-      array: require('./array').ArrayUtil,
-      object: require('./object').ObjectUtil,
-      file: require('./file').FileUtil,
-      http: require('./http').HttpUtil,
-      validator: require('./validator').ValidatorUtil,
-      crypto: require('./crypto').CryptoUtil,
-      logger: require('./logger').Logger,
-      performance: require('./performance').PerformanceUtil,
-      retry: require('./retry').RetryUtil,
-      random: require('./random').RandomUtil,
-      comparison: require('./comparison').ComparisonUtil,
-      pagination: require('./pagination').PaginationUtil,
-      template: require('./template').TemplateUtil,
-      cache: require('./cache').CacheUtil,
-      wait: require('./wait').WaitUtil,
-      conversion: require('./conversion').ConversionUtil,
-      batch: require('./batch').BatchUtil,
+      date: (await import("./date")).DateUtil,
+      string: (await import("./string")).StringUtil,
+      array: (await import("./array")).ArrayUtil,
+      object: (await import("./object")).ObjectUtil,
+      file: (await import("./file")).FileUtil,
+      http: (await import("./http")).HttpUtil,
+      validator: (await import("./validator")).ValidatorUtil,
+      crypto: (await import("./crypto")).CryptoUtil,
+      logger: (await import("./logger")).Logger,
+      performance: (await import("./performance")).PerformanceUtil,
+      retry: (await import("./retry")).RetryUtil,
+      random: (await import("./random")).RandomUtil,
+      comparison: (await import("./comparison")).ComparisonUtil,
+      pagination: (await import("./pagination")).PaginationUtil,
+      template: (await import("./template")).TemplateUtil,
+      cache: (await import("./cache")).CacheUtil,
+      wait: (await import("./wait")).WaitUtil,
+      conversion: (await import("./conversion")).ConversionUtil,
+      batch: (await import("./batch")).BatchUtil,
     };
   }
 
@@ -304,32 +305,32 @@ export class UtilityAggregator {
    */
   static getInfo() {
     return {
-      name: 'ULTIMATE SDET UTILITIES LIBRARY',
-      version: '1.0.0',
-      description: 'Comprehensive utility library for SDET automation testing',
-      author: 'SDET Team',
-      license: 'MIT',
+      name: "ULTIMATE SDET UTILITIES LIBRARY",
+      version: "1.0.0",
+      description: "Comprehensive utility library for SDET automation testing",
+      author: "SDET Team",
+      license: "MIT",
       utilities: this.listAvailable().length,
       categories: [
-        'Date & Time',
-        'String',
-        'Array & Collection',
-        'Object',
-        'File & Filesystem',
-        'HTTP & Network',
-        'Validation',
-        'Encryption & Security',
-        'Logging',
-        'Performance & Metrics',
-        'Retry & Error Handling',
-        'Random & Generation',
-        'Comparison & Assertion',
-        'Pagination & Data Handling',
-        'Template & Format',
-        'Caching',
-        'Wait & Polling',
-        'Conversion',
-        'Batch Processing',
+        "Date & Time",
+        "String",
+        "Array & Collection",
+        "Object",
+        "File & Filesystem",
+        "HTTP & Network",
+        "Validation",
+        "Encryption & Security",
+        "Logging",
+        "Performance & Metrics",
+        "Retry & Error Handling",
+        "Random & Generation",
+        "Comparison & Assertion",
+        "Pagination & Data Handling",
+        "Template & Format",
+        "Caching",
+        "Wait & Polling",
+        "Conversion",
+        "Batch Processing",
       ],
     };
   }
@@ -342,26 +343,27 @@ export class UtilityAggregator {
 /**
  * Quick access utility aliases
  */
+// Dynamische Utils-Factory für ESM
 export const Utils = {
-  Date: require('./date').DateUtil,
-  String: require('./string').StringUtil,
-  Array: require('./array').ArrayUtil,
-  Object: require('./object').ObjectUtil,
-  File: require('./file').FileUtil,
-  Http: require('./http').HttpUtil,
-  Validator: require('./validator').ValidatorUtil,
-  Crypto: require('./crypto').CryptoUtil,
-  Logger: require('./logger').Logger,
-  Performance: require('./performance').PerformanceUtil,
-  Retry: require('./retry').RetryUtil,
-  Random: require('./random').RandomUtil,
-  Comparison: require('./comparison').ComparisonUtil,
-  Pagination: require('./pagination').PaginationUtil,
-  Template: require('./template').TemplateUtil,
-  Cache: require('./cache').CacheUtil,
-  Wait: require('./wait').WaitUtil,
-  Conversion: require('./conversion').ConversionUtil,
-  Batch: require('./batch').BatchUtil,
+  Date: async () => (await import("./date")).DateUtil,
+  String: async () => (await import("./string")).StringUtil,
+  Array: async () => (await import("./array")).ArrayUtil,
+  Object: async () => (await import("./object")).ObjectUtil,
+  File: async () => (await import("./file")).FileUtil,
+  Http: async () => (await import("./http")).HttpUtil,
+  Validator: async () => (await import("./validator")).ValidatorUtil,
+  Crypto: async () => (await import("./crypto")).CryptoUtil,
+  Logger: async () => (await import("./logger")).Logger,
+  Performance: async () => (await import("./performance")).PerformanceUtil,
+  Retry: async () => (await import("./retry")).RetryUtil,
+  Random: async () => (await import("./random")).RandomUtil,
+  Comparison: async () => (await import("./comparison")).ComparisonUtil,
+  Pagination: async () => (await import("./pagination")).PaginationUtil,
+  Template: async () => (await import("./template")).TemplateUtil,
+  Cache: async () => (await import("./cache")).CacheUtil,
+  Wait: async () => (await import("./wait")).WaitUtil,
+  Conversion: async () => (await import("./conversion")).ConversionUtil,
+  Batch: async () => (await import("./batch")).BatchUtil,
 };
 
 // ============================================================================
@@ -378,46 +380,46 @@ export default UtilityAggregator;
  * SDET Utilities Package Metadata
  */
 export const PACKAGE_INFO = {
-  name: '@sdet/utilities',
-  version: '1.0.0',
-  description: 'Ultimate SDET automation testing utilities library',
-  main: 'src/utils/index.ts',
+  name: "@sdet/utilities",
+  version: "1.0.0",
+  description: "Ultimate SDET automation testing utilities library",
+  main: "src/utils/index.ts",
   exports: {
-    '.': './index.ts',
-    './date': './date.ts',
-    './string': './string.ts',
-    './array': './array.ts',
-    './object': './object.ts',
-    './file': './file.ts',
-    './http': './http.ts',
-    './validator': './validator.ts',
-    './crypto': './crypto.ts',
-    './logger': './logger.ts',
-    './performance': './performance.ts',
-    './retry': './retry.ts',
-    './random': './random.ts',
-    './comparison': './comparison.ts',
-    './pagination': './pagination.ts',
-    './template': './template.ts',
-    './cache': './cache.ts',
-    './wait': './wait.ts',
-    './conversion': './conversion.ts',
-    './batch': './batch.ts',
+    ".": "./index.ts",
+    "./date": "./date.ts",
+    "./string": "./string.ts",
+    "./array": "./array.ts",
+    "./object": "./object.ts",
+    "./file": "./file.ts",
+    "./http": "./http.ts",
+    "./validator": "./validator.ts",
+    "./crypto": "./crypto.ts",
+    "./logger": "./logger.ts",
+    "./performance": "./performance.ts",
+    "./retry": "./retry.ts",
+    "./random": "./random.ts",
+    "./comparison": "./comparison.ts",
+    "./pagination": "./pagination.ts",
+    "./template": "./template.ts",
+    "./cache": "./cache.ts",
+    "./wait": "./wait.ts",
+    "./conversion": "./conversion.ts",
+    "./batch": "./batch.ts",
   },
   keywords: [
-    'sdet',
-    'automation',
-    'testing',
-    'playwright',
-    'utilities',
-    'helpers',
-    'typescript',
-    'production-ready',
+    "sdet",
+    "automation",
+    "testing",
+    "playwright",
+    "utilities",
+    "helpers",
+    "typescript",
+    "production-ready",
   ],
-  author: 'SDET Team',
-  license: 'MIT',
+  author: "SDET Team",
+  license: "MIT",
   repository: {
-    type: 'git',
-    url: 'https://github.com/sdet-team/sdet-pw-practice',
+    type: "git",
+    url: "https://github.com/sdet-team/sdet-pw-practice",
   },
 } as const;

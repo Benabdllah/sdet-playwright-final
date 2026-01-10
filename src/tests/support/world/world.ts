@@ -58,6 +58,26 @@ export interface CustomWorld extends CucumberWorld {
   browser?: Browser;
   context?: BrowserContext;
   page?: Page;
+
+  /**
+   * Kontext für Debug-Logging (z.B. Retry, Fallback, Failure)
+   */
+  debugContext?: {
+    active: boolean;
+    reason?: string;
+    buffer: string[];
+    bufferSize: number;
+  };
+
+  /**
+   * Debug-Log mit Kontextpufferung
+   */
+  logDebug(message: string, contextReason?: string): void;
+
+  /**
+   * Kontext für Debug-Log aktivieren/deaktivieren
+   */
+  setDebugContextActive(active: boolean, reason?: string): void;
   apiContext?: any;
 
   // Scenario metadata (für hooks.ts)
@@ -119,6 +139,18 @@ export class World implements CustomWorld {
   startTime?: number;
   logs: string[] = [];
 
+  debugContext: {
+    active: boolean;
+    reason?: string;
+    buffer: string[];
+    bufferSize: number;
+  } = {
+    active: false,
+    reason: undefined,
+    buffer: [],
+    bufferSize: 20,
+  };
+
   testData: TestData = {};
   sharedData: Map<string, any> = new Map();
   metrics: TestMetrics;
@@ -144,6 +176,50 @@ export class World implements CustomWorld {
         : async () => {};
 
     this.log("World instance created", "debug");
+    // Initialisiere Debug-Kontext
+    this.debugContext = {
+      active: false,
+      reason: undefined,
+      buffer: [],
+      bufferSize: 20,
+    };
+  }
+  /**
+   * Debug-Log mit Kontextpufferung. Wird nur ausgegeben, wenn Debug-Kontext aktiv ist.
+   */
+  logDebug(message: string, contextReason?: string): void {
+    const timestamp = new Date().toISOString();
+    const entry = `[${timestamp}] 🐞 DEBUG${
+      contextReason ? ` [${contextReason}]` : ""
+    }: ${message}`;
+    // Immer in Buffer schreiben
+    this.debugContext.buffer.push(entry);
+    if (this.debugContext.buffer.length > this.debugContext.bufferSize) {
+      this.debugContext.buffer.shift();
+    }
+    // Nur ausgeben, wenn Kontext aktiv
+    if (this.debugContext.active) {
+      // Flush Buffer
+      for (const buffered of this.debugContext.buffer) {
+        console.log(buffered);
+      }
+      this.debugContext.buffer = [];
+    }
+  }
+
+  /**
+   * Aktiviert oder deaktiviert den Debug-Kontext (z.B. bei Retry, Fallback, Failure)
+   */
+  setDebugContextActive(active: boolean, reason?: string): void {
+    this.debugContext.active = active;
+    this.debugContext.reason = reason;
+    if (active) {
+      // Sofort Buffer flushen
+      for (const buffered of this.debugContext.buffer) {
+        console.log(buffered);
+      }
+      this.debugContext.buffer = [];
+    }
   }
 
   // ================================

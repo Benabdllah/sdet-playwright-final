@@ -1,7 +1,7 @@
 //const dotenv = require('dotenv') as any;
 import dotenv from "dotenv";
 
-import * as path from "path";
+import * as path from "node:path";
 import type { ViewportSize } from "@playwright/test";
 
 // ================================
@@ -484,9 +484,12 @@ if (ENV === "production" || ENV === "staging") {
 }
 
 // ================================
-// 16. DEBUG LOGGING
+// 16. DEBUG LOGGING (nur im ersten Worker oder ohne WORKER_ID)
 // ================================
-if (LOG_LEVEL === "debug" || VERBOSE || ENV === "development") {
+const isFirstWorker = process.env.WORKER_ID === "0" || !process.env.WORKER_ID;
+const shouldLogConfig =
+  (LOG_LEVEL === "debug" || VERBOSE || ENV === "development") && isFirstWorker;
+if (shouldLogConfig) {
   console.log("\n🚀 ========================================");
   console.log("   SDET+++++ Environment Configuration");
   console.log("========================================\n");

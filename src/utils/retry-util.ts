@@ -14,18 +14,18 @@
 // ============================================================================
 
 export enum BackoffStrategy {
-  FIXED = 'fixed',
-  LINEAR = 'linear',
-  EXPONENTIAL = 'exponential',
-  EXPONENTIAL_RANDOM = 'exponential_random',
-  FIBONACCI = 'fibonacci',
-  POLYNOMIAL = 'polynomial',
+  FIXED = "fixed",
+  LINEAR = "linear",
+  EXPONENTIAL = "exponential",
+  EXPONENTIAL_RANDOM = "exponential_random",
+  FIBONACCI = "fibonacci",
+  POLYNOMIAL = "polynomial",
 }
 
 export enum CircuitBreakerState {
-  CLOSED = 'closed',
-  OPEN = 'open',
-  HALF_OPEN = 'half_open',
+  CLOSED = "closed",
+  OPEN = "open",
+  HALF_OPEN = "half_open",
 }
 
 export interface RetryOptions {
@@ -281,7 +281,8 @@ export class CircuitBreaker {
    */
   getMetrics(): CircuitBreakerMetrics {
     const totalAttempts = this.failureCount + this.successCount;
-    const successRate = totalAttempts > 0 ? (this.successCount / totalAttempts) * 100 : 0;
+    const successRate =
+      totalAttempts > 0 ? (this.successCount / totalAttempts) * 100 : 0;
 
     return {
       state: this.state,
@@ -331,7 +332,7 @@ export class RetryUtil {
    */
   static async execute<T>(
     fn: () => Promise<T>,
-    options: Partial<RetryOptions> = {},
+    options: Partial<RetryOptions> = {}
   ): Promise<RetryResult<T>> {
     const opts: RetryOptions = {
       maxRetries: 3,
@@ -350,18 +351,24 @@ export class RetryUtil {
     const startTime = Date.now();
     let attempt = 0;
 
+    // Ermittle World-Instanz, falls übergeben (z.B. als options.world)
+    const world = (options as any)?.world;
     for (attempt = 0; attempt <= opts.maxRetries; attempt++) {
       try {
         // Apply timeout
         const result = await Promise.race([
           fn(),
           new Promise<T>((_, reject) =>
-            setTimeout(() => reject(new Error('Timeout')), opts.timeoutMs),
+            setTimeout(() => reject(new Error("Timeout")), opts.timeoutMs)
           ),
         ]);
 
         // Success
         this.statistics.successfulAttempts++;
+        // Debug-Kontext deaktivieren, falls aktiv
+        if (world && typeof world.setDebugContextActive === "function") {
+          world.setDebugContextActive(false);
+        }
         opts.onSuccess?.(result, attempt + 1);
 
         return {
@@ -375,16 +382,56 @@ export class RetryUtil {
         lastError = error as Error;
 
         // Check if error is retryable
-        const isRetryable = opts.retryableErrors.some((ErrorClass) => error instanceof ErrorClass);
+        const isRetryable = opts.retryableErrors.some(
+          (ErrorClass) => error instanceof ErrorClass
+        );
+
+        // DEBUG-Log bei jedem Retry-Versuch
+        if (isRetryable && attempt < opts.maxRetries) {
+          if (
+            world &&
+            typeof world.logDebug === "function" &&
+            typeof world.setDebugContextActive === "function"
+          ) {
+            world.setDebugContextActive(true, "retry");
+            world.logDebug(
+              `🔁 Retry #${attempt + 1} wegen Fehler: ${lastError?.message}`,
+              "retry"
+            );
+          } else {
+            // eslint-disable-next-line no-console
+            console.debug(
+              `🔁 Retry #${attempt + 1} wegen Fehler: ${lastError?.message}`
+            );
+          }
+        }
 
         if (!isRetryable || attempt === opts.maxRetries) {
           // Not retryable or max retries reached
           this.statistics.failedAttempts++;
-          const errorName = (error as any)?.constructor?.name || 'Error';
+          const errorName = (error as any)?.constructor?.name || "Error";
           this.statistics.errorDistribution.set(
             errorName,
-            (this.statistics.errorDistribution.get(errorName) || 0) + 1,
+            (this.statistics.errorDistribution.get(errorName) || 0) + 1
           );
+
+          // DEBUG-Log bei Failure
+          if (
+            world &&
+            typeof world.logDebug === "function" &&
+            typeof world.setDebugContextActive === "function"
+          ) {
+            world.setDebugContextActive(true, "failure");
+            world.logDebug(
+              `❌ Failure nach ${attempt + 1} Versuchen: ${lastError?.message}`,
+              "failure"
+            );
+          } else {
+            // eslint-disable-next-line no-console
+            console.debug(
+              `❌ Failure nach ${attempt + 1} Versuchen: ${lastError?.message}`
+            );
+          }
 
           opts.onFailure?.(lastError, attempt + 1);
 
@@ -424,7 +471,10 @@ export class RetryUtil {
   /**
    * Execute sync function with retry logic
    */
-  static executeSync<T>(fn: () => T, options: Partial<RetryOptions> = {}): RetryResult<T> {
+  static executeSync<T>(
+    fn: () => T,
+    options: Partial<RetryOptions> = {}
+  ): RetryResult<T> {
     const opts: RetryOptions = {
       maxRetries: 3,
       initialDelayMs: 100,
@@ -457,7 +507,9 @@ export class RetryUtil {
       } catch (error) {
         lastError = error as Error;
 
-        const isRetryable = opts.retryableErrors.some((ErrorClass) => error instanceof ErrorClass);
+        const isRetryable = opts.retryableErrors.some(
+          (ErrorClass) => error instanceof ErrorClass
+        );
 
         if (!isRetryable || attempt === opts.maxRetries) {
           this.statistics.failedAttempts++;
@@ -497,7 +549,7 @@ export class RetryUtil {
 
     return {
       success: false,
-      error: lastError || new Error('Unknown error'),
+      error: lastError || new Error("Unknown error"),
       attempts: opts.maxRetries + 1,
       totalDurationMs: Date.now() - startTime,
       lastAttemptTime: Date.now(),
@@ -510,12 +562,12 @@ export class RetryUtil {
   static async executeWithCircuitBreaker<T>(
     fn: () => Promise<T>,
     circuitBreaker: CircuitBreaker,
-    retryOptions?: Partial<RetryOptions>,
+    retryOptions?: Partial<RetryOptions>
   ): Promise<RetryResult<T>> {
     if (!circuitBreaker.canExecute()) {
       return {
         success: false,
-        error: new Error('Circuit breaker is open'),
+        error: new Error("Circuit breaker is open"),
         attempts: 0,
         totalDurationMs: 0,
         lastAttemptTime: Date.now(),
@@ -544,15 +596,21 @@ export class RetryUtil {
   static async executeWithFallback<T>(
     fn: () => Promise<T>,
     fallback: () => Promise<T>,
-    options?: Partial<RetryOptions>,
+    options?: Partial<RetryOptions>
   ): Promise<T> {
     try {
       const result = await this.execute(fn, options);
       if (result.success) {
         return result.data!;
       }
+      // DEBUG-Log wenn Fallback greift
+      // eslint-disable-next-line no-console
+      console.debug("🧯 Fallback wird ausgeführt!");
       return fallback();
     } catch (error) {
+      // DEBUG-Log wenn Fallback greift
+      // eslint-disable-next-line no-console
+      console.debug("🧯 Fallback wird ausgeführt!");
       return fallback();
     }
   }
@@ -562,7 +620,7 @@ export class RetryUtil {
    */
   static async executeAll<T>(
     fns: Array<() => Promise<T>>,
-    options?: Partial<RetryOptions>,
+    options?: Partial<RetryOptions>
   ): Promise<T[]> {
     const promises = fns.map((fn) => this.execute(fn, options));
     const results = await Promise.all(promises);
@@ -577,7 +635,7 @@ export class RetryUtil {
    */
   static async executeRace<T>(
     fns: Array<() => Promise<T>>,
-    options?: Partial<RetryOptions>,
+    options?: Partial<RetryOptions>
   ): Promise<T> {
     const promises = fns.map((fn) => this.execute(fn, options));
     const result = await Promise.race(promises);
@@ -601,9 +659,10 @@ export class RetryUtil {
     return {
       ...this.statistics,
       averageDurationMs: this.statistics.totalDurationMs / totalAttempts,
-      averageAttemptsPerSuccess: this.statistics.successfulAttempts > 0
-        ? this.statistics.totalAttempts / this.statistics.successfulAttempts
-        : 0,
+      averageAttemptsPerSuccess:
+        this.statistics.successfulAttempts > 0
+          ? this.statistics.totalAttempts / this.statistics.successfulAttempts
+          : 0,
     };
   }
 
@@ -629,29 +688,37 @@ export class RetryUtil {
   static printStatistics(): void {
     const stats = this.getStatistics();
 
-    console.log('\n' + '='.repeat(70));
-    console.log('RETRY STATISTICS REPORT');
-    console.log('='.repeat(70));
+    console.log("\n" + "=".repeat(70));
+    console.log("RETRY STATISTICS REPORT");
+    console.log("=".repeat(70));
     console.log(`Total Attempts: ${stats.totalAttempts}`);
     console.log(`Successful: ${stats.successfulAttempts}`);
     console.log(`Failed: ${stats.failedAttempts}`);
     console.log(`Average Duration: ${stats.averageDurationMs.toFixed(2)}ms`);
-    console.log(`Average Attempts per Success: ${stats.averageAttemptsPerSuccess.toFixed(2)}`);
+    console.log(
+      `Average Attempts per Success: ${stats.averageAttemptsPerSuccess.toFixed(
+        2
+      )}`
+    );
 
     if (stats.errorDistribution.size > 0) {
-      console.log('\nError Distribution:');
+      console.log("\nError Distribution:");
       stats.errorDistribution.forEach((count, error) => {
         console.log(`  ${error}: ${count}`);
       });
     }
 
     if (stats.backoffDelays.length > 0) {
-      const avgDelay = stats.backoffDelays.reduce((a, b) => a + b, 0) / stats.backoffDelays.length;
+      const avgDelay =
+        stats.backoffDelays.reduce((a, b) => a + b, 0) /
+        stats.backoffDelays.length;
       console.log(`\nAverage Backoff Delay: ${avgDelay.toFixed(2)}ms`);
-      console.log(`Max Backoff Delay: ${Math.max(...stats.backoffDelays).toFixed(2)}ms`);
+      console.log(
+        `Max Backoff Delay: ${Math.max(...stats.backoffDelays).toFixed(2)}ms`
+      );
     }
 
-    console.log('='.repeat(70) + '\n');
+    console.log("=".repeat(70) + "\n");
   }
 }
 
@@ -663,11 +730,18 @@ export class RetryUtil {
  * Retry decorator for methods
  */
 export function Retry(options?: Partial<RetryOptions>) {
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
-      const result = await RetryUtil.execute(() => originalMethod.apply(this, args), options);
+      const result = await RetryUtil.execute(
+        () => originalMethod.apply(this, args),
+        options
+      );
 
       if (!result.success) {
         throw result.error;
@@ -686,13 +760,17 @@ export function Retry(options?: Partial<RetryOptions>) {
 export function WithCircuitBreaker(config?: Partial<CircuitBreakerConfig>) {
   const breaker = new CircuitBreaker(config);
 
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
       const result = await RetryUtil.executeWithCircuitBreaker(
         () => originalMethod.apply(this, args),
-        breaker,
+        breaker
       );
 
       if (!result.success) {

@@ -186,6 +186,20 @@ After(async function (this: World, { result, pickle }) {
   const scenarioName = pickle.name;
   const statusEmoji = getStatusEmoji(status);
 
+  // Debug-Kontext: Bei Failure Buffer flushen
+  if (
+    status === "FAILED" &&
+    typeof this.setDebugContextActive === "function" &&
+    typeof this.logDebug === "function"
+  ) {
+    this.setDebugContextActive(true, "failure");
+    this.logDebug(
+      `Debug-Log-Buffer für Scenario '${scenarioName}' (Status: FAILED) wird ausgespült.`,
+      "failure"
+    );
+    this.setDebugContextActive(false);
+  }
+
   console.log("\n🏁 ========================================");
   console.log(`🏁 SCENARIO COMPLETED: ${scenarioName}`);
   console.log(`   Status: ${statusEmoji} ${STATUS_LABELS[status]}`);
