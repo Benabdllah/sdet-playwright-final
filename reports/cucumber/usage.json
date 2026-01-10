@@ -1,132 +1,132 @@
-┌────────────────────────────────────────────────────────────────────────────┬──────────┬─────────────────────────────────────────────────────────────────────────────────┐
-│ Pattern / Text                                                             │ Duration │ Location                                                                        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich bin auf der Conduit-Anmeldeseite                                       │ 943.08ms │ src/tests/step_definitions/auth/login.steps.ts:6                                │
-│   ich bin auf der Conduit-Anmeldeseite                                     │ 943.08ms │ src/tests/features/auth/login.feature:5                                         │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich mich mit gültigen Anmeldedaten anmelde                                 │ 0.46ms   │ src/tests/step_definitions/auth/login.steps.ts:12                               │
-│   ich mich mit gültigen Anmeldedaten anmelde                               │ 0.46ms   │ src/tests/features/auth/login.feature:6                                         │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf die Einstellungsschaltfläche klicke                                │ 0.44ms   │ src/tests/step_definitions/auth/login.steps.ts:27                               │
-│   ich auf die Einstellungsschaltfläche klicke                              │ 0.44ms   │ src/tests/features/auth/login.feature:7                                         │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ werde ich auf die Anmeldeseite zurückgeleitet                              │ 0.36ms   │ src/tests/step_definitions/auth/login.steps.ts:49                               │
-│   werde ich auf die Anmeldeseite zurückgeleitet                            │ 0.36ms   │ src/tests/features/auth/login.feature:9                                         │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf die Abmeldungsschaltfläche klicke                                  │ 0.34ms   │ src/tests/step_definitions/auth/login.steps.ts:38                               │
-│   ich auf die Abmeldungsschaltfläche klicke                                │ 0.34ms   │ src/tests/features/auth/login.feature:8                                         │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich bin auf der OrangeHRM-Anmeldeseite                                     │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:8              │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich den Benutzernamen {string} eingebe                                     │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:14             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich das Passwort {string} eingebe                                          │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:19             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf den {string}-Button klicke                                         │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:24             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich erfolgreich angemeldet sein                                     │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:34             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich sollte das Dashboard sehen                                             │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:41             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich das Benutzernamenfeld leer lasse                                       │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:47             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich eine Fehlermeldung {string} sehen                               │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:51             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich sollte auf der Anmeldeseite bleiben                                    │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:57             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich einen Validierungsfehler sehen                                  │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:63             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ das Formular sollte nicht eingereicht werden                               │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:73             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich bin als Administrator angemeldet                                       │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:79             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf das Benutzerprofilmenü klicke                                      │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:91             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf die Option {string} klicke                                         │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:98             │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich abgemeldet sein                                                 │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:105            │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich sollte auf die Anmeldeseite weitergeleitet werden                      │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:112            │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich 30 Minuten lang keine Aktion ausführe                                  │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:118            │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich versuche, zu einer authentifizierten Seite zu navigieren               │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:122            │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich sollte eine Sitzungszeitüberschreitung-Meldung sehen                   │ UNUSED   │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:128            │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich zum Abschnitt Mitarbeiterverwaltung navigiere                          │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:4         │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich die folgenden Mitarbeiterinformationen eingebe:                        │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:19        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ der Mitarbeiter {string} sollte in der Mitarbeiterliste erscheinen         │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:33        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich Validierungsfehler für erforderliche Felder sehen               │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:39        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ der Mitarbeiter sollte nicht erstellt werden                               │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:49        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich nach Mitarbeiter {string} suche                                        │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:56        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollten die Suchergebnisse Mitarbeiter anzeigen, die dem Namen entsprechen │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:68        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ein Mitarbeiter {string} existiert im System                               │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:81        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich nach {string} suche                                                    │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:86        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf den Löschen-Button für {string} klicke                             │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:95        │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich die Löschaktion bestätige                                              │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:105       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ {string} sollte nicht mehr in der Mitarbeiterliste erscheinen              │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:114       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf {string} klicke, um zu bearbeiten                                  │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:127       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich die E-Mail auf {string} aktualisiere                                   │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:136       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ die E-Mail für {string} sollte {string} sein                               │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:144       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf {string} klicke, um Details anzuzeigen                             │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:153       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich alle Mitarbeiterinformationen sehen                             │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:162       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ die Mitarbeiter-ID sollte angezeigt werden                                 │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:173       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ der Beschäftigungsstatus sollte angezeigt werden                           │ UNUSED   │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:183       │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ein Mitarbeiter {string} hat Urlaub vom {string} bis {string} beantragt    │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:6   │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich bin als Manager angemeldet                                             │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:10  │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich zu ausstehenden Urlaubsgenehmigungen navigiere                         │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:26  │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich den Urlaubsantrag von {string} auswähle                                │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:37  │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ der Urlaub-Status sollte sich in {string} ändern                           │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:43  │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ mein Jahresurlaub-Saldo beträgt {int} Tage                                 │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management-validation.todosteps.ts:5 │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich bin als Mitarbeiter angemeldet                                         │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:8            │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich zum Urlaub-Bereich navigiere                                           │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:20           │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich auf {string} klicke                                                    │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:27           │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich den Urlaubstyp {string} auswähle                                       │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:104          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich das Startdatum {string} auswähle                                       │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:111          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich das Enddatum {string} auswähle                                         │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:118          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich das Enddatum {string} auswähle \(5 Tage\)                              │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:125          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ ich den Kommentar {string} eingebe                                         │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:132          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich die Erfolgsmeldung {string} sehen                               │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:138          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ der Urlaub sollte in meiner Urlaubsliste mit Status {string} erscheinen    │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:144          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich die Fehlermeldung {string} sehen                                │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:150          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ der Urlaubsantrag sollte nicht eingereicht werden                          │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:156          │
-├────────────────────────────────────────────────────────────────────────────┼──────────┼─────────────────────────────────────────────────────────────────────────────────┤
-│ sollte ich meine verbleibenden Urlaubstage sehen:                          │ UNUSED   │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:162          │
-└────────────────────────────────────────────────────────────────────────────┴──────────┴─────────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────┬────────────┬─────────────────────────────────────────────────────────────────────────────────┐
+│ Pattern / Text                                                             │ Duration   │ Location                                                                        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich bin auf der Conduit-Anmeldeseite                                       │ 29686.20ms │ src/tests/step_definitions/auth/login.steps.ts:6                                │
+│   ich bin auf der Conduit-Anmeldeseite                                     │ 29686.20ms │ src/tests/features/auth/login.feature:5                                         │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf die Einstellungsschaltfläche klicke                                │ 1.06ms     │ src/tests/step_definitions/auth/login.steps.ts:27                               │
+│   ich auf die Einstellungsschaltfläche klicke                              │ 1.06ms     │ src/tests/features/auth/login.feature:7                                         │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich mich mit gültigen Anmeldedaten anmelde                                 │ 0.86ms     │ src/tests/step_definitions/auth/login.steps.ts:12                               │
+│   ich mich mit gültigen Anmeldedaten anmelde                               │ 0.86ms     │ src/tests/features/auth/login.feature:6                                         │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ werde ich auf die Anmeldeseite zurückgeleitet                              │ 0.56ms     │ src/tests/step_definitions/auth/login.steps.ts:49                               │
+│   werde ich auf die Anmeldeseite zurückgeleitet                            │ 0.56ms     │ src/tests/features/auth/login.feature:9                                         │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf die Abmeldungsschaltfläche klicke                                  │ 0.45ms     │ src/tests/step_definitions/auth/login.steps.ts:38                               │
+│   ich auf die Abmeldungsschaltfläche klicke                                │ 0.45ms     │ src/tests/features/auth/login.feature:8                                         │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich bin auf der OrangeHRM-Anmeldeseite                                     │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:8              │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich den Benutzernamen {string} eingebe                                     │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:14             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich das Passwort {string} eingebe                                          │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:19             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf den {string}-Button klicke                                         │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:24             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich erfolgreich angemeldet sein                                     │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:34             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich sollte das Dashboard sehen                                             │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:41             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich das Benutzernamenfeld leer lasse                                       │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:47             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich eine Fehlermeldung {string} sehen                               │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:51             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich sollte auf der Anmeldeseite bleiben                                    │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:57             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich einen Validierungsfehler sehen                                  │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:63             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ das Formular sollte nicht eingereicht werden                               │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:73             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich bin als Administrator angemeldet                                       │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:79             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf das Benutzerprofilmenü klicke                                      │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:91             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf die Option {string} klicke                                         │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:98             │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich abgemeldet sein                                                 │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:105            │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich sollte auf die Anmeldeseite weitergeleitet werden                      │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:112            │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich 30 Minuten lang keine Aktion ausführe                                  │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:118            │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich versuche, zu einer authentifizierten Seite zu navigieren               │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:122            │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich sollte eine Sitzungszeitüberschreitung-Meldung sehen                   │ UNUSED     │ src/tests/step_definitions/orangehrm/authentication.todosteps.ts:128            │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich zum Abschnitt Mitarbeiterverwaltung navigiere                          │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:4         │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich die folgenden Mitarbeiterinformationen eingebe:                        │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:19        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ der Mitarbeiter {string} sollte in der Mitarbeiterliste erscheinen         │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:33        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich Validierungsfehler für erforderliche Felder sehen               │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:39        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ der Mitarbeiter sollte nicht erstellt werden                               │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:49        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich nach Mitarbeiter {string} suche                                        │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:56        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollten die Suchergebnisse Mitarbeiter anzeigen, die dem Namen entsprechen │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:68        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ein Mitarbeiter {string} existiert im System                               │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:81        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich nach {string} suche                                                    │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:86        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf den Löschen-Button für {string} klicke                             │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:95        │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich die Löschaktion bestätige                                              │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:105       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ {string} sollte nicht mehr in der Mitarbeiterliste erscheinen              │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:114       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf {string} klicke, um zu bearbeiten                                  │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:127       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich die E-Mail auf {string} aktualisiere                                   │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:136       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ die E-Mail für {string} sollte {string} sein                               │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:144       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf {string} klicke, um Details anzuzeigen                             │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:153       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich alle Mitarbeiterinformationen sehen                             │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:162       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ die Mitarbeiter-ID sollte angezeigt werden                                 │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:173       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ der Beschäftigungsstatus sollte angezeigt werden                           │ UNUSED     │ src/tests/step_definitions/orangehrm/employee-management.todosteps.ts:183       │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ein Mitarbeiter {string} hat Urlaub vom {string} bis {string} beantragt    │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:6   │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich bin als Manager angemeldet                                             │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:10  │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich zu ausstehenden Urlaubsgenehmigungen navigiere                         │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:26  │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich den Urlaubsantrag von {string} auswähle                                │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:37  │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ der Urlaub-Status sollte sich in {string} ändern                           │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management-approval.todosteps.ts:43  │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ mein Jahresurlaub-Saldo beträgt {int} Tage                                 │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management-validation.todosteps.ts:5 │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich bin als Mitarbeiter angemeldet                                         │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:8            │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich zum Urlaub-Bereich navigiere                                           │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:20           │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich auf {string} klicke                                                    │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:27           │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich den Urlaubstyp {string} auswähle                                       │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:104          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich das Startdatum {string} auswähle                                       │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:111          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich das Enddatum {string} auswähle                                         │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:118          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich das Enddatum {string} auswähle \(5 Tage\)                              │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:125          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ ich den Kommentar {string} eingebe                                         │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:132          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich die Erfolgsmeldung {string} sehen                               │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:138          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ der Urlaub sollte in meiner Urlaubsliste mit Status {string} erscheinen    │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:144          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich die Fehlermeldung {string} sehen                                │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:150          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ der Urlaubsantrag sollte nicht eingereicht werden                          │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:156          │
+├────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ sollte ich meine verbleibenden Urlaubstage sehen:                          │ UNUSED     │ src/tests/step_definitions/orangehrm/leave-management.todosteps.ts:162          │
+└────────────────────────────────────────────────────────────────────────────┴────────────┴─────────────────────────────────────────────────────────────────────────────────┘

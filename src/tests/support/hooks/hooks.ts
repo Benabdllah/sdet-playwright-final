@@ -1,3 +1,5 @@
+// Zentrale .env-Initialisierung (muss als erstes stehen!)
+import "../../../config/env-init.ts";
 import {
   BeforeAll,
   AfterAll,

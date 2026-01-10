@@ -3,9 +3,7 @@ import * as path from "path";
 import { SecretsManager } from "./secrets/SecretsManager";
 
 // Lade .env.secrets für lokale Entwicklung
-if (process.env.NODE_ENV !== "production") {
-  const envPath = path.resolve(__dirname, "../../.env.secrets");
-  dotenv.config({ path: envPath });
+// ACHTUNG: dotenv wird jetzt zentral über src/config/env-init.ts geladen!
 }
 
 // Initialisiere Secret Manager

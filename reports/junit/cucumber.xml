@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<testsuite name="Cucumber" time="5.711" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-01-10T22:02:09.037Z">
-  <testcase classname="Conduit-Anmelde-Funktionalität" name="Anmeldung und Abmeldung mit gültigen Anmeldedaten" time="1.234">
+<testsuite name="Cucumber" time="35.046" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-01-10T22:55:23.554Z">
+  <testcase classname="Conduit-Anmelde-Funktionalität" name="Anmeldung und Abmeldung mit gültigen Anmeldedaten" time="30.481">
     <system-out><![CDATA[Angenommen ich bin auf der Conduit-Anmeldeseite.............................passed
 Wenn ich mich mit gültigen Anmeldedaten anmelde.............................passed
 Und ich auf die Einstellungsschaltfläche klicke.............................passed

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import 'dotenv/config';
+// ACHTUNG: dotenv/config wird jetzt zentral über src/config/env-init.ts geladen!
 export interface PrivateLabelKonfiguration {
   URL: string;
   BENUTZER_EMAIL: string;

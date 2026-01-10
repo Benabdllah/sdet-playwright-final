@@ -1,5 +1,5 @@
 // sdet-secrets-plus-plus.ts  (die echte SDET+++ Version)
-import 'dotenv/config';
+// ACHTUNG: dotenv/config wird jetzt zentral über src/config/env-init.ts geladen!
 import * as fs from 'fs';
 import * as path from 'path';
 

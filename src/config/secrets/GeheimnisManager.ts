@@ -1,7 +1,7 @@
 // استخدم هذا الملف لإدارة الأسرار (Secrets) بشكل مُحسَّن في بيئات Docker
 // تمت ترجمة أسماء المتغيرات، الكلاسات، والدوال إلى العربية، مع الإبقاء على عناصر لغة البرمجة كما هي
 
-import 'dotenv/config';
+// ACHTUNG: dotenv/config wird jetzt zentral über src/config/env-init.ts geladen!
 import * as fs from 'fs';
 import * as path from 'path';
 

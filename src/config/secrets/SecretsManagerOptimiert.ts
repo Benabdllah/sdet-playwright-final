@@ -1,7 +1,7 @@
 // benutzen Sie diese Datei für optimierte Secrets-Verwaltung in Docker-Umgebungen
 // Diese Datei dient der optimierten Verwaltung von Geheimnissen (Secrets)
 // in Docker-Umgebungen. Programmiersprachen-Elemente bleiben unverändert.
-import 'dotenv/config';
+// ACHTUNG: dotenv/config wird jetzt zentral über src/config/env-init.ts geladen!
 import * as fs from 'fs';
 import * as path from 'path';
 
